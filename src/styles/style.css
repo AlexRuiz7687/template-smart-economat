@@ -1,0 +1,406 @@
+/* -----------------------GENERALES----------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+:root {
+  --primary-color: #ea4634;
+  --secondary-color: #e1efe2;
+  --terciary-color: yellow;
+  --cl-white: #f5f5f5;
+  --cl-black: #2f2e2d;
+  --cl-light-gray: rgb(196, 196, 196);
+  --cl-dark-gray: rgb(99, 99, 99);
+  --footer-height: 72px;
+}
+
+body {
+  background-color: var(--cl-white);
+  display: grid;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer";
+  grid-template-rows: 2fr 6fr 1fr;
+  min-height: 100vh;
+  justify-items: center;
+}
+
+header {
+  grid-area: header;
+  /* background-color: aqua; */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* -----------------------HEADER----------------------- */
+
+.cabecera {
+  width: 96%;
+  height: 50%;
+  padding: 2%;
+  /* background-color: blueviolet; */
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 5vh;
+  align-items: center;
+  margin-bottom: 1vh;
+}
+
+.logos-externos {
+  height: 70px;
+  /* background-color: white; */
+  display: flex;
+  gap: 10px;
+}
+
+.logo-gobierno {
+  height: auto;
+  /*     border: 1px solid black;
+ */
+  width: 180px;
+
+  /* background-color: rgb(44, 161, 161); */
+}
+
+.logo-smart-cabecera {
+  height: auto;
+  max-width: 230px;
+  /* border: 1px solid black; */
+  /* background-color: aquamarine; */
+}
+
+.logo-smart-cabecera {
+  display: flex;
+  justify-items: center;
+}
+
+.menu {
+  /*        border: 1px solid black; 
+ */
+  border-radius: 2vh;
+  display: flex;
+  justify-content: center;
+  /* align-content: center; */
+  width: 100%;
+  
+  overflow:scroll;
+}
+
+.navbar {
+  /*     width: auto; */
+  height: 40px;
+  /*    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;*/
+  border-radius: 2vh;
+  padding: 1vh;
+  width: 80%;
+  height: auto;
+  background-color: var(--primary-color);
+}
+
+.navbar ul {
+  text-decoration: none;
+  list-style: none;
+
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-content: center;
+
+  padding: 0;
+  margin: 0;
+
+  justify-items: space-around;
+  /* align-items: center; */
+  /* height:100%; */
+  /* width: 100%; */
+  cursor: pointer;
+}
+
+.navbar li {
+  align-content: center;
+  /* padding-bottom: 2vh; */
+  /* justify-items: stretch; */
+  color: var(--cl-white);
+  height: 1.9vh;
+  transition: 0.3s;
+}
+
+.menu-toggle {
+  display: none;
+  background-color: transparent;
+  border: none;
+  font-size: 3rem;
+  cursor: pointer;
+  margin: 10px;
+}
+
+li:hover {
+  border-bottom: 3px solid var(--cl-white);
+}
+li.active {
+  border-bottom: 3px solid var(--cl-white);
+}
+
+.boton {
+  /* background-color: yellow; */
+  padding: 5px 14px;
+  height: 100%;
+  /* border-radius: 5px; */
+}
+
+/* -----------------------FIN HEADER----------------------- */
+
+/* -----------------------CONTENIDO----------------------- */
+
+main {
+  grid-area: main;
+  /* background-color: blue; */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2vh;
+  justify-content: center;
+  align-content: flex-start;
+  align-items: center;
+  padding: 2% 5%;
+  max-width: 1100px;
+  /* overflow: scroll; */
+  height: auto;
+  /* padding-bottom: calc(var(--footer-height)); */
+}
+
+.acceso-directo {
+  border: 1px solid var(--cl-white);
+  width: 40vh;
+  height: 20vh;
+  background-color: var(--cl-light-gray);
+  border-radius: 5vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: 20px;
+  box-shadow: 0.1em 0.1em 0.4em rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  position: relative;
+  object-fit: cover;
+
+}
+.acceso-directo img{
+  position: absolute; 
+  
+  width: 70%;
+  top: 0;
+  
+  filter: grayscale(100%) brightness(150%) contrast(70%) ;
+  z-index: 1;
+  transition: filter 0.3s ease;
+  
+}
+.acceso-directo img:hover{
+  filter: grayscale(0%);
+}
+.acceso-directo:hover {
+  box-shadow: 0.1em 0.1em 0.4em rgba(0, 0, 0, 0.5);
+}
+
+.bt-acc-dir {
+  min-width: 10vh;
+  padding: 1vh;
+  min-height: 5vh;
+  background-color: var(--primary-color);
+  color: var(--cl-white);
+  border-radius: 2vh;
+  border: none;
+  font-size: 0.9rem;
+  box-shadow: 0.1em 0.1em 0.4em rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: 0.2s;
+  position: relative;
+  z-index: 2;
+}
+
+.bt-acc-dir:hover {
+  scale: 1.1;
+  box-shadow: 0.1em 0.1em 0.8em rgba(0, 0, 0, 0.1);
+}
+
+.bt-acc-dir:active{
+  scale: .9;;
+}
+
+
+/* -----------------------FIN CONTENIDO----------------------- */
+
+/* --------------------------FOOTER-------------------------- */
+
+footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--footer-height);
+  line-height: var(--footer-height); 
+  z-index: 999;
+  border-top: 1px solid black;
+  background-color: var(--cl-black);
+  text-align: center;
+  color: var(--cl-white);
+  padding: 0 1rem; 
+  box-sizing: border-box;
+}
+
+footer a {
+  text-decoration: none;
+  position: static;
+}
+footer p > a:hover {
+  color: var(--primary-color);
+}
+footer a:visited {
+  color: var(--cl-white);
+  bottom: 0;
+  position: fixed;
+}
+
+/* --------------------------FIN FOOTER-------------------------- */
+
+/*-----------------------MEDIA QUERIES---------------------------*/
+
+@media screen and (max-width: 920px) {
+  header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-items: center;
+    align-content: center;
+    align-items: center;
+    max-height: 15vh;
+    margin-bottom: 2vh;
+  }
+
+  .cabecera {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 2vh;
+  }
+
+  .logos-externos {
+    justify-content: center;
+    max-width: 100%;
+  }
+
+   .logo-gobierno {
+    width: 140px; 
+    height: auto;
+  }
+
+  .logo-smart-cabecera {
+    width: 200px; 
+    height: auto;
+  }
+
+  .logo-smart-cabecera {
+    max-width: 150px;
+  }
+
+  .navbar {
+    background-color: transparent;
+    height: 50vh;
+    border-radius: 0%;
+    width: 40%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+
+    /*padding-top: 10vh; */
+  }
+
+  .navbar ul {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin: 0;
+    padding: 0.25rem 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .navbar ul.active {
+    display: flex;
+    position: relative;
+    background: white;
+    padding: 0.25rem 0.5rem;
+    gap: 0.25rem;
+    z-index: 30;
+  }
+  .navbar li {
+    width: 50%;
+    padding: 1rem 0.8rem;
+    color: var(--cl-black);
+  }
+
+  .menu-toggle {
+    display: block;
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    z-index: 40;
+    margin-left: 5vh;
+  }
+
+  li:hover {
+    border-bottom: 3px solid var(--cl-black);
+  }
+  li.active {
+    border-bottom: 3px solid var(--cl-black);
+  }
+}
+
+
+/* ======= BREAKPOINT PARA MÓVIL (hasta 600px) ======= */
+@media screen and (max-width: 630px) {
+  .cabecera {
+    flex-direction: row; 
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .logos-externos {
+    display: flex;
+    flex-direction: row; 
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    max-width: 60%;
+  }
+
+  .logo-gobierno {
+    width: 120px; 
+    height: auto;
+  }
+
+  .logo-smart-cabecera {
+    width: 120px; 
+    height: auto;
+  }
+
+  header {
+    max-height: none;
+    
+  }
+}
+

@@ -1,0 +1,109 @@
+@import url("./style.css");
+.main-login{
+    overflow:hidden;
+}
+.form-inicio {
+    max-width: 40vh;
+    min-height: 40vh;
+    background: var(--cl-white);
+    padding: 5vh;
+    text-align: center;
+    box-shadow: .5vh .5vh 3vh rgba(0, 0, 0, .2);
+    border-radius: 5vh;
+
+}
+
+.form-inicio:focus-within{
+    box-shadow: .5vh .5vh 3vh rgba(0, 0, 0, .5);
+}
+
+.form-inicio p {
+    font-size: .8em;
+}
+
+
+.form-inicio label {
+    font-size: .8em;
+}
+
+.form-inicio h1 {
+    margin-bottom: 2vh;
+    color: var(--cl-black);
+}
+
+
+.inputSesion{
+    margin: 1vh;
+    width: 80%;
+    height: 3vh;
+    border-radius: 2vh;
+    border: 1px solid var(--cl-black);
+    padding: 1vh;
+}
+
+.inputSesion:hover {
+    border: 1px solid var(--primary-color);
+}
+.inputSesion:active{
+    border: 1px solid var(--primary-color);
+}
+
+.inputSesion:focus{
+    border: 1px solid var(--primary-color);
+    outline: none;
+}
+
+.cont-submit{
+    margin: 2vh;
+}
+
+.btn-submit{
+    background-color: var(--primary-color);
+    color: var(--cl-white);
+    font-size: 2.5vh;
+    height: 5vh;
+    width: 80%;
+    outline: none;
+    border: none;
+    border-radius: 2vh;
+    box-shadow: .1vh .1vh .1vh rgba(0, 0, 0, .2);
+    transition: .1s;
+    cursor: pointer;
+}
+
+.btn-submit:hover{
+    scale: 1.05;
+}
+
+.btn-submit:active{
+    scale: .95;
+}
+
+.btn-submit:disabled{
+    background-color: var(--cl-dark-gray);
+    scale: none;
+}
+a{
+    color: var(--cl-dark-gray);
+}
+
+a:hover{
+    color: var(--primary-color);
+}
+
+input[type="checkbox"] {
+    accent-color: var(--primary-color);
+}
+
+@media screen and (max-width: 920px) {
+    .cabecera {
+        
+
+        align-items: center; 
+        justify-content: center;
+        gap: 3vh; 
+        
+       
+        margin-top: 2vh; 
+    }
+}
