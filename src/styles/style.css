@@ -336,7 +336,7 @@ footer a:visited {
     background-color: transparent;
     height: 50vh;
     border-radius: 0%;
-    width: 40%;
+    width: 50%;
     position: absolute;
     top: 0;
     right: 0;
@@ -417,12 +417,12 @@ footer a:visited {
   }
 
   .logo-gobierno {
-    width: 120px; 
+    width: 100px; 
     height: auto;
   }
 
   .logo-smart-cabecera {
-    width: 120px; 
+    width: 100px; 
     height: auto;
   }
 
