@@ -262,7 +262,7 @@ main {
 
 footer {
   grid-area: footer;
-  height: var(--footer-height);
+  height: auto;
   line-height: var(--footer-height); 
   border-top: 1px solid black;
   background-color: var(--cl-black);
@@ -429,6 +429,9 @@ footer a:visited {
   header {
     max-height: none;
     
+  }
+  footer{
+    font-size: .8rem;
   }
 }
 
