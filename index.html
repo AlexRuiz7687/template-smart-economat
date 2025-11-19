@@ -4,26 +4,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
-    <link rel="stylesheet" href="./src/styles/style.css" />
-    <link rel="stylesheet" href="./src/styles/form-styles.css" />
+    <link rel="stylesheet" href="./assets/css/form-styles.css" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
   </head>
   <body>
     <header>
       <div class="cabecera">
         <div class="logos-externos">
           <img
-            src="./src/img/logo_gobcan_05-01_color_mod31.png"
+            src="./assets/img/logo_gobcan_05-01_color_mod31.png"
             alt="Gobierno de Canarias"
             class="logo-gobierno consejeria"
           />
           <img
-            src="./src/img/logo-cifp-virgen-candelaria.png"
+            src="./assets/img/logo-cifp-virgen-candelaria.png"
             alt="Logo Virgen de la Candelaria"
             class="logo-gobierno"
           />
         </div>
         <img
-          src="./src/img/logo-smart.png" alt="Logotipo-Smart-Economato" class="logo-smart-cabecera"
+          src="./assets/img/logo-smart.png" alt="Logotipo-Smart-Economato" class="logo-smart-cabecera"
           alt="Logotipo-Smart-Economato"
           class="logo-smart-cabecera"
         />
@@ -33,7 +33,7 @@
     <div class="main-login">
       <div class="form-inicio">
         <h1>Inicio de sesión</h1>
-        <form action="./src/template.html">
+        <form action="./assets/inicio.html" id="loginForm">
           <div class="cont-submit">
             <input
               type="text"
@@ -41,7 +41,7 @@
               class="inputSesion nombreUsuario"
               value=""
               placeholder="Nombre de usuario"
-              required
+            
             />
           </div>
           <div class="cont-submit">
@@ -51,9 +51,10 @@
               class="inputSesion form-pasword"
               value=""
               placeholder="Contraseña"
-              required
+            
             />
           </div>
+          <p id="form-message" class="error"></p>
 
           <div class="cont-submit"></div>
           <input
@@ -83,12 +84,14 @@
 
           <p><a href="">Recuperar contraseña</a></p>
           <p><a href="">No tengo cuenta de Usuario</a></p>
+          
         </form>
       </div>
     </div>
     <footer>
       <p><a href="">Términos legales</a> | Versión 1.0 | Alexis Ruiz Salazar</p>
     </footer>
-    <script src="./src/js/menu.js"></script>
+    <!-- <script src="./assets/js/menu.js"></script> -->
+    <script type="module" src="/src/controllers/loginControllers.js">  </script>
   </body>
 </html>

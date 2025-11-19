@@ -1,0 +1,33 @@
+@import url("./style.css");
+
+.submenu{
+    height: 5vh;
+    width: 100%;
+    margin-top: 0;
+    display: flex;
+    margin-bottom: 2%;
+
+
+}
+.submenu-ul{
+    min-width:400px;
+    display: flex;
+    justify-content:flex-start;
+}
+.submenu-ul li{
+    margin-right: 2vh;
+    margin-left: 5%;
+    padding: 1vh;
+    color: var(--cl-dark-gray);
+    cursor: pointer;
+}
+
+li.liActive{
+    color: var(--cl-black);
+}
+
+.submenu-ul li:hover{
+    color: var(--cl-black);
+}
+
+
