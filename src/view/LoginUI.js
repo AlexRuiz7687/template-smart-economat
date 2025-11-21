@@ -1,7 +1,19 @@
-export const LoginUI = {
-    showMessage(message, type){
-        const msgElement = document.getElementById("form-message")
-        msgElement.textContent = message
-        msgElement.className = `${type}`
+export class LoginUI {
+
+    static showMessage(mensaje, tipo, idElemento = "form-message") {
+        
+        const messageContainer = document.getElementById(idElemento);
+
+        if (messageContainer) {
+            messageContainer.textContent = mensaje;
+            
+
+            messageContainer.className = tipo;
+            
+
+            setTimeout(() => {
+                messageContainer.textContent = "";
+            }, 12000);
+        }
     }
 }

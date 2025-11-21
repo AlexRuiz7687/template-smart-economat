@@ -1,18 +1,59 @@
 {
   "usuarios": [
-    {"id": 1,
-     "username": "tcasest",
-     "password": "secret",
-     "role": "admin",
-     "nombre": "Tanausú",
-     "apellidos": "Castrillo Estévez",
-     "email": "tcasest@gobiernodecanarias.org",
-     "telefono": "+34 91 123 45 67"     
+    {
+      "id": "1",
+      "username": "tcasest",
+      "password": "secret",
+      "role": "admin",
+      "nombre": "Tanausú",
+      "apellidos": "Castrillo Estévez",
+      "email": "tcasest@gobiernodecanarias.org",
+      "telefono": "+34 91 123 45 67"
+    },
+    {
+      "id": "239a",
+      "username": "aruiz",
+      "password": "12345",
+      "role": "alumno",
+      "nombre": "Alexis",
+      "apellidos": "Ruiz Salazar",
+      "email": "alexisruiz.daw@gmail.com",
+      "telefono": "639488426"
+    },
+    {
+      "id": "1595",
+      "username": "aruiz",
+      "password": "1234",
+      "role": "profesor",
+      "nombre": "Alexis",
+      "apellidos": "Ruiz Salazar",
+      "email": "alexisruiz7687@gmail.com",
+      "telefono": "2345"
+    },
+    {
+      "id": "3c0b",
+      "username": "amorales",
+      "password": "222222",
+      "role": "profesor",
+      "nombre": "Andres",
+      "apellidos": "Morales",
+      "email": "amorales@gmail.com",
+      "telefono": "222222"
+    },
+    {
+      "id": "75eb",
+      "username": "phernandez",
+      "password": "1234",
+      "role": "profesor",
+      "nombre": "Paula",
+      "apellidos": "hernandez",
+      "email": "paula@gmail.com",
+      "telefono": "123456"
     }
   ],
   "proveedores": [
     {
-      "id": 1,
+      "id": "1",
       "nombre": "Distribuciones Alimentarias Mediterráneo",
       "contacto": "Carlos Mendoza",
       "telefono": "+34 91 123 45 67",
@@ -20,7 +61,7 @@
       "direccion": "Polígono Industrial Sur, 45, Madrid"
     },
     {
-      "id": 2,
+      "id": "2",
       "nombre": "Frutas y Verduras Frescas SL",
       "contacto": "María López",
       "telefono": "+34 93 234 56 78",
@@ -28,7 +69,7 @@
       "direccion": "Mercabarna, Nave 23, Barcelona"
     },
     {
-      "id": 3,
+      "id": "3",
       "nombre": "Carnicerías Selectas del Norte",
       "contacto": "Roberto García",
       "telefono": "+34 94 345 67 89",
@@ -36,7 +77,7 @@
       "direccion": "Polígono Industrial Norte, 8, Bilbao"
     },
     {
-      "id": 4,
+      "id": "4",
       "nombre": "Pescados y Mariscos Atlántico",
       "contacto": "Ana Martínez",
       "telefono": "+34 98 456 78 90",
@@ -44,7 +85,7 @@
       "direccion": "Puerto Pesquero, 23, Vigo"
     },
     {
-      "id": 5,
+      "id": "5",
       "nombre": "Lácteos Valle Natural",
       "contacto": "Pedro Sánchez",
       "telefono": "+34 95 567 89 01",
@@ -52,7 +93,7 @@
       "direccion": "Carretera Nacional IV, km 12, Sevilla"
     },
     {
-      "id": 6,
+      "id": "6",
       "nombre": "Distribuidora de Aceites Oro Verde",
       "contacto": "Isabel Ramírez",
       "telefono": "+34 96 678 90 12",
@@ -60,7 +101,7 @@
       "direccion": "Ctra. Jaén, 34, Córdoba"
     },
     {
-      "id": 7,
+      "id": "7",
       "nombre": "Especias y Condimentos del Mundo",
       "contacto": "Ahmed Al-Farsi",
       "telefono": "+34 97 789 01 23",
@@ -68,7 +109,7 @@
       "direccion": "Calle Especias, 12, Valencia"
     },
     {
-      "id": 8,
+      "id": "8",
       "nombre": "Bebidas y Vinos Peninsulares",
       "contacto": "Laura Fernández",
       "telefono": "+34 98 890 12 34",
@@ -78,74 +119,74 @@
   ],
   "categorias": [
     {
-      "id": 1,
+      "id": "1",
       "nombre": "Frutas Frescas",
       "descripcion": "Frutas de temporada y tropicales"
     },
     {
-      "id": 2,
+      "id": "2",
       "nombre": "Verduras y Hortalizas",
       "descripcion": "Verduras frescas y de temporada"
     },
     {
-      "id": 3,
+      "id": "3",
       "nombre": "Carnes Rojas",
       "descripcion": "Cortes selectos de carne de vacuno, cerdo y cordero"
     },
     {
-      "id": 4,
+      "id": "4",
       "nombre": "Aves y Caza",
       "descripcion": "Pollo, pavo, codorniz y carnes de caza"
     },
     {
-      "id": 5,
+      "id": "5",
       "nombre": "Pescados Frescos",
       "descripcion": "Pescado fresco de mar y río"
     },
     {
-      "id": 6,
+      "id": "6",
       "nombre": "Mariscos y Crustáceos",
       "descripcion": "Mariscos frescos y congelados"
     },
     {
-      "id": 7,
+      "id": "7",
       "nombre": "Lácteos",
       "descripcion": "Leche, yogures y natas"
     },
     {
-      "id": 8,
+      "id": "8",
       "nombre": "Quesos",
       "descripcion": "Quesos nacionales e internacionales"
     },
     {
-      "id": 9,
+      "id": "9",
       "nombre": "Huevos",
       "descripcion": "Huevos de gallina campera y ecológicos"
     },
     {
-      "id": 10,
+      "id": "10",
       "nombre": "Panadería",
       "descripcion": "Pan fresco y productos de panadería"
     },
     {
-      "id": 11,
+      "id": "11",
       "nombre": "Aceites y Vinagres",
       "descripcion": "Aceites de oliva y vinagres selectos"
     },
     {
-      "id": 12,
+      "id": "12",
       "nombre": "Especias y Condimentos",
       "descripcion": "Especias, hierbas y condimentos"
     },
     {
-      "id": 13,
+      "id": "13",
       "nombre": "Bebidas",
       "descripcion": "Vinos, aguas y refrescos"
     }
   ],
   "productos": [
     {
-      "id": 1,
+      "id": "1",
       "nombre": "Tomate Raf",
       "precio": 4.2,
       "precioUnitario": "kg",
@@ -171,7 +212,7 @@
       }
     },
     {
-      "id": 2,
+      "id": "2",
       "nombre": "Lechuga Iceberg",
       "precio": 1.15,
       "precioUnitario": "unidad",
@@ -197,7 +238,7 @@
       }
     },
     {
-      "id": 3,
+      "id": "3",
       "nombre": "Solomillo de Ternera",
       "precio": 24.9,
       "precioUnitario": "kg",
@@ -223,7 +264,7 @@
       }
     },
     {
-      "id": 4,
+      "id": "4",
       "nombre": "Pechuga de Pollo",
       "precio": 7.85,
       "precioUnitario": "kg",
@@ -249,7 +290,7 @@
       }
     },
     {
-      "id": 5,
+      "id": "5",
       "nombre": "Salmón Fresco",
       "precio": 18.5,
       "precioUnitario": "kg",
@@ -277,7 +318,7 @@
       }
     },
     {
-      "id": 6,
+      "id": "6",
       "nombre": "Gambas Blancas",
       "precio": 26.4,
       "precioUnitario": "kg",
@@ -305,7 +346,7 @@
       }
     },
     {
-      "id": 7,
+      "id": "7",
       "nombre": "Leche Entera",
       "precio": 0.95,
       "precioUnitario": "litro",
@@ -333,7 +374,7 @@
       }
     },
     {
-      "id": 8,
+      "id": "8",
       "nombre": "Queso Manchego",
       "precio": 16.8,
       "precioUnitario": "kg",
@@ -361,7 +402,7 @@
       }
     },
     {
-      "id": 9,
+      "id": "9",
       "nombre": "Huevos Camperos",
       "precio": 2.95,
       "precioUnitario": "docena",
@@ -389,7 +430,7 @@
       }
     },
     {
-      "id": 10,
+      "id": "10",
       "nombre": "Pan de Barra",
       "precio": 1.1,
       "precioUnitario": "unidad",
@@ -417,7 +458,7 @@
       }
     },
     {
-      "id": 11,
+      "id": "11",
       "nombre": "Aceite de Oliva Virgen Extra",
       "precio": 8.9,
       "precioUnitario": "litro",
@@ -443,7 +484,7 @@
       }
     },
     {
-      "id": 12,
+      "id": "12",
       "nombre": "Vinagre de Jerez",
       "precio": 6.4,
       "precioUnitario": "litro",
@@ -471,7 +512,7 @@
       }
     },
     {
-      "id": 13,
+      "id": "13",
       "nombre": "Pimentón de la Vera",
       "precio": 4.95,
       "precioUnitario": "100g",
@@ -497,7 +538,7 @@
       }
     },
     {
-      "id": 14,
+      "id": "14",
       "nombre": "Azafrán en hebras",
       "precio": 13.2,
       "precioUnitario": "1g",
@@ -523,7 +564,7 @@
       }
     },
     {
-      "id": 15,
+      "id": "15",
       "nombre": "Vino Tinto Reserva",
       "precio": 14.8,
       "precioUnitario": "botella",
@@ -551,7 +592,7 @@
       }
     },
     {
-      "id": 16,
+      "id": "16",
       "nombre": "Agua Mineral",
       "precio": 0.65,
       "precioUnitario": "botella",
@@ -577,7 +618,7 @@
       }
     },
     {
-      "id": 17,
+      "id": "17",
       "nombre": "Plátanos de Canarias",
       "precio": 1.95,
       "precioUnitario": "kg",
@@ -603,7 +644,7 @@
       }
     },
     {
-      "id": 18,
+      "id": "18",
       "nombre": "Naranjas Valencia",
       "precio": 1.45,
       "precioUnitario": "kg",
@@ -629,7 +670,7 @@
       }
     },
     {
-      "id": 19,
+      "id": "19",
       "nombre": "Zanahorias",
       "precio": 0.85,
       "precioUnitario": "kg",
@@ -655,7 +696,7 @@
       }
     },
     {
-      "id": 20,
+      "id": "20",
       "nombre": "Cebollas",
       "precio": 0.75,
       "precioUnitario": "kg",
@@ -681,7 +722,7 @@
       }
     },
     {
-      "id": 21,
+      "id": "21",
       "nombre": "Lomo de Cerdo",
       "precio": 11.9,
       "precioUnitario": "kg",
@@ -707,7 +748,7 @@
       }
     },
     {
-      "id": 22,
+      "id": "22",
       "nombre": "Chuletas de Cordero",
       "precio": 16.75,
       "precioUnitario": "kg",
@@ -733,7 +774,7 @@
       }
     },
     {
-      "id": 23,
+      "id": "23",
       "nombre": "Muslos de Pollo",
       "precio": 5.45,
       "precioUnitario": "kg",
@@ -759,7 +800,7 @@
       }
     },
     {
-      "id": 24,
+      "id": "24",
       "nombre": "Pavo Pechuga",
       "precio": 9.2,
       "precioUnitario": "kg",
@@ -785,7 +826,7 @@
       }
     },
     {
-      "id": 25,
+      "id": "25",
       "nombre": "Merluza Fresca",
       "precio": 12.8,
       "precioUnitario": "kg",
@@ -813,7 +854,7 @@
       }
     },
     {
-      "id": 26,
+      "id": "26",
       "nombre": "Lubina Fresca",
       "precio": 15.9,
       "precioUnitario": "kg",
@@ -841,7 +882,7 @@
       }
     },
     {
-      "id": 27,
+      "id": "27",
       "nombre": "Mejillones",
       "precio": 8.5,
       "precioUnitario": "kg",
@@ -869,7 +910,7 @@
       }
     },
     {
-      "id": 28,
+      "id": "28",
       "nombre": "Almejas Finas",
       "precio": 18.75,
       "precioUnitario": "kg",
@@ -897,7 +938,7 @@
       }
     },
     {
-      "id": 29,
+      "id": "29",
       "nombre": "Yogur Natural",
       "precio": 0.45,
       "precioUnitario": "unidad",
@@ -925,7 +966,7 @@
       }
     },
     {
-      "id": 30,
+      "id": "30",
       "nombre": "Mantequilla",
       "precio": 2.85,
       "precioUnitario": "250g",
@@ -953,7 +994,7 @@
       }
     },
     {
-      "id": 31,
+      "id": "31",
       "nombre": "Queso Brie",
       "precio": 12.4,
       "precioUnitario": "kg",
@@ -981,7 +1022,7 @@
       }
     },
     {
-      "id": 32,
+      "id": "32",
       "nombre": "Queso Cabrales",
       "precio": 19.8,
       "precioUnitario": "kg",
@@ -1009,7 +1050,7 @@
       }
     },
     {
-      "id": 33,
+      "id": "33",
       "nombre": "Huevos Ecológicos",
       "precio": 3.45,
       "precioUnitario": "docena",
@@ -1037,7 +1078,7 @@
       }
     },
     {
-      "id": 34,
+      "id": "34",
       "nombre": "Pan Integral",
       "precio": 1.35,
       "precioUnitario": "unidad",
@@ -1065,7 +1106,7 @@
       }
     },
     {
-      "id": 35,
+      "id": "35",
       "nombre": "Baguette",
       "precio": 0.95,
       "precioUnitario": "unidad",
@@ -1093,7 +1134,7 @@
       }
     },
     {
-      "id": 36,
+      "id": "36",
       "nombre": "Aceite de Oliva Virgen",
       "precio": 6.75,
       "precioUnitario": "litro",
@@ -1119,7 +1160,7 @@
       }
     },
     {
-      "id": 37,
+      "id": "37",
       "nombre": "Vinagre de Módena",
       "precio": 5.2,
       "precioUnitario": "500ml",
@@ -1147,7 +1188,7 @@
       }
     },
     {
-      "id": 38,
+      "id": "38",
       "nombre": "Orégano",
       "precio": 2.15,
       "precioUnitario": "50g",
@@ -1173,7 +1214,7 @@
       }
     },
     {
-      "id": 39,
+      "id": "39",
       "nombre": "Pimienta Negra",
       "precio": 3.45,
       "precioUnitario": "50g",
@@ -1199,7 +1240,7 @@
       }
     },
     {
-      "id": 40,
+      "id": "40",
       "nombre": "Vino Blanco",
       "precio": 8.9,
       "precioUnitario": "botella",
@@ -1227,7 +1268,7 @@
       }
     },
     {
-      "id": 41,
+      "id": "41",
       "nombre": "Cerveza Rubia",
       "precio": 1.2,
       "precioUnitario": "botella",
@@ -1255,7 +1296,7 @@
       }
     },
     {
-      "id": 42,
+      "id": "42",
       "nombre": "Refresco de Cola",
       "precio": 0.85,
       "precioUnitario": "lata",
@@ -1281,7 +1322,7 @@
       }
     },
     {
-      "id": 43,
+      "id": "43",
       "nombre": "Manzanas Golden",
       "precio": 1.75,
       "precioUnitario": "kg",
@@ -1307,7 +1348,7 @@
       }
     },
     {
-      "id": 44,
+      "id": "44",
       "nombre": "Peras Conferencia",
       "precio": 2.1,
       "precioUnitario": "kg",
@@ -1333,7 +1374,7 @@
       }
     },
     {
-      "id": 45,
+      "id": "45",
       "nombre": "Pimientos Rojos",
       "precio": 2.45,
       "precioUnitario": "kg",
@@ -1359,7 +1400,7 @@
       }
     },
     {
-      "id": 46,
+      "id": "46",
       "nombre": "Patatas",
       "precio": 0.65,
       "precioUnitario": "kg",
@@ -1385,7 +1426,7 @@
       }
     },
     {
-      "id": 47,
+      "id": "47",
       "nombre": "Filetes de Ternera",
       "precio": 19.5,
       "precioUnitario": "kg",
@@ -1411,7 +1452,7 @@
       }
     },
     {
-      "id": 48,
+      "id": "48",
       "nombre": "Costillas de Cerdo",
       "precio": 8.95,
       "precioUnitario": "kg",
@@ -1437,7 +1478,7 @@
       }
     },
     {
-      "id": 49,
+      "id": "49",
       "nombre": "Alitas de Pollo",
       "precio": 4.25,
       "precioUnitario": "kg",
@@ -1463,7 +1504,7 @@
       }
     },
     {
-      "id": 50,
+      "id": "50",
       "nombre": "Codornices",
       "precio": 14.2,
       "precioUnitario": "kg",

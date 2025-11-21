@@ -32,7 +32,7 @@
 
     <div class="main-login">
       <div class="form-inicio">
-        <h1>Inicio de sesión</h1>
+        <h2>Inicio de sesión</h2>
         <form action="./assets/inicio.html" id="loginForm">
           <div class="cont-submit">
             <input
@@ -57,7 +57,7 @@
           <p id="form-message" class="error"></p>
 
           <div class="cont-submit"></div>
-          <input
+          <!-- <input
             type="checkbox"
             id="consentimiento"
             name="consentimiento"
@@ -70,7 +70,7 @@
             <a href="/politica-de-privacidad/" target="_blank"
               >política de privacidad</a
             >.
-          </label>
+          </label> -->
 
           <div class="cont-submit">
             <input
@@ -78,12 +78,122 @@
               type="submit"
               value="Ingresar"
               class="btn-submit"
-              disabled
             />
           </div>
 
           <p><a href="">Recuperar contraseña</a></p>
-          <p><a href="">No tengo cuenta de Usuario</a></p>
+          <!-- <p><a href="">No tengo cuenta de Usuario</a></p> -->
+          
+        </form>
+      </div>
+
+      <div class="form-inicio">
+        <h2>Nuevo Usuario</h2>
+        <form action="" id="newUserForm">
+          <div class="cont-submit">
+            <input
+              type="text"
+              id="newNombre"
+              class="inputSesion nombreUsuario"
+              value=""
+              placeholder="Nombre"
+            
+            />
+          </div>
+          <div class="cont-submit">
+            <input
+              type="text"
+              id="newApellidos"
+              class="inputSesion nombreUsuario"
+              value=""
+              placeholder="Apellidos"
+            
+            />
+          </div>
+
+          <div class="cont-submit">
+            <input
+              type="password"
+              id="newPassword"
+              class="inputSesion form-pasword"
+              value=""
+              placeholder="Contraseña"
+            
+            />
+          </div>
+
+          <div class="cont-submit">
+            <input
+              type="password"
+              id="confirmPassword"
+              class="inputSesion form-pasword"
+              value=""
+              placeholder="Confirmar contraseña"
+            
+            />
+          </div>
+
+          <p id="newMail-message" class="error success"></p>
+
+          <div class="cont-submit">
+            <input
+              type="email"
+              id="newEmail"
+              class="inputSesion nombreUsuario"
+              value=""
+              placeholder="Correo Electrónico"
+            
+            />
+          </div>
+
+          <div class="cont-submit">
+            <input
+              type="tel"
+              id="newTelefono"
+              class="inputSesion nombreUsuario"
+              value=""
+              placeholder="Teléfono"
+            />
+          </div>
+
+          <div class="cont-submit select-rol">
+            <label for="">Rol de usuario</label>
+            <select name="rol" id="tipoUsuario">
+              <option value="profesor">Profesor</option>
+              <option value="alumno">Alumno</option>
+            </select>
+          </div>
+
+          <p id="register-message" class="error"></p>  <div class="cont-submit"></div>
+
+          <div class="cont-submit"></div>
+          <input
+            type="checkbox"
+            id="consentimiento"
+            name="consentimiento"
+            value="consentimiento"
+            onchange="document.getElementById('register').disabled = !this.checked"
+          />
+
+          <label for="consentimiento">
+            He leído y acepto la
+            <a href="/politica-de-privacidad/" target="_blank"
+              >política de privacidad</a
+            >
+          </label>
+
+          <div class="cont-submit">
+            <input
+              id="register"
+              type="submit"
+              value="Registrar"
+              class="btn-submit"
+              disabled
+            />
+          </div>
+
+          <!-- <p><a href="">Recuperar contraseña</a></p>
+          <p><a href="">No tengo cuenta de Usuario</a></p> -->
           
         </form>
       </div>
@@ -93,5 +203,6 @@
     </footer>
     <!-- <script src="./assets/js/menu.js"></script> -->
     <script type="module" src="/src/controllers/loginControllers.js">  </script>
+    <script type="module" src="/src/controllers/registerController.js"></script>
   </body>
 </html>

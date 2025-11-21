@@ -65,6 +65,9 @@ ul{
   list-style: none;
 }
 
+h2{
+  color: var(--cl-black);
+}
 /* -----------------------HEADER----------------------- */
 
 .cabecera {
@@ -281,6 +284,7 @@ footer {
   padding: 0 1rem; 
   box-sizing: border-box;
   width: 100%;
+   margin-top: 10vh;
 }
 
 footer a {
