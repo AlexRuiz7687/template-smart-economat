@@ -1,0 +1,143 @@
+<!-- Tab links -->
+ <div class="menu-articulos"></div>
+
+  <div class="tab">
+    <button class="tablinks" id="btnNuevoArticulo" data-target="nvoArticulo">Nuevo Artículo</button>
+    <button class="tablinks" id="defaultOpen" data-target="verArticulos">Artículos</button>
+  </div>
+
+</div>
+<!-- Tab content -->
+<div id="nvoArticulo" class="tabcontent">
+  
+  <div class="crear-articulo">
+    <form class="form-nuevo-articulo">
+    
+    <div class="form-row main-inputs">
+      <div class="form-group">
+        <label for="codigo">Código</label>
+        <input type="text" id="codigo" class="form-control rounded">
+      </div>
+      <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input type="text" id="nombre" class="form-control rounded">
+      </div>
+      <div class="form-group">
+        <label for="distribuidor">Distribuidor</label>
+        <input type="text" id="distribuidor" class="form-control rounded">
+      </div>
+      <div class="form-group">
+        <label for="precio">Precio</label>
+        <input type="text" id="precio" class="form-control rounded">
+      </div>
+    </div>
+
+    <div class="form-row description-image-row">
+      
+      <div class="left-col">
+        <div class="form-group">
+          <label for="descripcion">Descripción</label>
+          <textarea id="descripcion" rows="4" class="form-control rounded"></textarea>
+        </div>
+
+        <div class="form-row select-row">
+          <div class="form-group">
+            <label for="categoria">Categoría</label>
+            <select id="categoria" class="form-control rounded">
+              <option value="">Seleccionar</option>
+              </select>
+          </div>
+          <!-- <div class="form-group">
+            <label for="caducidad">Tiempo de caducidad</label>
+            <input type="text" id="caducidad" class="form-control rounded">
+          </div> -->
+          <div class="form-group">
+            <label class="labels" for="medida">Tipo de medida</label>
+            <select id="medida" class="form-control rounded">
+              <option value="">Seleccionar</option>
+              </select>
+          </div>
+        </div>
+
+        <div class="alergenos-section rounded">
+          <label class="alergenos-label">Alergenos</label>
+          <div class="alergenos-grid">
+            <label class="radio-label"><input type="radio" name="alergeno1"> Gluten</label>
+            <label class="radio-label"><input type="radio" name="alergeno2"> Huevo</label>
+            <label class="radio-label"><input type="radio" name="alergeno3"> Cacahuetes</label>
+            <label class="radio-label"><input type="radio" name="alergeno4"> Apio</label>
+            <label class="radio-label"><input type="radio" name="alergeno5"> Sulfitos</label>
+            
+            <label class="radio-label"><input type="radio" name="alergeno6"> Crustáceos</label>
+            <label class="radio-label"><input type="radio" name="alergeno7"> Pescado</label>
+            <label class="radio-label"><input type="radio" name="alergeno8"> Lacteos</label>
+            <label class="radio-label"><input type="radio" name="alergeno9"> Mostaza</label>
+            <label class="radio-label"><input type="radio" name="alergeno10"> Sésamo</label>
+
+            <label class="radio-label"><input type="radio" name="alergeno11"> Soja</label>
+            <label class="radio-label"><input type="radio" name="alergeno12"> Moluscos</label>
+            <label class="radio-label"><input type="radio" name="alergeno13"> Frutos secos</label>
+            <label class="radio-label"><input type="radio" name="alergeno14"> Altramuz</label>
+          </div>
+        </div>
+
+      </div> <div class="right-col image-upload-col">
+        <div class="image-placeholder rounded">
+          <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </div>
+        <a href="#" class="upload-link">Adjuntar imágen</a>
+        <input type="file" id="imagenUpload" style="display: none;">
+      </div>
+
+    </div>
+    
+  </form>
+
+  </div>
+</div>
+
+<div id="verArticulos" class="tabcontent">
+
+  <div class="cabecera-articulos">
+
+    <div class="controles">
+      <input type="text" id="busqueda" placeholder="Buscar producto..." />
+      <button id="btnBuscar">Buscar</button>
+
+      <select id="categoriaSelect">
+        <option value="">-- Categoría --</option>
+      </select>
+
+      <select id="ordenSelect">
+        <option value="asc">Precio ascendente</option>
+        <option value="desc">Precio descendente</option>
+      </select>
+
+      <button id="btnStock">Comprobar stock</button>
+      <button id="btnAllProducts">Mostrar todos</button>
+    </div>
+
+  </div>
+
+  <table id="tablaProductos">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Categoría</th>
+        <th>Precio (€)</th>
+        <th>Stock</th>
+        <th>Stock Mínimo</th>
+        <th>Proveedor</th>
+        <th>Isla</th>
+      </tr>
+    </thead>
+    <tbody id="tabla-body"></tbody>
+    <tfoot>
+      <tr>
+        <td colspan="8" id="resumen"></td>
+      </tr>
+    </tfoot>
+  </table>
+
+</div>

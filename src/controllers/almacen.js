@@ -2,23 +2,43 @@ import { renderizarTabla, cargarCategorias } from '../view/almacenView.js';
 import { buscarProducto, ordenarPorPrecio, comprobarStockMinimo } from '../utils/funciones.js';
 import { getProductos, getCategorias } from '../services/economatoService.js';
 
-const tabla = document.querySelector('#tablaProductos tbody');
-const resumen = document.querySelector('#resumen');
-const inputBusqueda = document.querySelector('#busqueda');
-const selectCategoria = document.querySelector('#categoriaSelect');
-const selectOrden = document.querySelector('#ordenSelect');
+let tabla, resumen, inputBusqueda, selectCategoria, selectOrden;
 
 let todosLosProductos = [];
 let productosMostrados = [];
 
-async function inicializar() {
+// 2. Exportamos la función para poder llamarla desde main.js
+export async function inicializarAlmacen() {
+  
+  // 3. AHORA que el HTML ya existe, buscamos los elementos
+  tabla = document.querySelector('#tablaProductos tbody');
+  resumen = document.querySelector('#resumen');
+  inputBusqueda = document.querySelector('#busqueda');
+  selectCategoria = document.querySelector('#categoriaSelect');
+  selectOrden = document.querySelector('#ordenSelect');
+
+  if (!tabla) {
+      console.error("No se encontró la tabla de productos en el HTML");
+      return;
+  }
+
   todosLosProductos = await getProductos();
   productosMostrados = [...todosLosProductos];
   const categorias = await getCategorias();
 
   renderizarTabla(productosMostrados, resumen);
   cargarCategorias(categorias);
+
+  const eventMap = [
+    { selector: '#btnBuscar', event: 'click', handler: onBuscar },
+    { selector: '#ordenSelect', event: 'change', handler: onOrdenar },
+    { selector: '#btnAllProducts', event: 'click', handler: onShowAll },
+    { selector: '#btnStock', event: 'click', handler: onComprobarStock },
+    { selector: '#categoriaSelect', event: 'change', handler: onCategoriaChange }
+  ];
+
   bindEvents(eventMap);
+  setupTabs();
 }
 
 const eventMap = [
@@ -70,7 +90,34 @@ function bindEvents(events) {
   }
 }
 
-inicializar();
+function setupTabs() {
+    // Seleccionamos todos los botones de las pestañas
+    const tabButtons = document.querySelectorAll('.tablinks');
+    
+    tabButtons.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+            // 1. Ocultar todos los contenidos
+            const tabContents = document.querySelectorAll(".tabcontent");
+            tabContents.forEach(content => content.style.display = "none");
+
+            // 2. Quitar clase active de todos los botones
+            tabButtons.forEach(b => b.classList.remove("active"));
+
+            // 3. Mostrar el contenido seleccionado (usando el data-target del botón)
+            const targetId = e.target.dataset.target; // ej: 'verArticulos'
+            document.getElementById(targetId).style.display = "block";
+
+            // 4. Activar el botón actual
+            e.currentTarget.classList.add("active");
+        });
+    });
+
+    // Simular un click en el botón por defecto para que se abra al cargar
+    const defaultBtn = document.getElementById("defaultOpen");
+    if (defaultBtn) {
+        defaultBtn.click();
+    }
+}
 
 
 

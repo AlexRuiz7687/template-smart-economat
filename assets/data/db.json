@@ -49,6 +49,16 @@
       "apellidos": "hernandez",
       "email": "paula@gmail.com",
       "telefono": "123456"
+    },
+    {
+      "id": "be4c",
+      "username": "dmartinez",
+      "password": "12abc",
+      "role": "profesor",
+      "nombre": "Darel",
+      "apellidos": "Martinez",
+      "email": "darelMartinez@gmail.com",
+      "telefono": "122344"
     }
   ],
   "proveedores": [
