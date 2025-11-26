@@ -21,3 +21,22 @@ export async function getCategorias() {
     return [];
   }
 }
+
+export async function getArticuloById(id) {
+    try {
+        
+        const response = await fetch(`${Api_URL}/productos/${id}`);
+        
+        if (!response.ok) {
+            if(response.status === 404) throw new Error("Artículo no encontrado");
+            throw new Error("Error de conexión");
+        }
+        
+        const data = await response.json();
+        return data;
+
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}

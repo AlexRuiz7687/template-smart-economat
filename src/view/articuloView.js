@@ -3,7 +3,7 @@ export function renderizarTabla(datos, resumenEl) {
   tabla.innerHTML = '';
 
   if (!datos || datos.length === 0) {
-    tabla.innerHTML = '<tr><td colspan="6" style="text-align:center;">No se encontraron productos</td></tr>';
+    tabla.innerHTML = '<tr><td colspan="8" style="text-align:center;">No se encontraron productos</td></tr>';
     resumenEl.textContent = '';
     return;
   }
@@ -21,14 +21,10 @@ export function renderizarTabla(datos, resumenEl) {
       <td>${p.nombre}</td> 
       <td>${categoria}</td> 
       <td>${p.precio?.toFixed ? p.precio.toFixed(2) : p.precio}</td> 
-      
+      <td>${p.stock}</td> 
       <td>${p.stockMinimo}</td> 
       <td>${proveedorNombre}</td> 
-      <td> 
-          <button class="btn-ver-detalle" data-page="detalle-producto" data-id="${p.id}"> 
-             + 
-          </button> 
-      </td>
+      <td>${proveedorIsla}</td>
     `;
     tabla.appendChild(fila);
   });

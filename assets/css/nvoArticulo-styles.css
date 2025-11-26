@@ -13,6 +13,7 @@
     border: 1px solid var(--cl-dark-gray);
     border-radius: 1vh;
     padding: 8px 12px;
+    background-color:rgb(from var(--cl-white) r g b / 0.6);
 }
 
 .form-group {

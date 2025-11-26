@@ -1,0 +1,160 @@
+/* =========================================
+   Estilos para la Ficha de Detalle de Artículo
+   (Basado en nvoArticulo-styles.css)
+   ========================================= */
+
+/* --- Contenedor Principal --- */
+.contenedor-ficha {
+    max-width: 1000px;
+    margin: 2vh auto;
+    padding: 20px;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* --- Encabezado (Título y Botón Volver) --- */
+.encabezado-ficha {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--cl-dark-gray);
+}
+
+.encabezado-ficha h2 {
+    margin: 0;
+    color: var(--cl-dark-gray);
+}
+
+.btn-volver {
+    padding: 8px 16px;
+    background-color: var(--cl-dark-gray);
+    color: var(--cl-white);
+    border: none;
+    border-radius: 1vh;
+    cursor: pointer;
+    font-weight: 300;
+    transition: background-color 0.3s;
+}
+
+.btn-volver:hover {
+    background-color: #000; /* Un poco más oscuro al pasar el mouse */
+}
+
+/* --- Grid Principal (Imagen a la izquierda, Datos a la derecha) --- */
+.card-producto {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* 1 parte imagen, 2 partes datos */
+    gap: 30px;
+    align-items: start;
+}
+
+/* --- Contenedor de la Imagen (Estilo .image-placeholder) --- */
+.img-container {
+    width: 100%;
+    min-height: 300px;
+    height: 100%;
+    border: 1px solid var(--cl-dark-gray);
+    border-radius: 1vh;
+    background-color: rgb(from var(--cl-white) r g b / 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.img-container img {
+    max-width: 100%;
+    max-height: 300px;
+    object-fit: contain;
+    border-radius: 0.5vh;
+}
+
+/* --- Contenedor de los Datos --- */
+.datos-producto {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* --- Estilos de Inputs (Modo Lectura) --- */
+/* Reutilizamos la lógica de .rounded y .form-group */
+
+.grupo-input {
+    display: flex;
+    flex-direction: column;
+}
+
+.grupo-input label {
+    margin-bottom: 5px;
+    font-weight: 400; /* Un poco más de peso para leer mejor */
+    font-size: 0.9rem;
+    color: var(--cl-dark-gray);
+}
+
+.datos-producto input,
+.datos-producto textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid var(--cl-dark-gray);
+    border-radius: 1vh;
+    padding: 10px 12px;
+    
+    /* Fondo un poco más transparente para indicar que es solo lectura */
+    background-color: rgb(from var(--cl-white) r g b / 0.4); 
+    
+    color: #333;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 500; /* Texto de datos más negrita */
+}
+
+/* Quitamos el borde azul al hacer click ya que es readonly */
+.datos-producto input:focus,
+.datos-producto textarea:focus {
+    outline: none;
+    border-color: var(--cl-dark-gray);
+}
+
+.datos-producto textarea {
+    resize: none;
+    min-height: 100px;
+}
+
+/* --- Agrupación de Precio y Stock (en una misma fila) --- */
+.grupo-dato-doble {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* --- Animación de entrada suave --- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Responsive (Móviles) --- */
+@media (max-width: 768px) {
+    .card-producto {
+        grid-template-columns: 1fr; /* Una sola columna */
+    }
+
+    .img-container {
+        min-height: 200px;
+        order: -1; /* La imagen siempre arriba en móvil */
+    }
+    
+    .encabezado-ficha {
+        flex-direction: column;
+        gap: 10px;
+        align-items: flex-start;
+    }
+    
+    .btn-volver {
+        width: 100%;
+        text-align: center;
+    }
+}

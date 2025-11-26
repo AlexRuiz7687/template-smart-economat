@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
             /*CONSULTA LA API POR MEDIO DEL MÉTODO CREADO EN EL SERVICIO DE AUTENTIFICACIÓN (VER SERVICES/AUTHSERVICE.JS) */
             const user = await AuthService.login(username, password);
             /* Y SE REDIRIGE A LA PAGINA DE INICIO DE LA APLICACIÓN SI NO HAY ERROR */
-            window.location.href = "../../assets/home.html";
+            window.location.href = "pages/home.html";
 
         } catch (error) {
             /*SI ENCUENTRA UN ERROR ENTRA POR AQUI */

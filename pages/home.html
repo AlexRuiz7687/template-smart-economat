@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,17 +11,21 @@
     <link rel="stylesheet" href="../assets/css/table-style.css">
     <link rel="stylesheet" href="../assets/css/tab-style.css">
     <link rel="stylesheet" href="../assets/css/nvoArticulo-styles.css">
+    <link rel="stylesheet" href="../assets/css/ficha-articulo-style.css">
 
 </head>
+
 <body>
     <header>
         <div class="cabecera">
             <div class="logos-externos">
-                <img src="../assets/img/logo_gobcan_05-01_color_mod31.png" alt="Gobierno de Canarias" class="logo-gobierno consejeria">
-                <img src="../assets/img/logo-cifp-virgen-candelaria.png" alt="Logo Virgen de la Candelaria" class="logo-gobierno">
+                <img src="../assets/img/logo_gobcan_05-01_color_mod31.png" alt="Gobierno de Canarias"
+                    class="logo-gobierno consejeria">
+                <img src="../assets/img/logo-cifp-virgen-candelaria.png" alt="Logo Virgen de la Candelaria"
+                    class="logo-gobierno">
             </div>
             <img src="../assets/img/logo-smart.png" alt="Logotipo-Smart-Economato" class="logo-smart-cabecera">
-            
+
         </div>
 
         <button class="menu-toggle" id="menu-toggle">☰</button>
@@ -29,30 +34,46 @@
             <div class="navbar">
 
                 <ul id="main-nav">
-                    <a href="#" data-page="inicio"><li class="boton bt-inicio active"> Inicio </li></a>
-                    <a href="#" data-page="articulos"><li class="boton bt-articulos"> Artículos </li></a>
-                    <a href="#" data-page="pedidos"><li class="boton bt-pedidos"> Pedidos </li></a>
-                    <a href="#" data-page="recepcion"><li class="boton bt-recepcion"> Recepción </li></a>
-                    <a href="#" data-page="dist-interna"><li class="boton bt-dist-interna"> Distribución Interna </li></a>
-                    <a href="#" data-page="proveedores"><li class="boton bt-proveedores"> Proveedores </li></a>
-                    <a href="#" data-page="inventario"><li class="boton bt-inventario"> Inventario </li></a>
+                    <a href="#" data-page="inicio">
+                        <li class="boton bt-inicio active"> Inicio </li>
+                    </a>
+                    <a href="#" data-page="articulos">
+                        <li class="boton bt-articulos"> Artículos </li>
+                    </a>
+                    <a href="#" data-page="inventario">
+                        <li class="boton bt-inventario"> Inventario </li>
+                    </a>
+                    <a href="#" data-page="pedidos">
+                        <li class="boton bt-pedidos"> Pedidos </li>
+                    </a>
+                    <a href="#" data-page="recepcion">
+                        <li class="boton bt-recepcion"> Recepción </li>
+                    </a>
+                    <a href="#" data-page="dist-interna">
+                        <li class="boton bt-dist-interna"> Distribución Interna </li>
+                    </a>
+                    <a href="#" data-page="proveedores">
+                        <li class="boton bt-proveedores"> Proveedores </li>
+                    </a>
+
                 </ul>
 
             </div>
 
         </div>
-        
+
     </header>
 
     <main id="contenido">
-       
+
     </main>
 
     <footer>
         <p> <a href="">Términos legales</a> | Versión 1.0 | Alexis Ruiz Salazar </p>
     </footer>
-    <script src="js/menu.js"></script>
+    <script src="../assets/js/menu.js"></script>
     <script type="module" src="../src/controllers/mainController.js"></script>
     <!-- <script src="tabArticulos.js"></script> -->
 </body>
+
 </html>
