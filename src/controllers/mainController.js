@@ -1,4 +1,4 @@
-/* import { inicializarAlmacen } from '../../src/controllers/almacen.js';
+import { inicializarAlmacen } from './almacenController.js';
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const cargarPagina = async (page) => {
         try {
             // Pide el archivo a la carpeta pages/
-            const response = await fetch(`pages/${page}.html`);
+            const response = await fetch(`../pages/${page}.html`);
 
             // Si el archivo no existe, lanza un error
             if (!response.ok) throw new Error("No se pudo cargar la sección");
@@ -68,4 +68,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
     cargarPagina("inicio");
 
-}); */
+});
