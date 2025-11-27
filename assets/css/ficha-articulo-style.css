@@ -13,6 +13,8 @@
 
 /* --- Encabezado (Título y Botón Volver) --- */
 .encabezado-ficha {
+    /* width: 100%; */
+    min-width: 700px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -157,4 +159,75 @@
         width: 100%;
         text-align: center;
     }
+}
+
+/* Clase utilitaria para ocultar elementos */
+.oculto {
+    display: none !important;
+}
+
+/* Estilos para los botones de acción */
+.acciones-ficha {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-editar {
+    background-color: var(--primary-color, #e63946); /* O el color que uses */
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 1vh;
+    cursor: pointer;
+}
+
+.btn-guardar {
+    background-color: #2a9d8f; /* Verde */
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 1vh;
+    cursor: pointer;
+}
+
+.btn-cancelar {
+    background-color: #6c757d; /* Gris */
+    color: white;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 1vh;
+    cursor: pointer;
+}
+
+/* =========================================
+   Estilos para MODO EDICIÓN (Campos activos)
+   ========================================= */
+
+/* Cuando el input o textarea NO está desactivado (es decir, se puede escribir) */
+.datos-producto input:not(:disabled),
+.datos-producto textarea:not(:disabled) {
+    
+    /* 1. Fondo totalmente blanco y opaco */
+    background-color: #ffffff; 
+    /* O si usas variables: var(--cl-white) */
+
+    /* 2. Borde más oscuro para resaltar */
+    border: 1px solid #333; 
+    
+    /* 3. Una sombra suave para que "salga" hacia afuera */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    
+    /* 4. Cambiamos el cursor para indicar texto */
+    cursor: text;
+    
+    /* 5. Transición suave al cambiar de estado */
+    transition: all 0.3s ease-in-out;
+}
+
+/* Efecto extra cuando estás escribiendo dentro (Focus) */
+.datos-producto input:focus,
+.datos-producto textarea:focus {
+    border-color: var(--primary-color, blue); /* Cambia al color principal de tu marca */
+    outline: none;
+    background-color: #fff;
 }

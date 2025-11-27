@@ -52,3 +52,63 @@
     width: 100%;
     max-width: 1000px;
 }
+
+
+
+
+/* ============================================
+   Estilos para alinear Título y Pestañas
+   ============================================ */
+
+/* El contenedor que agrupa título y tabs */
+.header-flex {
+    display: flex;
+    justify-content: space-between; /* Uno a cada extremo */
+    align-items: center; /* Centrados verticalmente */
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ccc; /* Opcional: línea gris fina debajo de todo */
+    padding-bottom: 10px;
+}
+
+/* Ajuste para el título */
+.header-flex .menu-articulos {
+    margin-bottom: 0 !important; /* Quitamos el margen inferior que tenía antes */
+}
+
+.header-flex .menu-articulos h2 {
+    margin: 0; /* Quitamos márgenes por defecto del h2 */
+    font-size: 24px; /* Ajusta el tamaño según prefieras */
+}
+
+/* Ajuste para las pestañas */
+.header-flex .tab {
+    width: auto; /* IMPORTANTE: Ya no ocupa el 100% */
+    margin-top: 0;
+    border: none; /* Quitamos bordes si los tenía el contenedor */
+    background-color: transparent;
+}
+
+/* Ajuste de los botones de las pestañas */
+.header-flex .tab button {
+    font-size: 16px;
+    padding: 10px 20px;
+    background-color: transparent;
+}
+
+/* Responsive: En móviles, que vuelvan a ponerse uno debajo del otro */
+@media (max-width: 768px) {
+    .header-flex {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+    
+    .header-flex .tab {
+        width: 100%;
+        justify-content: space-between; /* O flex-start */
+    }
+}
+
+.contenedor-seccion{
+  min-width: 900px;
+}

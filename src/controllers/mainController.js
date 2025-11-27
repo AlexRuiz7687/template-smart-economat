@@ -1,6 +1,7 @@
 // src/controllers/mainController.js
 import { inicializarAlmacen } from './almacenController.js';
 import { inicializarDetalleProducto } from './detalleProductoController.js'; 
+import { inicializarInventario } from './inventarioController.js';
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -28,6 +29,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 console.log("Cargando detalle para ID:", id);
                 inicializarDetalleProducto(id);
+            }
+            else if (page === "inventario") {
+
+                console.log("Cargando detalle para ID:", id);
+                inicializarInventario();
             }
 
             if (menuPrincipal) menuPrincipal.classList.remove("open");

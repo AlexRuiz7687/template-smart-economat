@@ -198,7 +198,7 @@
     {
       "id": "1",
       "nombre": "Tomate Raf",
-      "precio": 4.2,
+      "precio": 4,
       "precioUnitario": "kg",
       "stock": 85,
       "stockMinimo": 30,
@@ -209,13 +209,10 @@
       "codigoBarras": "8410001000015",
       "fechaCaducidad": "2024-03-20",
       "alergenos": [],
-      "descripcion": "Tomate Raf de la Vega de Almería",
+      "descripcion": "Tomate Raf de la Vega de Almería modificado 2",
       "imagen": "tomate-raf.jpg",
       "activo": true,
-      "categoria": {
-        "id": 1,
-        "nombre": "Frutas Frescas"
-      },
+      "categoria": "Frutas Frescas",
       "proveedor": {
         "id": 2,
         "nombre": "Frutas y Verduras Frescas SL"
@@ -1538,6 +1535,20 @@
         "id": 3,
         "nombre": "Carnicerías Selectas del Norte"
       }
+    },
+    {
+      "id": "1764234896501",
+      "nombre": "Tomate cherry",
+      "distribuidor": "1",
+      "precio": 2.5,
+      "unidad": "kg",
+      "descripcion": "Tomates pequeñitos",
+      "categoria": "Verduras y Hortalizas",
+      "caducidad": "10",
+      "alergenos": [],
+      "stock": 0,
+      "stockMinimo": 5,
+      "imagenUrl": "no-image.png"
     }
   ]
 }

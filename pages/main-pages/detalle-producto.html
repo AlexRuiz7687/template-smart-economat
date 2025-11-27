@@ -1,45 +1,55 @@
 <div class="contenedor-ficha">
     <div class="encabezado-ficha">
         <h2>Ficha de Producto</h2>
-        <button class="btn-volver" data-page="articulos"> Volver al listado</button>
-    </div>
 
-    <div class="card-producto">
-        <div class="img-container">
-            <img id="ficha-img" src="../assets/img/no-image.png" alt="Imagen producto">
-        </div>
+        <div class="acciones-ficha">
+            <button id="btn-editar" class="btn-editar">Editar</button>
 
-        <div class="datos-producto">
-            <div class="grupo-input">
-                <label>ID Referencia:</label>
-                <input type="text" id="ficha-id" disabled>
-            </div>
+            <button id="btn-guardar" class="btn-guardar oculto">Guardar</button>
+            <button id="btn-cancelar" class="btn-cancelar oculto">Cancelar</button>
 
-            <div class="grupo-input">
-                <label>Nombre del Artículo:</label>
-                <input type="text" id="ficha-nombre" disabled>
-            </div>
-
-            <div class="grupo-input">
-                <label>Categoría:</label>
-                <input type="text" id="ficha-categoria" disabled>
-            </div>
-
-            <div class="grupo-dato-doble">
-                <div class="grupo-input">
-                    <label>Precio (€):</label>
-                    <input type="number" id="ficha-precio" disabled>
-                </div>
-                <div class="grupo-input">
-                    <label>Stock Actual:</label>
-                    <input type="number" id="ficha-stock" disabled>
-                </div>
-            </div>
-
-            <div class="grupo-input">
-                <label>Descripción / Notas:</label>
-                <textarea id="ficha-descripcion" disabled></textarea>
-            </div>
+            <button class="btn-volver" data-page="articulos">⬅ Volver</button>
         </div>
     </div>
+
+</div>
+
+<div class="card-producto">
+    <div class="img-container">
+        <img id="ficha-img" src="../assets/img/no-image.png" alt="Imagen producto">
+    </div>
+
+    <div class="datos-producto">
+        <div class="grupo-input">
+            <label>ID Referencia:</label>
+            <input type="text" id="ficha-id" disabled>
+        </div>
+
+        <div class="grupo-input">
+            <label>Nombre del Artículo:</label>
+            <input type="text" id="ficha-nombre" disabled>
+        </div>
+
+        <div class="grupo-input">
+            <label>Categoría:</label>
+            <input type="text" id="ficha-categoria" disabled>
+        </div>
+
+        <div class="grupo-dato-doble">
+            <div class="grupo-input">
+                <label>Precio (€):</label>
+                <input type="number" id="ficha-precio" disabled>
+            </div>
+            <div class="grupo-input">
+                <label>Stock Mínimo:</label>
+                <input type="number" id="ficha-stock-min" disabled>
+            </div>
+        </div>
+
+        <div class="grupo-input">
+            <label>Descripción / Notas:</label>
+            <textarea id="ficha-descripcion" disabled></textarea>
+        </div>
+    </div>
+</div>
 </div>

@@ -1,16 +1,20 @@
+// src/controllers/almacenController.js
+
 import { renderizarTabla, cargarCategorias } from '../view/almacenView.js';
 import { buscarProducto, ordenarPorPrecio, comprobarStockMinimo } from '../utils/funciones.js';
 import { getProductos, getCategorias } from '../services/economatoService.js';
+// 1. IMPORTACIÓN DEL CONTROLADOR DE NUEVO ARTÍCULO
+import { inicializarNuevoArticulo } from './nuevoArticuloController.js';
 
 let tabla, resumen, inputBusqueda, selectCategoria, selectOrden;
 
 let todosLosProductos = [];
 let productosMostrados = [];
 
-// 2. Exportamos la función para poder llamarla desde main.js
+// 2. Exportamos la función para poder llamarla desde mainController.js
 export async function inicializarAlmacen() {
   
-  // 3. AHORA que el HTML ya existe, buscamos los elementos
+  // 3. Buscamos los elementos del DOM
   tabla = document.querySelector('#tablaProductos tbody');
   resumen = document.querySelector('#resumen');
   inputBusqueda = document.querySelector('#busqueda');
@@ -22,13 +26,36 @@ export async function inicializarAlmacen() {
       return;
   }
 
-  todosLosProductos = await getProductos();
-  productosMostrados = [...todosLosProductos];
-  const categorias = await getCategorias();
+  // 4. Carga de datos
+  try {
+      todosLosProductos = await getProductos();
+      productosMostrados = [...todosLosProductos];
+      const categorias = await getCategorias();
 
-  renderizarTabla(productosMostrados, resumen);
-  cargarCategorias(categorias);
+      // Renderizar tabla inicial
+      renderizarTabla(productosMostrados, resumen);
 
+      // Cargar categorías en el filtro de búsqueda (Select de la barra superior)
+      if(selectCategoria) {
+          selectCategoria.innerHTML = '<option value="">-- Categoría --</option>';
+          categorias.forEach(c => {
+              const opt = document.createElement('option');
+              // Manejo robusto por si la categoría es objeto o string
+              const nombreCat = c.nombre || c; 
+              opt.value = nombreCat;
+              opt.textContent = nombreCat;
+              selectCategoria.appendChild(opt);
+          });
+      }
+
+      // 5. INICIALIZAR EL FORMULARIO DE REGISTRO (Pestaña Nuevo Artículo)
+      await inicializarNuevoArticulo();
+
+  } catch (error) {
+      console.error("Error al cargar datos iniciales:", error);
+  }
+
+  // 6. Configuración de Eventos
   const eventMap = [
     { selector: '#btnBuscar', event: 'click', handler: onBuscar },
     { selector: '#ordenSelect', event: 'change', handler: onOrdenar },
@@ -41,47 +68,64 @@ export async function inicializarAlmacen() {
   setupTabs();
 }
 
-const eventMap = [
-  { selector: '#btnBuscar', event: 'click', handler: onBuscar },
-  { selector: '#ordenSelect', event: 'change', handler: onOrdenar },
-  { selector: '#btnAllProducts', event: 'click', handler: onShowAll },
-  { selector: '#btnStock', event: 'click', handler: onComprobarStock },
-  { selector: '#categoriaSelect', event: 'change', handler: onCategoriaChange }
-];
+/* =========================================
+   FUNCIONES MANEJADORAS DE EVENTOS
+   ========================================= */
 
 function onBuscar() {
+  if (!inputBusqueda) return;
   const termino = inputBusqueda.value.trim();
+  // Usamos la utilidad importada de funciones.js
   productosMostrados = buscarProducto(todosLosProductos, termino);
   renderizarTabla(productosMostrados, resumen);
 }
 
 function onOrdenar() {
+  if (!selectOrden) return;
   const orden = selectOrden.value;
+  // Usamos la utilidad importada de funciones.js
   productosMostrados = ordenarPorPrecio(productosMostrados, orden);
   renderizarTabla(productosMostrados, resumen);
 }
 
 function onShowAll() {
+  // Reseteamos filtros
   productosMostrados = [...todosLosProductos];
-  inputBusqueda.value = '';
-  selectCategoria.value = '';
+  if (inputBusqueda) inputBusqueda.value = '';
+  if (selectCategoria) selectCategoria.value = '';
+  if (selectOrden) selectOrden.value = 'asc'; // O el valor por defecto que tengas
   renderizarTabla(productosMostrados, resumen);
 }
 
 function onComprobarStock() {
+  // Usamos la utilidad importada de funciones.js
   productosMostrados = comprobarStockMinimo(todosLosProductos);
   renderizarTabla(productosMostrados, resumen);
 }
 
 function onCategoriaChange() {
+  if (!selectCategoria) return;
   const categoriaSeleccionada = selectCategoria.value;
+
   if (categoriaSeleccionada === '') {
-    renderizarTabla(todosLosProductos, resumen);
+    // Si no hay selección, mostramos todo
+    productosMostrados = [...todosLosProductos];
   } else {
-    const filtrados = todosLosProductos.filter(p => p.categoria.nombre === categoriaSeleccionada);
-    renderizarTabla(filtrados, resumen);
+    // Filtramos
+    productosMostrados = todosLosProductos.filter(p => {
+        // Verificación si categoria es objeto o string
+        const catNombre = (typeof p.categoria === 'object' && p.categoria !== null) 
+                          ? p.categoria.nombre 
+                          : p.categoria;
+        return catNombre === categoriaSeleccionada;
+    });
   }
+  renderizarTabla(productosMostrados, resumen);
 }
+
+/* =========================================
+   UTILIDADES INTERNAS
+   ========================================= */
 
 function bindEvents(events) {
   for (const { selector, event, handler, option } of events) {
@@ -96,6 +140,8 @@ function setupTabs() {
     
     tabButtons.forEach(btn => {
         btn.addEventListener('click', (e) => {
+            e.preventDefault(); // Buena práctica para botones en forms
+
             // 1. Ocultar todos los contenidos
             const tabContents = document.querySelectorAll(".tabcontent");
             tabContents.forEach(content => content.style.display = "none");
@@ -105,7 +151,11 @@ function setupTabs() {
 
             // 3. Mostrar el contenido seleccionado (usando el data-target del botón)
             const targetId = e.target.dataset.target; // ej: 'verArticulos'
-            document.getElementById(targetId).style.display = "block";
+            const targetDiv = document.getElementById(targetId);
+            
+            if (targetDiv) {
+                targetDiv.style.display = "block";
+            }
 
             // 4. Activar el botón actual
             e.currentTarget.classList.add("active");
@@ -118,6 +168,3 @@ function setupTabs() {
         defaultBtn.click();
     }
 }
-
-
-

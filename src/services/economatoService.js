@@ -40,3 +40,44 @@ export async function getArticuloById(id) {
         throw error;
     }
 }
+
+// Actualizar un artículo existente
+export async function updateArticulo(id, datosActualizados) {
+    try {
+        const response = await fetch(`${Api_URL}/productos/${id}`, {
+            method: 'PUT', // Método para actualizar
+            headers: {
+                'Content-Type': 'application/json' // Avisamos que enviamos JSON
+            },
+            body: JSON.stringify(datosActualizados) // Convertimos datos a texto
+        });
+
+        if (!response.ok) throw new Error("Error al actualizar el producto");
+
+        return await response.json();
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+export async function createArticulo(nuevoArticulo) {
+    try {
+        const response = await fetch(`${Api_URL}/productos`, { // Recuerda: /productos según tu db.json
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(nuevoArticulo)
+        });
+
+        if (!response.ok) throw new Error("Error al registrar el artículo");
+
+        return await response.json();
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+
