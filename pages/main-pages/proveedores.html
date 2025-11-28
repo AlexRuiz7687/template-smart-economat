@@ -1,1 +1,32 @@
-<h1>PROVEEDORES</h1>
+<div class="contenedor-seccion">
+    
+    <div class="header-flex">
+        <div class="menu-articulos">
+            <h2>Gestión de Proveedores</h2>
+        </div>
+        <div>
+            <button id="btnNuevoProveedor" class="btn-guardar" style="padding: 8px 16px;">+ Nuevo Proveedor</button>
+        </div>
+    </div>
+
+    <div class="controles" style="margin-bottom: 15px; justify-content: flex-start;">
+        <input type="text" id="busquedaProveedor" placeholder="Buscar proveedor..." class="form-control rounded" style="width: 300px;">
+    </div>
+
+    <table class="styled-table" style="width: 100%;">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Empresa</th>
+                <th>CIF/NIF</th>
+                <th>Contacto</th>
+                <th>Teléfono</th>
+                <th>Email</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody id="tabla-proveedores-body">
+            </tbody>
+    </table>
+
+</div>

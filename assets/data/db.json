@@ -59,6 +59,26 @@
       "apellidos": "Martinez",
       "email": "darelMartinez@gmail.com",
       "telefono": "122344"
+    },
+    {
+      "id": "fc7f",
+      "username": "valonso",
+      "password": "1234",
+      "role": "profesor",
+      "nombre": "Victor",
+      "apellidos": "Alonso",
+      "email": "victoralonsoglez0308@gmail.com",
+      "telefono": "5432132344"
+    },
+    {
+      "id": "dd8e",
+      "username": "araya",
+      "password": "1234",
+      "role": "alumno",
+      "nombre": "Alba Maria",
+      "apellidos": "Raya Herrera",
+      "email": "Albarhclase3@gmail.com",
+      "telefono": "12312312"
     }
   ],
   "proveedores": [
@@ -209,7 +229,7 @@
       "codigoBarras": "8410001000015",
       "fechaCaducidad": "2024-03-20",
       "alergenos": [],
-      "descripcion": "Tomate Raf de la Vega de Almería modificado 2",
+      "descripcion": "Tomate Raf de la Vega de Almería modificado 3",
       "imagen": "tomate-raf.jpg",
       "activo": true,
       "categoria": "Frutas Frescas",
@@ -232,13 +252,10 @@
       "codigoBarras": "8410001000022",
       "fechaCaducidad": "2024-03-15",
       "alergenos": [],
-      "descripcion": "Lechuga iceberg extra fresca",
+      "descripcion": "Lechuga iceberg extra fresca modificado",
       "imagen": "lechuga-iceberg.jpg",
       "activo": true,
-      "categoria": {
-        "id": 2,
-        "nombre": "Verduras y Hortalizas"
-      },
+      "categoria": "Verduras y Hortalizas",
       "proveedor": {
         "id": 2,
         "nombre": "Frutas y Verduras Frescas SL"
@@ -1545,6 +1562,20 @@
       "descripcion": "Tomates pequeñitos",
       "categoria": "Verduras y Hortalizas",
       "caducidad": "10",
+      "alergenos": [],
+      "stock": 0,
+      "stockMinimo": 5,
+      "imagenUrl": "no-image.png"
+    },
+    {
+      "id": "1764242008817",
+      "nombre": "Mango",
+      "distribuidor": "1",
+      "precio": 6.5,
+      "unidad": "kg",
+      "descripcion": "Sin descripción detallada.",
+      "categoria": "Frutas Frescas",
+      "caducidad": "5",
       "alergenos": [],
       "stock": 0,
       "stockMinimo": 5,

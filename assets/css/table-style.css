@@ -57,4 +57,7 @@ tfoot td {
     font-weight: bold;
     background: #f4f4f4;
 }
+.acciones button{
+    margin: 1vh;
+}
 

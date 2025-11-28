@@ -80,4 +80,15 @@ export async function createArticulo(nuevoArticulo) {
     }
 }
 
-
+// OBTENER PROVEEDORES
+export async function getProveedores() {
+  try {
+    // Asumimos que en tu db.json se llama "proveedores"
+    const res = await fetch(`${Api_URL}/proveedores`);
+    if (!res.ok) throw new Error(`Error al obtener proveedores`);
+    return await res.json();
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
