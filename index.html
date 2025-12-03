@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login</title>
+  <link rel="stylesheet" href="./assets/css/form-styles.css" />
+  <link rel="stylesheet" href="./assets/css/style.css" />
+  <link rel="stylesheet" href="./assets/css/header-style.css" />
+  <script type="module" src="src/controllers/loginController.js">  </script>
+  <script type="module" src="src/controllers/registerController.js"></script>
+</head>
+
+<body>
+  <header>
+    <div class="cabecera">
+      <div class="logos-externos">
+        <img src="./assets/img/logo_gobcan_05-01_color_mod31.png" alt="Gobierno de Canarias"
+          class="logo-gobierno consejeria" />
+        <img src="./assets/img/logo-cifp-virgen-candelaria.png" alt="Logo Virgen de la Candelaria"
+          class="logo-gobierno" />
+      </div>
+      <img src="./assets/img/logo-smart.png" alt="Logotipo-Smart-Economato" class="logo-smart-cabecera"
+        alt="Logotipo-Smart-Economato" class="logo-smart-cabecera" />
+    </div>
+  </header>
+
+  <div class="main-login">
+    <div class="form-inicio">
+      <h2>Inicio de sesión</h2>
+      <form id="loginForm">
+        <div class="cont-submit">
+          <input type="text" id="nombreUsuario" class="inputSesion nombreUsuario" value=""
+            placeholder="Nombre de usuario" />
+        </div>
+        <div class="cont-submit contenedor-password"> <input type="password" id="form-pasword"
+            class="inputSesion form-pasword" value="" placeholder="Contraseña" autocomplete="current-password" />
+
+          <button type="button" id="btnTogglePassword" class="ojo-password">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icono-ojo">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          </button>
+        </div>
+        <p id="form-message" class="error"></p>
+
+        <div class="cont-submit"></div>
+
+        <div class="cont-submit">
+          <input id="submit" type="submit" value="Ingresar" class="btn-submit" />
+        </div>
+
+        <p><a href="">Recuperar contraseña</a></p>
+        <!-- <p><a href="">No tengo cuenta de Usuario</a></p> -->
+
+      </form>
+    </div>
+
+    <div class="form-inicio">
+      <h2>Nuevo Usuario</h2>
+      <form action="" id="newUserForm">
+        <div class="cont-submit">
+          <input type="text" id="newNombre" class="inputSesion nombreUsuario" value="" placeholder="Nombre" />
+        </div>
+        <div class="cont-submit">
+          <input type="text" id="newApellidos" class="inputSesion nombreUsuario" value="" placeholder="Apellidos" />
+        </div>
+
+        <div class="cont-submit contenedor-password">
+          <input type="password" id="newPassword" class="inputSesion form-pasword" value="" placeholder="Contraseña" />
+
+          <button type="button" id="btnToggleNewPass" class="ojo-password">
+            <svg ...> ... </svg>
+          </button>
+        </div>
+
+        <div class="cont-submit contenedor-password">
+          <input type="password" id="confirmPassword" class="inputSesion form-pasword" value=""
+            placeholder="Confirmar contraseña" />
+
+          <button type="button" id="btnToggleConfirmPass" class="ojo-password">
+            <svg ...> ... </svg>
+          </button>
+        </div>
+
+        <p id="newMail-message" class="error success"></p>
+
+        <div class="cont-submit">
+          <input type="email" id="newEmail" class="inputSesion nombreUsuario" value=""
+            placeholder="Correo Electrónico" />
+        </div>
+
+        <div class="cont-submit">
+          <input type="tel" id="newTelefono" class="inputSesion nombreUsuario" value="" placeholder="Teléfono" />
+        </div>
+
+        <div class="cont-submit select-rol">
+          <label for="">Rol de usuario</label>
+          <select name="rol" id="tipoUsuario">
+            <option value="profesor">Profesor</option>
+            <option value="alumno">Alumno</option>
+          </select>
+        </div>
+
+        <p id="register-message" class="error"></p>
+        <div class="cont-submit"></div>
+
+        <div class="cont-submit"></div>
+        <input type="checkbox" id="consentimientoRegistro" name="consentimiento" value="consentimiento"
+          onchange="document.getElementById('register').disabled = !this.checked" />
+
+        <label for="consentimientoRegistro">
+          He leído y acepto la
+          <a href="/politica-de-privacidad/" target="_blank">política de privacidad</a>
+        </label>
+
+        <div class="cont-submit">
+          <input id="register" type="submit" value="Registrar" class="btn-submit" disabled />
+        </div>
+
+        <!-- <p><a href="">Recuperar contraseña</a></p>
+          <p><a href="">No tengo cuenta de Usuario</a></p> -->
+
+      </form>
+    </div>
+  </div>
+  <footer>
+    <p><a href="">Términos legales</a> | Versión 1.0 | Alexis Ruiz Salazar</p>
+  </footer>
+  <!-- <script src="./assets/js/menu.js"></script> -->
+
+</body>
+
+</html>

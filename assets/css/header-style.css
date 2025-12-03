@@ -1,0 +1,312 @@
+@import url("style.css");
+
+/* =========================================
+   1. ESTRUCTURA BASE DEL HEADER
+   ========================================= */
+
+header {
+  grid-area: header;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  background-color: var(--cl-white);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 5vh;
+}
+
+/* --- Zona de Logos --- */
+.cabecera {
+  width: 96%;
+  max-width: 1200px;
+  padding: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.logos-externos {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo-gobierno {
+  width: 180px;
+  height: auto;
+  object-fit: contain;
+}
+
+.logo-smart-cabecera {
+  width: 200px;
+  height: auto;
+  object-fit: contain;
+}
+
+/* =========================================
+   2. BARRA DE NAVEGACIÓN (MENÚ)
+   ========================================= */
+
+.menu {
+  width: 100%;
+  background-color: var(--cl-black);
+  display: flex;
+  justify-content: center;
+}
+
+.navbar {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  justify-content: space-between; /* Separa el menú a la izq y el usuario a la der */
+  align-items: center;
+}
+
+.navbar ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding: 0 2vh;
+  margin: 0;
+  gap: 2vh;
+/*   flex-wrap: wrap; */
+}
+
+.navbar li {
+  color: var(--cl-white);
+  transition: all 0.3s ease;
+  position: relative;
+  padding: 15px 10px;
+  font-weight: 300;
+}
+
+/* Estilo para el enlace/botón dentro del li */
+.navbar a,
+.boton {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* Efectos Hover y Active */
+.navbar li:hover,
+.navbar li.active {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-bottom: 3px solid var(--primary-color);
+}
+
+/* Botón Hamburguesa (Oculto en Desktop) */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 2rem;
+  color: var(--cl-black);
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  top: 25px;
+  padding: 0;
+  
+}
+button.menu-toggle:hover{
+  background-color: transparent;
+}
+
+
+/* =========================================
+   3. ZONA DE USUARIO Y LOGOUT (Diseño Cápsula)
+   ========================================= */
+
+.contenedor-usuario {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  
+  padding: 5px 20px;
+  /* border: 1px solid var(--cl-light-gray); */
+  margin-right: 10px;
+  
+}
+
+.contenedor-usuario .info-texto {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline; 
+  gap: 6px;
+}
+
+.contenedor-usuario small {
+  color: var(--cl-light-gray);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+}
+
+.contenedor-usuario .user-name {
+  color: var(--primary-color);
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+/* Botón de Salir */
+.bt-logout {
+  background-color: var(--primary-color);
+  color: var(--cl-white);
+  border: none;
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: bold;
+  transition: background 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: 0; 
+}
+
+.bt-logout:hover {
+  background-color: #ff4d5e;
+}
+
+
+/* =========================================
+   4. RESPONSIVE (Tablets y Móviles)
+   ========================================= */
+
+/* --- Breakpoint Principal: 920px --- */
+@media screen and (max-width: 920px) {
+
+  /* A. Header y Cabecera */
+  header {
+    position: relative;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    height: auto;
+    padding: 10px 0;
+  }
+
+  .cabecera {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    margin: 0;
+    padding: 0 15px 0 15px;
+    padding-right: 60px;
+  }
+
+  .logos-externos {
+    margin-bottom: 0;
+  }
+
+  .logo-gobierno {
+    width: 130px;
+  }
+
+  .logo-smart-cabecera {
+    width: 140px;
+  }
+
+  /* B. Botón Hamburguesa */
+  .menu-toggle {
+    display: block;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 101;
+    margin: 0;
+  }
+
+  /* C. Menú Desplegable */
+  .menu {
+    background-color: transparent;
+    height: 0;
+    width: 100%;
+    position: static;
+  }
+
+  .navbar {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 50%; /* Esto es lo que hace que se vea al 50% del ancho */
+    background-color: var(--cl-black);
+    
+    /* Configuración para el efecto de despliegue */
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out, padding 0.4s ease; /* Añadida transición al padding */
+    z-index: 100;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    
+    /* En móvil, los elementos van en columna */
+    flex-direction: column;
+    align-items: stretch;
+    margin: 0;
+    border-radius: 0;
+    
+    /* CORRECCIÓN AQUÍ: Quitamos el padding por defecto para que no se vea la franja */
+    padding-bottom: 0; 
+  }
+
+  .navbar.open {
+    max-height: 800px; 
+    /* CORRECCIÓN AQUÍ: Añadimos el padding SOLO cuando está abierto */
+    padding-bottom: 20px;
+  }
+
+  .navbar ul {
+    flex-direction: column;
+    width: 100%;
+    align-items: stretch;
+    padding: 0 2vh;
+    gap: 0;
+  }
+
+  .navbar li {
+    width: 100%;
+    text-align: center;
+    padding: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .navbar a,
+  .boton {
+    padding: 20px;
+    display: block;
+  }
+
+  /* D. Ajuste del Contenedor Usuario en Móvil */
+  .contenedor-usuario {
+    margin: 20px;
+    justify-content: space-between;
+  }
+
+  .contenedor-usuario .info-texto {
+    text-align: left;
+  }
+}
+
+/* --- Breakpoint Pequeño: 550px --- */
+@media screen and (max-width: 550px) {
+  .cabecera {
+    gap: 5px;
+    padding-right: 50px;
+  }
+
+  .logo-gobierno {
+    width: 100px;
+  }
+
+  .logo-smart-cabecera {
+    width: 110px;
+  }
+}

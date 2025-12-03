@@ -1,0 +1,205 @@
+/* -----------------------GENERALES----------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+:root {
+  --primary-color: #ea4634;
+  --secondary-color: #e1efe2;
+  --terciary-color: yellow;
+  --cl-white: #f5f5f5;
+  --cl-black: #2f2e2d;
+  --cl-light-gray: rgb(196, 196, 196);
+  --cl-dark-gray: rgb(99, 99, 99);
+  --footer-height: 100px;
+  --cl-green: rgb(4, 160, 4);
+  
+}
+
+body {
+  
+  /* min-height: 100vh; */
+  position: relative;
+  background-color: var(--cl-white);
+  display: grid;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer";
+  grid-template-rows: auto 1fr auto;
+  height: 100vh;
+  justify-items: center;
+}
+
+body::before {
+  content: ""; 
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-image: linear-gradient(to bottom, white, transparent), url('../img/fondo-economato.jpg');
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: grayscale(40%)  opacity(0.2) blur(0px);
+}
+
+
+
+a{
+  text-decoration: none;
+}
+
+ul{
+  list-style: none;
+}
+
+h2{
+  color: var(--cl-black);
+}
+
+
+/* -----------------------CONTENIDO----------------------- */
+
+main {
+  margin-top: 1vh;
+  grid-area: main;
+  /* background-color: blue; */
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2vh;
+  justify-content: center;
+  align-content: flex-start;
+  align-items: center;
+  max-width: 1100px;
+  /* overflow: scroll;  */
+  /* max-height: 60vh; */
+  /* padding-bottom: calc(var(--footer-height) + 2vh); */
+  position: relative;
+}
+
+.acceso-directo {
+  border: 1px solid var(--cl-white);
+  width: 40vh;
+  height: 20vh;
+  background-color: var(--cl-light-gray);
+  border-radius: 5vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: 20px;
+  box-shadow: 0.1em 0.1em 0.4em rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  position: relative;
+  object-fit: cover;
+  margin-top: 2%;
+
+}
+.acceso-directo img{
+  position: absolute; 
+  
+  width: 70%;
+  top: 0;
+  
+  filter: grayscale(100%) brightness(150%) contrast(70%) ;
+  z-index: 1;
+  transition: filter 0.3s ease;
+  
+}
+.acceso-directo img:hover{
+  filter: grayscale(0%);
+}
+.acceso-directo:hover {
+  box-shadow: 0.1em 0.1em 0.4em rgba(0, 0, 0, 0.5);
+}
+
+.bt-acc-dir {
+  min-width: 10vh;
+  padding: 1vh;
+  min-height: 5vh;
+  background-color: var(--primary-color);
+  color: var(--cl-white);
+  border-radius: 2vh;
+  border: none;
+  font-size: 0.9rem;
+  box-shadow: 0.1em 0.1em 0.4em rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: 0.2s;
+  position: relative;
+  z-index: 2;
+}
+
+.bt-acc-dir:hover {
+  scale: 1.1;
+  box-shadow: 0.1em 0.1em 0.8em rgba(0, 0, 0, 0.1);
+}
+
+.bt-acc-dir:active{
+  scale: .9;;
+}
+
+
+/* -----------------------FIN CONTENIDO----------------------- */
+
+/* --------------------------FOOTER-------------------------- */
+
+footer {
+  grid-area: footer;
+  height: auto;
+  line-height: var(--footer-height); 
+  border-top: 1px solid black;
+  background-color: var(--cl-black);
+  text-align: center;
+  color: var(--cl-white);
+  padding: 0 1rem; 
+  box-sizing: border-box;
+  width: 100%;
+   margin-top: 10vh;
+   
+   
+}
+
+footer a {
+  text-decoration: none;
+  position: static;
+}
+footer p > a:hover {
+  color: var(--primary-color);
+}
+footer a:visited {
+  color: var(--cl-white);
+  bottom: 0;
+  position: fixed;
+}
+
+/* --------------------------FIN FOOTER-------------------------- */
+
+/*-----------------------MEDIA QUERIES---------------------------*/
+
+@media screen and (max-width: 920px) {
+
+  main{
+    margin-top: 0;
+  }
+  
+}
+
+
+/* ======= BREAKPOINT PARA MÓVIL (hasta 600px) ======= */
+@media screen and (max-width: 630px) {
+
+  footer{
+    font-size: .8rem;
+    bottom: 0;
+   margin-bottom: 0;
+  }
+}
+
