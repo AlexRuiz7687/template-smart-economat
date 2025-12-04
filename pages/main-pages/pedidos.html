@@ -1,1 +1,57 @@
-<h1>PEDIDOS</h1>
+<div class="contenedor-seccion">
+    
+    <div class="header-flex">
+        <div class="menu-articulos">
+            <h2>Gestión de Pedidos</h2>
+        </div>
+        
+        <div class="tab">
+            <button class="tablinks active" id="tabListaPedidos">Historial de Pedidos</button>
+            <button class="tablinks" id="tabNuevoPedido">+ Nuevo Pedido</button>
+        </div>
+    </div>
+
+    <div id="vistaListaPedidos" class="tabcontent" style="display: block;">
+        <div class="cabecera-articulos">
+            <div class="controles">
+                <input type="text" id="busquedaPedido" placeholder="Buscar por ID o Usuario..." class="form-control rounded" style="width: 250px;">
+                
+                <select id="filtroEstadoPedido" class="form-control rounded option-style">
+                    <option value="">-- Todos los Estados --</option>
+                    <option value="pendiente">Pendiente</option>
+                    <option value="aprobado">Aprobado</option>
+                    <option value="recibido">Recibido</option>
+                    <option value="cancelado">Cancelado</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="contenedor-tabla-responsive">
+            <table class="styled-table" style="width: 100%;">
+                <thead>
+                    <tr>
+                        <th>ID Pedido</th>
+                        <th>Fecha</th>
+                        <th>Solicitante</th>
+                        <th>Estado</th>
+                        <th>Total (€)</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-pedidos-body">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div id="vistaNuevoPedido" class="tabcontent" style="display: none;">
+        <div class="cabecera-articulos">
+            <h3>🛒 Realizar Solicitud de Material</h3>
+            <p>Selecciona productos del inventario para añadir a tu solicitud.</p>
+        </div>
+        <div style="padding: 20px; text-align: center; border: 2px dashed #ccc; margin-top: 20px;">
+            <p>🚧 Módulo de Carrito de Compra en construcción 🚧</p>
+        </div>
+    </div>
+
+</div>

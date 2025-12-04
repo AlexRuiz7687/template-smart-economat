@@ -151,3 +151,33 @@ export async function getProveedores() {
     return [];
   }
 }
+
+// PEDIDOS
+
+export async function getPedidos() {
+    try {
+        // Hacemos dos peticiones para cruzar datos (Pedidos y Usuarios)
+        const [pedidosRes, usuariosRes] = await Promise.all([
+            fetch(`${Api_URL}/pedidos`),
+            fetch(`${Api_URL}/usuarios`)
+        ]);
+
+        if (!pedidosRes.ok || !usuariosRes.ok) throw new Error("Error cargando pedidos");
+
+        const pedidos = await pedidosRes.json();
+        const usuarios = await usuariosRes.json();
+
+        // Cruzamos los datos para que salga el nombre del usuario, no solo el ID
+        return pedidos.map(p => {
+            const usuario = usuarios.find(u => u.id == p.id_usuario);
+            return {
+                ...p, // Copia todo lo del pedido (id, fecha, total...)
+                nombreUsuario: usuario ? `${usuario.nombre} ${usuario.apellidos}` : 'Usuario Desconocido'
+            };
+        });
+
+    } catch (error) {
+        console.error(error);
+        return [];
+    }
+}

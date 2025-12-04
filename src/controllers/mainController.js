@@ -4,6 +4,7 @@ import { inicializarAlmacen } from './almacenController.js';
 import { inicializarDetalleProducto } from './detalleProductoController.js';
 import { inicializarInventario } from './inventarioController.js';
 import { inicializarProveedores } from './proveedoresController.js';
+import { inicializarPedidos } from './pedidosController.js'; // <--- IMPORTAR
 
 // PROTECCIÓN DE SEGURIDAD
 if (!authService.isAuthenticated()) {
@@ -48,6 +49,9 @@ else {
                 else if (page === "proveedores") {
                     inicializarProveedores();
                 }
+                else if (page === "pedidos") {
+        inicializarPedidos(); // <--- LLAMAR
+    }
 
                 if (menuPrincipal) menuPrincipal.classList.remove("open");
 

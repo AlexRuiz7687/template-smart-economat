@@ -51,7 +51,7 @@ header {
 
 .menu {
   width: 100%;
-  background-color: var(--cl-black);
+  background-color: var(--cl-white);
   display: flex;
   justify-content: center;
 }
@@ -60,7 +60,7 @@ header {
   width: 100%;
   max-width: 1200px;
   display: flex;
-  justify-content: space-between; /* Separa el menú a la izq y el usuario a la der */
+  justify-content: space-between;
   align-items: center;
 }
 
@@ -76,7 +76,7 @@ header {
 }
 
 .navbar li {
-  color: var(--cl-white);
+  color: var(--cl-dark-gray);
   transition: all 0.3s ease;
   position: relative;
   padding: 15px 10px;
@@ -96,7 +96,7 @@ header {
 /* Efectos Hover y Active */
 .navbar li:hover,
 .navbar li.active {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--cl-white);
   border-bottom: 3px solid var(--primary-color);
 }
 
@@ -142,7 +142,7 @@ button.menu-toggle:hover{
 }
 
 .contenedor-usuario small {
-  color: var(--cl-light-gray);
+  color: var(--cl-dark-gray);
   font-size: 0.7rem;
   text-transform: uppercase;
 }
@@ -237,8 +237,8 @@ button.menu-toggle:hover{
     position: absolute;
     top: 100%;
     right: 0;
-    width: 50%; /* Esto es lo que hace que se vea al 50% del ancho */
-    background-color: var(--cl-black);
+    width: 40vh; /* Esto es lo que hace que se vea al 50% del ancho */
+    background-color: var(--cl-white);
     
     /* Configuración para el efecto de despliegue */
     max-height: 0;

@@ -93,6 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // === ACTIVAR LOS DOS OJITOS DEL REGISTRO ===
+    configurarOjo('btnTogglePassword', 'form-pasword')
     configurarOjo('btnToggleNewPass', 'newPassword');
     configurarOjo('btnToggleConfirmPass', 'confirmPassword');
 

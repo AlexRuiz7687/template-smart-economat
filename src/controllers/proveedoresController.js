@@ -7,13 +7,13 @@ export async function inicializarProveedores() {
     console.log("Inicializando Proveedores...");
 
     try {
-        // 1. Obtener datos
+        // OBTENCIÓN DE DATOS
         listaProveedores = await getProveedores();
         
-        // 2. Renderizar tabla
+        // RENDERIZACIÓN DE TABLA
         renderTablaProveedores(listaProveedores);
 
-        // 3. Activar Buscador
+        // ACTIVACIÓN DE BUSCADOR
         const inputBusqueda = document.getElementById('busquedaProveedor');
         if (inputBusqueda) {
             inputBusqueda.addEventListener('keyup', (e) => {
@@ -26,7 +26,7 @@ export async function inicializarProveedores() {
             });
         }
 
-        // 4. Activar botón Nuevo (Por ahora solo un alert o log)
+        // ACTIVACIÓN DE BOTON "NUEVO PROVEEDOR"
         const btnNuevo = document.getElementById('btnNuevoProveedor');
         if(btnNuevo) {
             btnNuevo.addEventListener('click', () => {
