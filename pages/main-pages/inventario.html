@@ -1,7 +1,7 @@
 <div class="contenedor-seccion">
-    
+
     <div class="header-flex">
-        
+
         <div class="menu-articulos">
             <h2>Gestión de Inventario</h2>
         </div>
@@ -13,17 +13,20 @@
 
     </div>
 
-    <div id="verStock" class="tabcontent" style="display: block;"> 
-        
+    <div id="verStock" class="tabcontent" style="display: block;">
+
         <div class="cabecera-articulos">
             <div class="controles">
-                <input type="text" id="busquedaInv" placeholder="Buscar en inventario..." class="form-control rounded" style="width: 200px; display:inline-block;">
-                
-                <select id="categoriaInvSelect" class="form-control rounded option-style" style="width: auto; display:inline-block;">
-                    <option value="">-- Todas las Categorías --</option>
-                    </select>
+                <input type="text" id="busquedaInv" placeholder="Buscar por nombre o código..." class="form-control rounded"
+                    style="max-width: 300px; display:inline-block;">
 
-                <select id="ordenInvSelect" class="form-control rounded option-style" style="width: auto; display:inline-block;">
+                <select id="categoriaInvSelect" class="form-control rounded option-style"
+                    style="width: auto; display:inline-block;">
+                    <option value="">-- Todas las Categorías --</option>
+                </select>
+
+                <select id="ordenInvSelect" class="form-control rounded option-style"
+                    style="width: auto; display:inline-block;">
                     <option value="asc">Precio: Bajo a Alto</option>
                     <option value="desc">Precio: Alto a Bajo</option>
                     <option value="stock-asc">Stock: Menor a Mayor</option>
@@ -37,43 +40,53 @@
         <table id="tablaInventarioValorado" class="styled-table" style="width: 100%; margin-top: 15px;">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
+                    <th>Código / SKU</th>
+                    <th>Producto</th>
                     <th>Categoría</th>
                     <th>Cantidad</th>
-                    <th>Total (€)</th> 
+                    <th>Total (€)</th>
                 </tr>
             </thead>
             <tbody id="tabla-valorada-body">
-                </tbody>
+            </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="5" id="resumen-inventario" style="font-weight:bold; text-align:right; padding: 10px; background-color: #f4f4f4;"></td>
+                    <td colspan="5" id="resumen-inventario"
+                        style="font-weight:bold; text-align:right; padding: 10px; background-color: #f4f4f4;"></td>
                 </tr>
             </tfoot>
         </table>
     </div>
 
     <div id="consolidarStock" class="tabcontent" style="display: none;">
-        
-        <div class="cabecera-articulos">
-            <p style="padding: 10px; background-color: #f9f9f9; border-left: 4px solid var(--cl-dark-gray, #333);">
-                Ajuste manual de existencias (Inventario físico).
-            </p>
-        </div>
+    
+    <div class="cabecera-articulos">
+        <div class="controles">
+            <input type="text" 
+                   id="busquedaConsolidar" 
+                   placeholder="Buscar por nombre o código..." 
+                   class="form-control rounded" 
+                   style="width: 250px; display:inline-block;">
 
-        <table id="tablaConsolidacion" class="styled-table" style="width: 100%; margin-top: 15px;">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Producto</th>
-                    <th style="width: 150px;">Stock Actual</th> 
-                    <th>Acción</th>
-                </tr>
-            </thead>
-            <tbody id="tabla-consolidar-body">
-                </tbody>
-        </table>
+            <select id="ordenConsolidar" class="form-control rounded option-style" style="width: auto; display:inline-block;">
+                <option value="asc">Stock: Menor a Mayor</option>
+                <option value="desc">Stock: Mayor a Menor</option>
+            </select>
+        </div>
     </div>
+
+    <table id="tablaConsolidacion" class="styled-table" style="width: 100%; margin-top: 15px;">
+        <thead>
+            <tr>
+                <th>Código / SKU</th>
+                <th>Producto</th>
+                <th style="width: 150px;">Stock Actual</th> 
+                <th>Acción</th>
+            </tr>
+        </thead>
+        <tbody id="tabla-consolidar-body">
+            </tbody>
+    </table>
+</div>
 
 </div>

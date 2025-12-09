@@ -6,8 +6,8 @@
         </div>
         
         <div class="tab">
-            <button class="tablinks active" id="tabListaPedidos">Historial de Pedidos</button>
-            <button class="tablinks" id="tabNuevoPedido">+ Nuevo Pedido</button>
+            <button class="tablinks active" id="tabListaPedidos">Historial</button>
+            <button class="tablinks" id="tabNuevoPedido">Nuevo Pedido</button>
         </div>
     </div>
 
@@ -30,7 +30,7 @@
             <table class="styled-table" style="width: 100%;">
                 <thead>
                     <tr>
-                        <th>ID Pedido</th>
+                        <th>ID</th>
                         <th>Fecha</th>
                         <th>Solicitante</th>
                         <th>Estado</th>
@@ -45,13 +45,31 @@
     </div>
 
     <div id="vistaNuevoPedido" class="tabcontent" style="display: none;">
-        <div class="cabecera-articulos">
-            <h3>🛒 Realizar Solicitud de Material</h3>
-            <p>Selecciona productos del inventario para añadir a tu solicitud.</p>
-        </div>
-        <div style="padding: 20px; text-align: center; border: 2px dashed #ccc; margin-top: 20px;">
-            <p>🚧 Módulo de Carrito de Compra en construcción 🚧</p>
-        </div>
-    </div>
+        
+        <div class="hoja-pedido-container">
+            <h2 class="titulo-hoja" style="border-bottom: 2px solid #333; margin-bottom:20px; padding-bottom:10px;">HOJA DE PEDIDO</h2>
 
-</div>
+            <form id="formNuevoPedido">
+                <div class="grid-cabecera-pedido">
+                    
+                    <div class="fila-hoja">
+                        <label>PROFESOR/A:</label>
+                        <input type="text" id="nombreProfesor" class="input-hoja" readonly style="background-color: #f0f0f0; color: #555;">
+                        <input type="hidden" id="idUsuarioPedido">
+                    </div>
+
+                    <div class="fila-hoja fechas-group">
+                        <div class="campo-fecha">
+                            <label>FECHA PEDIDO:</label>
+                            <input type="date" id="fechaPedido" class="input-hoja" required>
+                        </div>
+                        <div class="campo-fecha">
+                            <label>FECHA ENTREGA:</label>
+                            <input type="date" id="fechaEntrega" class="input-hoja" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contenedor-tabla-pedido" style="margin-top: 20px;">
+                    <table class="tabla-hoja" id="tablaLineasPedido">
+                        <thead>

@@ -25,10 +25,10 @@ export function renderizarTabla(datos, resumenEl) {
       <td>${p.stockMinimo}</td> 
       <td>${proveedorNombre}</td> 
       <td> 
-          <button class="btn-ver-detalle" data-page="detalle-producto" data-id="${p.id}"> 
-             + 
-          </button> 
-      </td>
+        <button class="btn-ver-detalle" data-page="detalle-producto" data-id="${p.productoId}"> 
+           + 
+        </button> 
+    </td>
     `;
     tabla.appendChild(fila);
   });

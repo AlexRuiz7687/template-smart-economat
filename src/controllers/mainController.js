@@ -1,83 +1,77 @@
-// src/controllers/mainController.js
 import { authService } from '../services/authService.js';
+// Importamos los controladores de cada sección
 import { inicializarAlmacen } from './almacenController.js';
 import { inicializarDetalleProducto } from './detalleProductoController.js';
 import { inicializarInventario } from './inventarioController.js';
 import { inicializarProveedores } from './proveedoresController.js';
-import { inicializarPedidos } from './pedidosController.js'; // <--- IMPORTAR
+import { inicializarPedidos } from './pedidosController.js';
 
-// PROTECCIÓN DE SEGURIDAD
+// 1. PROTECCIÓN DE SEGURIDAD
 if (!authService.isAuthenticated()) {
-    // Si no hay usuario, devolver al login
     window.location.href = '../index.html';
-}
+} 
 else {
-
     document.addEventListener("DOMContentLoaded", () => {
 
+        // --- REFERENCIAS GLOBALES ---
         const contenido = document.getElementById("contenido");
         const menuPrincipal = document.getElementById("menu-principal");
         const btnLogout = document.getElementById("btnLogout");
+        const userSpan = document.getElementById('header-username');
 
-        // LOGOUT
+        // --- MOSTRAR USUARIO ---
+        const currentUser = authService.getCurrentUser();
+        if (userSpan && currentUser) {
+            userSpan.textContent = currentUser.nombre || currentUser.username;
+        }
+
+        // --- ACTIVAR LOGOUT ---
         if (btnLogout) {
             btnLogout.addEventListener('click', () => {
                 authService.logout();
             });
         }
 
-        // CARGAS DE PÁGINAS
-        const cargarPagina = async (page, id = null) => {
+        // --- FUNCIÓN PARA CARGAR PÁGINAS ---
+        // CAMBIO 1: Aceptamos un tercer parámetro 'tab' (pestaña)
+        const cargarPagina = async (page, id = null, tab = null) => {
             try {
-
                 const response = await fetch(`main-pages/${page}.html`);
 
-                if (!response.ok) throw new Error("No se pudo cargar la sección");
+                if (!response.ok) throw new Error(`No se pudo cargar la sección ${page}`);
 
                 const html = await response.text();
                 contenido.innerHTML = html;
 
-                if (page === "articulos") {
-                    inicializarAlmacen();
+                // Inicializadores específicos por página
+                switch (page) {
+                    case "articulos":
+                        // CAMBIO 2: Le pasamos el 'tab' al controlador de almacén
+                        inicializarAlmacen(tab);
+                        break;
+                    case "detalle-producto":
+                        inicializarDetalleProducto(id);
+                        break;
+                    case "inventario":
+                        inicializarInventario();
+                        break;
+                    case "proveedores":
+                        inicializarProveedores();
+                        break;
+                    case "pedidos":
+                        inicializarPedidos();
+                        break;
                 }
-                else if (page === "detalle-producto") {
-                    inicializarDetalleProducto(id);
-                }
-                else if (page === "inventario") {
-                    inicializarInventario();
-                }
-                else if (page === "proveedores") {
-                    inicializarProveedores();
-                }
-                else if (page === "pedidos") {
-        inicializarPedidos(); // <--- LLAMAR
-    }
 
                 if (menuPrincipal) menuPrincipal.classList.remove("open");
 
-                // CARGAR NOMBRE DE USUARIO EN EL HEADER
-                const userSpan = document.getElementById('header-username');
-                const currentUser = authService.getCurrentUser();
-
-                if (userSpan && currentUser) {
-                    
-                    userSpan.textContent = currentUser.nombre || currentUser.username;
-                }
-
-                // BOTÓN LOGOUT
-                const btnLogout = document.getElementById('btnLogout');
-                if (btnLogout) {
-                    btnLogout.addEventListener('click', () => {
-                        authService.logout();
-                    });
-                }
-
             } catch (error) {
                 console.error(error);
-                contenido.innerHTML = `<p style='color:red; padding:20px'>Error cargando la sección: ${page}</p>`;
+                contenido.innerHTML = `<div style="padding:20px; color:red">Error cargando ${page}: ${error.message}</div>`;
             }
         };
 
+        // --- DELEGACIÓN DE EVENTOS PARA EL MENÚ Y ACCESOS DIRECTOS ---
         document.addEventListener("click", (e) => {
             const elemento = e.target.closest("[data-page]");
 
@@ -85,18 +79,31 @@ else {
                 e.preventDefault();
                 const page = elemento.dataset.page;
                 const id = elemento.dataset.id || null;
+                
+                // CAMBIO 3: Capturamos el atributo data-tab
+                const tab = elemento.dataset.tab || null; 
 
+                // Gestión de la clase 'active' visual en el menú
                 if (elemento.closest(".menu")) {
                     document.querySelectorAll(".menu li").forEach(li => li.classList.remove("active"));
                     const li = elemento.querySelector("li");
                     if (li) li.classList.add("active");
                 }
 
-                if (page) cargarPagina(page, id);
+                // CAMBIO 4: Pasamos el tab a la función de carga
+                cargarPagina(page, id, tab);
             }
         });
+        
+        // Manejo del botón menú hamburguesa
+        const menuToggle = document.getElementById('menu-toggle');
+        if (menuToggle && menuPrincipal) {
+            menuToggle.addEventListener('click', () => {
+                menuPrincipal.classList.toggle('open');
+            });
+        }
 
-        // CARGA INICIAL
+        // --- CARGA INICIAL ---
         cargarPagina("inicio");
     });
 }

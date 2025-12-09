@@ -133,28 +133,36 @@
       "nombre": "Tomate Raf",
       "categoriaId": 1,
       "unidad": "kg",
-      "imagen": "tomate-raf.jpg"
+      "imagen": "tomate-raf.jpg",
+      "categoria": "Sin categoría",
+      "precio": null,
+      "stockMinimo": 0,
+      "descripcion": "Sin descripción detallada. 2",
+      "stock": 89
     },
     {
       "id": "2",
       "nombre": "Lechuga Iceberg",
       "categoriaId": 2,
       "unidad": "unidad",
-      "imagen": "lechuga-iceberg.jpg"
+      "imagen": "lechuga-iceberg.jpg",
+      "stock": 6
     },
     {
       "id": "3",
       "nombre": "Solomillo de Ternera",
       "categoriaId": 3,
       "unidad": "kg",
-      "imagen": "solomillo-ternera.jpg"
+      "imagen": "solomillo-ternera.jpg",
+      "stock": 9
     },
     {
       "id": "4",
       "nombre": "Pechuga de Pollo",
       "categoriaId": 4,
       "unidad": "kg",
-      "imagen": "pechuga-pollo.jpg"
+      "imagen": "pechuga-pollo.jpg",
+      "stock": 6
     },
     {
       "id": "5",
@@ -1175,28 +1183,41 @@
   ],
   "pedidos": [
     {
-      "id": 1001,
+      "id": "1001",
       "id_usuario": 3,
       "fecha": "2023-11-20",
       "estado": "pendiente",
-      "total": 150.50,
-      "observaciones": "Urgente para el lunes"
+      "total": 150.5,
+      "observaciones": "Urgente para el lunes",
+      "numero_albaran": "",
+      "detalles": [
+        {
+          "id_producto": "1",
+          "nombre_producto": "Tomate Raf",
+          "cantidad": 10,
+          "precio_coste": 4,
+          "id_proveedor": "2",
+          "subtotal": 40
+        },
+        {
+          "id_producto": "7",
+          "nombre_producto": "Leche Entera",
+          "cantidad": 20,
+          "precio_coste": 0.95,
+          "id_proveedor": "5",
+          "subtotal": 19
+        }
+      ]
     },
     {
-      "id": 1002,
+      "id": "1002",
       "id_usuario": 4,
       "fecha": "2023-11-22",
       "estado": "recibido",
-      "total": 45.20,
-      "observaciones": ""
-    },
-    {
-      "id": 1003,
-      "id_usuario": 3,
-      "fecha": "2023-11-25",
-      "estado": "aprobado",
-      "total": 210.00,
-      "observaciones": "Material para laboratorio"
+      "total": 45.2,
+      "observaciones": "",
+      "numero_albaran": "ALB-2023-998",
+      "detalles": []
     }
   ]
 }

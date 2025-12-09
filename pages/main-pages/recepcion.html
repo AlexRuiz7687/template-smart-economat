@@ -1,1 +1,67 @@
-<h1>RECEPCIÓN</h1>
+<section class="hoja-pedido-container">
+    <div class="header-recepcion">
+        <h2 class="titulo-hoja">Recepción de Mercancías</h2>
+        
+        <div class="grid-cabecera-pedido">
+            <div class="fila-hoja">
+                <label for="selectPedidoRecepcion">Seleccionar Pedido Pendiente:</label>
+                <select id="selectPedidoRecepcion" class="input-hoja">
+                    <option value="">Cargando pedidos pendientes...</option>
+                </select>
+                <button id="btnCargarPedido" class="btn-submit" style="width: auto; margin: 0 10px; height: auto; padding: 5px 15px; font-size: 1rem;">Cargar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="areaRecepcion" style="display: none;">
+        
+        <div class="grid-cabecera-pedido">
+            <div class="fila-hoja">
+                <label>Proveedor (Principal)</label>
+                <input type="text" id="txtProveedor" class="input-hoja" readonly>
+            </div>
+            <div class="fila-hoja">
+                <label>Nº Albarán Físico</label>
+                <input type="text" id="txtNumeroAlbaran" class="input-hoja" placeholder="Escribe el nº del papel...">
+            </div>
+            <div class="fechas-group">
+                <div class="campo-fecha">
+                    <label>Fecha Pedido</label>
+                    <input type="date" id="fechaPedido" readonly>
+                </div>
+                <div class="campo-fecha">
+                    <label>Fecha Recepción</label>
+                    <input type="date" id="fechaRecepcion">
+                </div>
+            </div>
+        </div>
+
+        <div class="contenedor-tabla-pedido">
+            <table class="tabla-hoja" id="tablaRecepcion">
+                <thead>
+                    <tr>
+                        <th style="width: 40%;">Descripción</th>
+                        <th style="width: 15%;">Cant. Pedida</th>
+                        <th style="width: 15%;">Cant. Recibida</th> <th style="width: 15%;">Coste Kg/Ud</th>
+                        <th style="width: 15%;">Concordancia</th>
+                    </tr>
+                </thead>
+                <tbody id="tbodyRecepcion">
+                    </tbody>
+            </table>
+        </div>
+
+        <div class="pie-pedido">
+            <div class="nota-informativa">
+                <strong>Instrucciones:</strong> Verifica que la cantidad recibida coincide con la pedida. Si hay diferencias, anótalas. Al confirmar, el stock se sumará automáticamente al inventario.
+            </div>
+            <div class="acciones-finales" style="display: flex; gap: 20px; flex-direction: column; align-items: flex-end;">
+                <div class="total-box">
+                    <label>Total Albarán</label>
+                    <input type="text" id="totalAlbaran" readonly value="0.00 €">
+                </div>
+                <button id="btnConfirmarRecepcion" class="btn-submit">✅ Confirmar Entrada y Stock</button>
+            </div>
+        </div>
+    </div>
+</section>

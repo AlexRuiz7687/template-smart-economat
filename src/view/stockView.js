@@ -46,14 +46,13 @@ export function cargarCategorias(categorias) {
   });
 }
 
-// ... (Tu código anterior de renderizarTabla y cargarCategorias se queda igual) ...
 
 
 /* =========================================================
    NUEVAS FUNCIONES PARA SECCIÓN INVENTARIO
    ========================================================= */
 
-// TAB 1: Solo ID, Nombre, Categoria, Cantidad, Total €
+// TAB 1: ID, Nombre, Categoria, Cantidad, Total €
 export function renderInventarioValorado(datos, resumenEl) {
     const tabla = document.getElementById('tabla-valorada-body');
     tabla.innerHTML = '';
@@ -105,7 +104,7 @@ export function renderConsolidacion(datos) {
             <input type="number" id="input-stock-${p.id}" value="${p.stock}" class="form-control rounded" style="width:100px">
         </td>
         <td>
-            <button class="btn-guardar-stock" data-id="${p.id}">💾 Guardar</button>
+            <button class="btn-guardar-stock" data-id="${p.id}">Guardar</button>
         </td> 
       `;
       tabla.appendChild(fila);

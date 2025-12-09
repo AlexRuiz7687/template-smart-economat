@@ -13,7 +13,7 @@ let todosLosProductos = [];
 let productosMostrados = [];
 
 // FUNCIÓN INICIALIZAR
-export async function inicializarAlmacen() {
+export async function inicializarAlmacen(tabDestino = null) {
   
   // Búsqueda de elementos del DOM
   tabla = document.querySelector('#tablaProductos tbody');
@@ -41,7 +41,6 @@ export async function inicializarAlmacen() {
           selectCategoria.innerHTML = '<option value="">-- Categoría --</option>';
           categorias.forEach(c => {
               const opt = document.createElement('option');
-              
               const nombreCat = c.nombre || c; 
               opt.value = nombreCat;
               opt.textContent = nombreCat;
@@ -66,7 +65,9 @@ export async function inicializarAlmacen() {
   ];
 
   bindEvents(eventMap);
-  setupTabs();
+  
+  // AQUÍ LLAMAMOS A LA FUNCIÓN UNICA DE PESTAÑAS
+  setupTabs(tabDestino);
 }
 
 /* =========================================
@@ -76,7 +77,6 @@ export async function inicializarAlmacen() {
 function onBuscar() {
   if (!inputBusqueda) return;
   const termino = inputBusqueda.value.trim();
-  // Usamos la utilidad importada de funciones.js
   productosMostrados = buscarProducto(todosLosProductos, termino);
   renderizarTabla(productosMostrados, resumen);
 }
@@ -84,13 +84,11 @@ function onBuscar() {
 function onOrdenar() {
   if (!selectOrden) return;
   const orden = selectOrden.value;
-  // Usamos la utilidad importada de funciones.js
   productosMostrados = ordenarPorPrecio(productosMostrados, orden);
   renderizarTabla(productosMostrados, resumen);
 }
 
 function onShowAll() {
-  // Reseteamos filtros
   productosMostrados = [...todosLosProductos];
   if (inputBusqueda) inputBusqueda.value = '';
   if (selectCategoria) selectCategoria.value = '';
@@ -99,7 +97,6 @@ function onShowAll() {
 }
 
 function onComprobarStock() {
-  // Usamos la utilidad importada de funciones.js
   productosMostrados = comprobarStockMinimo(todosLosProductos);
   renderizarTabla(productosMostrados, resumen);
 }
@@ -109,12 +106,9 @@ function onCategoriaChange() {
   const categoriaSeleccionada = selectCategoria.value;
 
   if (categoriaSeleccionada === '') {
-    // Si no hay selección, mostramos todo
     productosMostrados = [...todosLosProductos];
   } else {
-    // Filtramos
     productosMostrados = todosLosProductos.filter(p => {
-        // Verificación si categoria es objeto o string
         const catNombre = (typeof p.categoria === 'object' && p.categoria !== null) 
                           ? p.categoria.nombre 
                           : p.categoria;
@@ -135,10 +129,12 @@ function bindEvents(events) {
   }
 }
 
-function setupTabs() {
+// ESTA ES LA VERSIÓN BUENA Y ÚNICA DE SETUPTABS
+function setupTabs(tabDestino) {
     // Seleccionamos todos los botones de las pestañas
     const tabButtons = document.querySelectorAll('.tablinks');
     
+    // Asignamos los clicks
     tabButtons.forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.preventDefault();
@@ -150,7 +146,7 @@ function setupTabs() {
             // Quitar clase active de todos los botones
             tabButtons.forEach(b => b.classList.remove("active"));
 
-            // Mostrar el contenido seleccionado (usando el data-target del botón)
+            // Mostrar el contenido seleccionado
             const targetId = e.target.dataset.target; 
             const targetDiv = document.getElementById(targetId);
             
@@ -158,12 +154,22 @@ function setupTabs() {
                 targetDiv.style.display = "block";
             }
 
-            // 4. Activar el botón actual
             e.currentTarget.classList.add("active");
         });
     });
 
-    // Apertura de tab por defecto
+    // LÓGICA DE APERTURA AUTOMÁTICA
+    if (tabDestino) {
+        // Buscamos el botón que tiene data-target igual al destino (ej: "nvoArticulo")
+        const botonEspecifico = document.querySelector(`.tablinks[data-target="${tabDestino}"]`);
+        
+        if (botonEspecifico) {
+            botonEspecifico.click(); // ¡Clic automático!
+            return; // Salimos para que no se ejecute el default
+        }
+    }
+
+    // Si no pidieron nada especial, abrimos la por defecto
     const defaultBtn = document.getElementById("defaultOpen");
     if (defaultBtn) {
         defaultBtn.click();

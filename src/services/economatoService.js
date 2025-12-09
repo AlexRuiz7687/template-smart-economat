@@ -1,8 +1,10 @@
 const Api_URL = 'http://localhost:3000';
 
+// 1. OBTENER PRODUCTOS (JOIN COMPLETO)
+
 export async function getProductos() {
   try {
-  // PEDIR TODAS LAS TABLAS
+    // Pedimos todo en paralelo
     const [productosRes, proveedoresRes, relacionesRes, inventarioRes, categoriasRes] = await Promise.all([
       fetch(`${Api_URL}/productos`),
       fetch(`${Api_URL}/proveedores`),
@@ -11,54 +13,47 @@ export async function getProductos() {
       fetch(`${Api_URL}/categorias`)
     ]);
 
-    if (!productosRes.ok || !proveedoresRes.ok || !relacionesRes.ok || !inventarioRes.ok) {
-      throw new Error("Error al cargar alguna de las tablas de la base de datos");
-    }
+    if (!productosRes.ok) throw new Error("Error al cargar datos");
 
     const productos = await productosRes.json();
     const proveedores = await proveedoresRes.json();
     const relaciones = await relacionesRes.json();
-    const inventario = await inventarioRes.json();
+    // const inventario = await inventarioRes.json(); // YA NO LO USAMOS PARA EL STOCK
     const categorias = await categoriasRes.json();
 
-    // UNIFICAR DATOS
-    // Recorremos la tabla intermedia producto_proveedor que es la que conecta todo
+    // Mapeamos basándonos en las relaciones (o podrías hacerlo directo de productos si quisieras simplificar más)
     const datosUnificados = relaciones.map(relacion => {
         
-        
+        // Buscamos el producto real
         const prodBase = productos.find(p => p.id == relacion.id_producto);
         const provBase = proveedores.find(p => p.id == relacion.id_proveedor);
-        const invBase = inventario.find(i => i.id_producto_proveedor == relacion.id);
 
+        // Nombre de categoría
         let nombreCategoria = 'General';
         if (prodBase && prodBase.categoriaId) {
-            const catObj = categorias.find(c => c.id == prodBase.categoriaId);
-            if (catObj) nombreCategoria = catObj.nombre;
+            // Buscamos por ID o nombre, según cómo lo guardes
+            const catObj = categorias.find(c => c.id == prodBase.categoriaId || c.nombre == prodBase.categoriaId);
+            if (catObj) nombreCategoria = catObj.nombre || catObj;
         }
 
         return {
-            id: relacion.id,
-            codigo: relacion.codigo,
+            id: relacion.id,           // ID de la relación (Fila)
             
-            // Datos del Producto
+            // --- CORRECCIÓN CLAVE 1: ID REAL DEL PRODUCTO ---
+            productoId: prodBase ? prodBase.id : null, 
+            
+            codigo: relacion.codigo || (prodBase ? prodBase.codigo : ''),
             nombre: prodBase ? prodBase.nombre : 'Producto no encontrado',
-            descripcion: prodBase ? prodBase.descripcion : '',
+            
+            // --- CORRECCIÓN CLAVE 2: EL STOCK VIENE DE PRODUCTOS (prodBase) ---
+            // Antes leías de 'invBase', ahora leemos de 'prodBase' que es donde guardas.
+            stock: prodBase ? parseInt(prodBase.stock || 0) : 0,
+            stockMinimo: prodBase ? parseInt(prodBase.stockMinimo || 0) : 0,
+            
+            precio: relacion.precio, // O prodBase.precio si lo prefieres
             categoria: nombreCategoria, 
-            imagen: prodBase ? prodBase.imagen : 'no-image.png',
-
-            // Datos del Proveedor
             proveedor: provBase ? provBase.nombre : 'Sin proveedor',
-            proveedorId: provBase ? provBase.id : null,
-
-            // Datos de la Relación
-            precio: relacion.precio,
-            
-            // Datos de Inventario
-            stock: invBase ? invBase.stock : 0,
-            stockMinimo: invBase ? invBase.stockMinimo : 0,
-            
-            // Flag útil para pintar en rojo en la tabla
-            alertaStock: invBase ? (invBase.stock < invBase.stockMinimo) : false
+            imagen: prodBase ? prodBase.imagenUrl : 'no-image.png'
         };
     });
 
@@ -69,6 +64,9 @@ export async function getProductos() {
     return [];
   }
 }
+
+// Alias para compatibilidad con controladores que buscan "getProductosCompleto"
+export { getProductos as getProductosCompleto };
 
 export async function getCategorias() {
   try {
@@ -83,36 +81,23 @@ export async function getCategorias() {
 
 export async function getArticuloById(id) {
     try {
-        
-        const response = await fetch(`${Api_URL}/productos/${id}`);
-        
-        if (!response.ok) {
-            if(response.status === 404) throw new Error("Artículo no encontrado");
-            throw new Error("Error de conexión");
-        }
-        
-        const data = await response.json();
-        return data;
-
+        const response = await fetch(`${Api_URL}/productos/${id}`); // OJO: Para detalle completo deberías usar getProductos() y find
+        if (!response.ok) throw new Error("Error conexión");
+        return await response.json();
     } catch (error) {
         console.error(error);
         throw error;
     }
 }
 
-// Actualizar un artículo existente
 export async function updateArticulo(id, datosActualizados) {
     try {
         const response = await fetch(`${Api_URL}/productos/${id}`, {
-            method: 'PUT', // Método para actualizar
-            headers: {
-                'Content-Type': 'application/json' // Avisamos que enviamos JSON
-            },
-            body: JSON.stringify(datosActualizados) // Convertimos datos a texto
+            method: 'PATCH', 
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(datosActualizados)
         });
-
-        if (!response.ok) throw new Error("Error al actualizar el producto");
-
+        if(!response.ok) throw new Error("Error al actualizar");
         return await response.json();
     } catch (error) {
         console.error(error);
@@ -121,28 +106,33 @@ export async function updateArticulo(id, datosActualizados) {
 }
 
 export async function createArticulo(nuevoArticulo) {
-    try {
-        const response = await fetch(`${Api_URL}/productos`, { // Recuerda: /productos según tu db.json
+     try {
+        // 1. Guardamos el producto base
+        const response = await fetch(`${Api_URL}/productos`, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(nuevoArticulo)
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                id: nuevoArticulo.id,
+                nombre: nuevoArticulo.nombre,
+                descripcion: nuevoArticulo.descripcion,
+                categoriaId: nuevoArticulo.categoria, 
+                imagen: "no-image.png"
+            })
         });
 
-        if (!response.ok) throw new Error("Error al registrar el artículo");
-
+        if(!response.ok) throw new Error("Error al crear producto base");
+        
+    
+        
         return await response.json();
-    } catch (error) {
-        console.error(error);
-        throw error;
-    }
+     } catch (error) {
+         console.error(error);
+         throw error;
+     }
 }
 
-// OBTENER PROVEEDORES
 export async function getProveedores() {
   try {
-    // Asumimos que en tu db.json se llama "proveedores"
     const res = await fetch(`${Api_URL}/proveedores`);
     if (!res.ok) throw new Error(`Error al obtener proveedores`);
     return await res.json();
@@ -152,32 +142,46 @@ export async function getProveedores() {
   }
 }
 
-// PEDIDOS
+// --- SECCIÓN PEDIDOS ---
 
 export async function getPedidos() {
     try {
-        // Hacemos dos peticiones para cruzar datos (Pedidos y Usuarios)
         const [pedidosRes, usuariosRes] = await Promise.all([
             fetch(`${Api_URL}/pedidos`),
             fetch(`${Api_URL}/usuarios`)
         ]);
 
-        if (!pedidosRes.ok || !usuariosRes.ok) throw new Error("Error cargando pedidos");
+        if (!pedidosRes.ok) return [];
 
         const pedidos = await pedidosRes.json();
         const usuarios = await usuariosRes.json();
 
-        // Cruzamos los datos para que salga el nombre del usuario, no solo el ID
         return pedidos.map(p => {
             const usuario = usuarios.find(u => u.id == p.id_usuario);
             return {
-                ...p, // Copia todo lo del pedido (id, fecha, total...)
-                nombreUsuario: usuario ? `${usuario.nombre} ${usuario.apellidos}` : 'Usuario Desconocido'
+                ...p,
+                nombreUsuario: usuario ? `${usuario.nombre} ${usuario.apellidos}` : 'Desconocido'
             };
         });
 
     } catch (error) {
         console.error(error);
         return [];
+    }
+}
+
+export async function createPedido(nuevoPedido) {
+    try {
+        const response = await fetch(`${Api_URL}/pedidos`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(nuevoPedido)
+        });
+
+        if (!response.ok) throw new Error("Error al guardar el pedido");
+        return await response.json();
+    } catch (error) {
+        console.error(error);
+        throw error;
     }
 }
