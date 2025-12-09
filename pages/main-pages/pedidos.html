@@ -4,72 +4,111 @@
         <div class="menu-articulos">
             <h2>Gestión de Pedidos</h2>
         </div>
-        
-        <div class="tab">
-            <button class="tablinks active" id="tabListaPedidos">Historial</button>
-            <button class="tablinks" id="tabNuevoPedido">Nuevo Pedido</button>
+        <div id="panel-admin-actions" style="display:none;">
+            <button id="btnUnificar" class="btn-guardar" style="background-color: #2a9d8f;">
+                Unificar para Compra
+            </button>
         </div>
     </div>
 
-    <div id="vistaListaPedidos" class="tabcontent" style="display: block;">
-        <div class="cabecera-articulos">
-            <div class="controles">
-                <input type="text" id="busquedaPedido" placeholder="Buscar por ID o Usuario..." class="form-control rounded" style="width: 250px;">
+    <div class="tab">
+        <button class="tablinks active" id="defaultOpenPedidos" data-target="verPedidos">Historial de Pedidos</button>
+        <button class="tablinks" id="btnTabNuevoPedido" data-target="nvoPedido">Nuevo Pedido</button>
+    </div>
+
+    <div id="verPedidos" class="tabcontent" style="display: block;">
+        <div class="controles" style="margin-top: 20px; margin-bottom: 15px;">
+            <input type="text" id="busquedaPedido" placeholder="Buscar..." class="form-control rounded" style="width: 300px;">
+            <select id="filtroEstadoPedido" class="form-control rounded" style="width: 150px; margin-left: 10px;">
+                <option value="">Estado: Todos</option>
+                <option value="Pendiente">Pendiente</option>
+                <option value="Procesado">Procesado</option>
+            </select>
+        </div>
+
+        <table class="styled-table" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th class="col-check-admin" style="display:none; width: 40px;">Sel.</th>
+                    <th>ID</th>
+                    <th>Fecha</th>
+                    <th>Solicitante</th>
+                    <th>Estado</th>
+                    <th>Total (€)</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-pedidos-body"></tbody>
+        </table>
+    </div>
+
+    <div id="nvoPedido" class="tabcontent" style="display: none;">
+        <div class="crear-articulo">
+            <form class="form-nuevo-articulo" id="formNuevoPedido">
+                <input type="hidden" id="pedido-id-edicion">
                 
-                <select id="filtroEstadoPedido" class="form-control rounded option-style">
-                    <option value="">-- Todos los Estados --</option>
-                    <option value="pendiente">Pendiente</option>
-                    <option value="aprobado">Aprobado</option>
-                    <option value="recibido">Recibido</option>
-                    <option value="cancelado">Cancelado</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="contenedor-tabla-responsive">
-            <table class="styled-table" style="width: 100%;">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Fecha</th>
-                        <th>Solicitante</th>
-                        <th>Estado</th>
-                        <th>Total (€)</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody id="tabla-pedidos-body">
-                    </tbody>
-            </table>
-        </div>
-    </div>
-
-    <div id="vistaNuevoPedido" class="tabcontent" style="display: none;">
-        
-        <div class="hoja-pedido-container">
-            <h2 class="titulo-hoja" style="border-bottom: 2px solid #333; margin-bottom:20px; padding-bottom:10px;">HOJA DE PEDIDO</h2>
-
-            <form id="formNuevoPedido">
-                <div class="grid-cabecera-pedido">
-                    
-                    <div class="fila-hoja">
-                        <label>PROFESOR/A:</label>
-                        <input type="text" id="nombreProfesor" class="input-hoja" readonly style="background-color: #f0f0f0; color: #555;">
-                        <input type="hidden" id="idUsuarioPedido">
+                <div class="form-row main-inputs" style="margin-bottom: 20px;">
+                    <div class="form-group">
+                        <label>Solicitante</label>
+                        <input type="text" id="pedido-solicitante" class="form-control rounded" readonly>
                     </div>
-
-                    <div class="fila-hoja fechas-group">
-                        <div class="campo-fecha">
-                            <label>FECHA PEDIDO:</label>
-                            <input type="date" id="fechaPedido" class="input-hoja" required>
-                        </div>
-                        <div class="campo-fecha">
-                            <label>FECHA ENTREGA:</label>
-                            <input type="date" id="fechaEntrega" class="input-hoja" required>
-                        </div>
+                    <div class="form-group">
+                        <label>Fecha de Solicitud</label>
+                        <input type="date" id="pedido-fecha" class="form-control rounded">
                     </div>
                 </div>
 
-                <div class="contenedor-tabla-pedido" style="margin-top: 20px;">
-                    <table class="tabla-hoja" id="tablaLineasPedido">
-                        <thead>
+                <h3 style="margin-bottom: 10px; color: var(--cl-dark-gray);">Detalle del Pedido</h3>
+                
+                <table class="styled-table" style="width: 100%; margin-bottom: 15px;">
+                    <thead>
+                        <tr>
+                            <th style="width: 40%;">Producto</th>
+                            <th style="width: 20%;">Cantidad</th>
+                            <th style="width: 20%;">Subtotal</th>
+                            <th style="width: 10%;">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="lineas-pedido-body"></tbody>
+                </table>
+
+                <button type="button" id="btnAgregarLinea" class="btn-guardar" style="background-color: #6c757d; margin-bottom: 20px;">
+                    + Agregar Producto
+                </button>
+
+                <div class="form-row" style="display: flex; justify-content: flex-end; align-items: center; gap: 20px; border-top: 1px solid #ccc; padding-top: 20px;">
+                    <h2 style="margin: 0;">Total: <span id="pedido-total-global">0.00</span> €</h2>
+                    <button id="btnGuardarPedido" class="btn-guardar" style="background-color: var(--primary-color);">
+                        Enviar Pedido
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="vistaUnificacion" class="tabcontent" style="display: none;">
+        <div class="contenedor-ficha">
+            <div class="encabezado-ficha" style="border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 20px;">
+                <h2>Requerimiento de Compra Unificado</h2>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn-guardar" onclick="window.print()" style="background-color: #2c3e50;">Imprimir / PDF</button>
+                    <button class="btn-guardar" id="btnVolverDeUnificado" style="background-color: #6c757d;">Volver</button>
+                </div>
+            </div>
+            
+            <p><strong>Pedidos consolidados:</strong> <span id="lista-ids-unificados"></span></p>
+            
+            <table class="styled-table" style="width: 100%; margin-top: 20px; border: 1px solid #000;">
+                <thead style="background-color: #eee;">
+                    <tr>
+                        <th>Código</th>
+                        <th>Producto</th>
+                        <th style="text-align: center;">Cantidad Total</th>
+                        <th>Unidad</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-unificada-body"></tbody>
+            </table>
+        </div>
+    </div>
+</div>

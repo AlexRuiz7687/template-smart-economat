@@ -4,7 +4,7 @@
       "id": "1",
       "username": "tcasest",
       "password": "secret",
-      "role": "admin",
+      "rol": "admin",
       "nombre": "Tanausú",
       "apellidos": "Castrillo Estévez",
       "email": "tcasest@gobiernodecanarias.org",
@@ -14,7 +14,7 @@
       "id": "239a",
       "username": "aruiz",
       "password": "12345",
-      "role": "alumno",
+      "rol": "alumno",
       "nombre": "Alexis",
       "apellidos": "Ruiz Salazar",
       "email": "alexisruiz.daw@gmail.com",
@@ -24,7 +24,7 @@
       "id": "1595",
       "username": "aruiz",
       "password": "1234",
-      "role": "profesor",
+      "rol": "profesor",
       "nombre": "Alexis",
       "apellidos": "Ruiz Salazar",
       "email": "alexisruiz7687@gmail.com",
@@ -89,12 +89,22 @@
     {
       "id": "1",
       "nombre": "Distribuciones Alimentarias Mediterráneo",
-      "contacto": "Carlos Mendoza"
+      "contacto": "Carlos Mendoza",
+      "cif": "44557766B",
+      "telefono": "",
+      "email": "",
+      "direccion": "",
+      "notas": ""
     },
     {
       "id": "2",
       "nombre": "Frutas y Verduras Frescas SL",
-      "contacto": "María López"
+      "contacto": "María López",
+      "cif": "",
+      "telefono": "",
+      "email": "",
+      "direccion": "",
+      "notas": ""
     },
     {
       "id": "3",
@@ -125,6 +135,16 @@
       "id": "8",
       "nombre": "Bebidas y Vinos Peninsulares",
       "contacto": "Laura Fernández"
+    },
+    {
+      "id": "3698",
+      "cif": "z1521848n",
+      "nombre": "Alexis Fresh Food",
+      "telefono": "",
+      "email": "",
+      "contacto": "",
+      "direccion": "",
+      "notas": ""
     }
   ],
   "productos": [
@@ -1218,6 +1238,34 @@
       "observaciones": "",
       "numero_albaran": "ALB-2023-998",
       "detalles": []
+    },
+    {
+      "id": "61d4",
+      "usuarioId": "1595",
+      "nombreSolicitante": "Alexis",
+      "fecha": "2025-12-09",
+      "estado": "Pendiente",
+      "detalles": [
+        {
+          "productoId": "1",
+          "cantidad": 6,
+          "subtotal": 24,
+          "precioUnitario": 4
+        },
+        {
+          "productoId": "2",
+          "cantidad": 4,
+          "subtotal": 4.6,
+          "precioUnitario": 1.15
+        },
+        {
+          "productoId": "3",
+          "cantidad": 4,
+          "subtotal": 99.6,
+          "precioUnitario": 24.9
+        }
+      ],
+      "total": 128.2
     }
   ]
 }

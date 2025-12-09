@@ -203,3 +203,34 @@ footer a:visited {
   }
 }
 
+
+/* =========== PEDIDOS =====================*/
+
+@media print {
+    /* Oculta todo por defecto */
+    body * {
+        visibility: hidden;
+    }
+    
+    /* Muestra solo el contenido de unificación */
+    #vistaUnificacion, #vistaUnificacion * {
+        visibility: visible;
+    }
+
+    /* Posiciona el contenido arriba a la izquierda */
+    #vistaUnificacion {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 20px;
+        background-color: white;
+    }
+
+    /* Oculta los botones dentro de la vista de unificación */
+    #vistaUnificacion button {
+        display: none !important;
+    }
+}
+

@@ -131,6 +131,9 @@ export async function createArticulo(nuevoArticulo) {
      }
 }
 
+
+// --- SECCIÓN PROVEEDORES ---
+
 export async function getProveedores() {
   try {
     const res = await fetch(`${Api_URL}/proveedores`);
@@ -142,8 +145,29 @@ export async function getProveedores() {
   }
 }
 
+
+
+export async function createProveedor(nuevoProveedor) {
+    try {
+        const response = await fetch(`${Api_URL}/proveedores`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(nuevoProveedor)
+        });
+
+        if (!response.ok) throw new Error("Error al crear el proveedor");
+        
+        // Retornamos el proveedor creado (incluyendo el ID generado automáticamente)
+        return await response.json();
+    } catch (error) {
+        console.error("Error en createProveedor:", error);
+        throw error;
+    }
+}
+
 // --- SECCIÓN PEDIDOS ---
 
+// OBTENER PEDIDOS
 export async function getPedidos() {
     try {
         const [pedidosRes, usuariosRes] = await Promise.all([
@@ -170,6 +194,37 @@ export async function getPedidos() {
     }
 }
 
+// ELIMINAR PEDIDO
+export async function deletePedido(id) {
+    try {
+        const response = await fetch(`${Api_URL}/pedidos/${id}`, {
+            method: 'DELETE'
+        });
+        if (!response.ok) throw new Error("Error al eliminar pedido");
+        return true;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+// ACTUALIZAR PEDIDO
+export async function updatePedido(id, datos) {
+    try {
+        const response = await fetch(`${Api_URL}/pedidos/${id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(datos)
+        });
+
+        if (!response.ok) throw new Error("Error al actualizar el pedido");
+        return await response.json();
+    } catch (error) {
+        console.error("Error updatePedido:", error);
+        throw error;
+    }
+}
+
 export async function createPedido(nuevoPedido) {
     try {
         const response = await fetch(`${Api_URL}/pedidos`, {
@@ -182,6 +237,38 @@ export async function createPedido(nuevoPedido) {
         return await response.json();
     } catch (error) {
         console.error(error);
+        throw error;
+    }
+}
+
+// ---- SECCIÓN PROVEEDORES ------------
+
+export async function updateProveedor(id, datosActualizados) {
+    try {
+        const response = await fetch(`${Api_URL}/proveedores/${id}`, {
+            method: 'PATCH', // Usamos PATCH para actualizar solo lo que cambie
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(datosActualizados)
+        });
+
+        if (!response.ok) throw new Error("Error al actualizar proveedor");
+        return await response.json();
+    } catch (error) {
+        console.error("Error updateProveedor:", error);
+        throw error;
+    }
+}
+
+export async function deleteProveedor(id) {
+    try {
+        const response = await fetch(`${Api_URL}/proveedores/${id}`, {
+            method: 'DELETE'
+        });
+
+        if (!response.ok) throw new Error("Error al eliminar proveedor");
+        return true; 
+    } catch (error) {
+        console.error("Error deleteProveedor:", error);
         throw error;
     }
 }
