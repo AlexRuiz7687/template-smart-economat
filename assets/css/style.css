@@ -1,4 +1,4 @@
-/* -----------------------GENERALES----------------------- */
+/* =====================================GENERALES===================================== */
 * {
   margin: 0;
   padding: 0;
@@ -17,6 +17,9 @@
   --cl-dark-gray: rgb(99, 99, 99);
   --footer-height: 100px;
   --cl-green: rgb(4, 160, 4);
+  --cl-green-primary: #2a9d8f;
+  --cl-green-primary-light: #3ad6c4;
+  --cl-orange: #e67e22;
   
 }
 
@@ -65,8 +68,13 @@ h2{
   color: var(--cl-black);
 }
 
+input:focus{
+    border-color: var(--primary-color, blue);
+    outline: none;
+    background-color: var(--cl-white);
+}
 
-/* -----------------------CONTENIDO----------------------- */
+/* ===================================== MAIN ===================================== */
 
 main {
   margin-top: 1vh;
@@ -84,6 +92,9 @@ main {
   /* padding-bottom: calc(var(--footer-height) + 2vh); */
   position: relative;
 }
+
+/* ===================================== ACCESOS DIRECTOS ===================================== */
+
 
 .acceso-directo {
   border: 1px solid var(--cl-white);
@@ -147,9 +158,9 @@ main {
 }
 
 
-/* -----------------------FIN CONTENIDO----------------------- */
+/* -----------------------FIN ACCESOS DIRECTOS ----------------------- */
 
-/* --------------------------FOOTER-------------------------- */
+/* ====================================FOOTER==================================== */
 
 footer {
   grid-area: footer;
@@ -182,7 +193,7 @@ footer a:visited {
 
 /* --------------------------FIN FOOTER-------------------------- */
 
-/*-----------------------MEDIA QUERIES---------------------------*/
+/*====================================MEDIA QUERIES====================================*/
 
 @media screen and (max-width: 920px) {
 
@@ -225,7 +236,7 @@ footer a:visited {
         width: 100%;
         margin: 0;
         padding: 20px;
-        background-color: white;
+        background-color: var(--cl-white);
     }
 
     /* Oculta los botones dentro de la vista de unificación */

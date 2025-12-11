@@ -1,7 +1,5 @@
 @import url("./style.css");
-.cabecera-articulos{
-    
-}
+
 .controles {
     margin-bottom: 1.5rem;
     display: flex;
@@ -15,7 +13,7 @@ select,
 button {
     padding: 0.6rem 1rem;
     border-radius: 6px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--cl-light-gray);
     font-size: 0.9rem;
 }
 
@@ -34,19 +32,19 @@ button:hover {
 table {
     width: 100%;
     border-collapse: collapse;
-    background: white;
+    background: var(--cl-white);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 th,
 td {
-    border: 1px solid #ddd;
+    border: 1px solid var(--cl-light-gray);
     padding: 0.5rem;
     text-align: left;
 }
 
 th {
-    background: #e0e0e0;
+    background: var(--cl-light-gray);
 }
 
 tr.alerta {
@@ -55,9 +53,23 @@ tr.alerta {
 
 tfoot td {
     font-weight: bold;
-    background: #f4f4f4;
+    background: var(--cl-light-gray);
 }
 .acciones button{
     margin: 1vh;
+}
+
+/*INVENTARIO*/
+
+.valorado {
+    width: 100%; 
+    margin-top: 15px;
+}
+
+.resumen-inv{
+    font-weight:bold; 
+    text-align:right; 
+    padding: 10px; 
+    background-color: var(--cl-white);
 }
 

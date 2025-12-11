@@ -1,67 +1,101 @@
-<section class="hoja-pedido-container">
-    <div class="header-recepcion">
-        <h2 class="titulo-hoja">Recepción de Mercancías</h2>
-        
-        <div class="grid-cabecera-pedido">
-            <div class="fila-hoja">
-                <label for="selectPedidoRecepcion">Seleccionar Pedido Pendiente:</label>
-                <select id="selectPedidoRecepcion" class="input-hoja">
-                    <option value="">Cargando pedidos pendientes...</option>
-                </select>
-                <button id="btnCargarPedido" class="btn-submit" style="width: auto; margin: 0 10px; height: auto; padding: 5px 15px; font-size: 1rem;">Cargar</button>
-            </div>
+<div class="contenedor-seccion">
+    
+    <div class="header-flex">
+        <div class="menu-articulos">
+            <h2>Gestión de Recepciones</h2>
         </div>
     </div>
 
-    <div id="areaRecepcion" style="display: none;">
-        
-        <div class="grid-cabecera-pedido">
-            <div class="fila-hoja">
-                <label>Proveedor (Principal)</label>
-                <input type="text" id="txtProveedor" class="input-hoja" readonly>
-            </div>
-            <div class="fila-hoja">
-                <label>Nº Albarán Físico</label>
-                <input type="text" id="txtNumeroAlbaran" class="input-hoja" placeholder="Escribe el nº del papel...">
-            </div>
-            <div class="fechas-group">
-                <div class="campo-fecha">
-                    <label>Fecha Pedido</label>
-                    <input type="date" id="fechaPedido" readonly>
-                </div>
-                <div class="campo-fecha">
-                    <label>Fecha Recepción</label>
-                    <input type="date" id="fechaRecepcion">
-                </div>
-            </div>
+    <div class="tab">
+        <button class="tablinks active" id="defaultOpenRecepcion" data-target="historialRecepciones">Historial de Recepciones</button>
+        <button class="tablinks" id="btnTabNuevaRecepcion" data-target="nvaRecepcion">Nueva Recepción (Albarán)</button>
+    </div>
+
+    <div id="historialRecepciones" class="tabcontent active-tab">
+        <div class="controles recep-controles-wrapper">
+            <input type="text" id="busquedaRecepcion" placeholder="Buscar por proveedor o albarán..." class="form-control rounded recep-search">
+            <input type="date" id="filtroFechaRecepcion" class="form-control rounded recep-date-filter">
         </div>
 
-        <div class="contenedor-tabla-pedido">
-            <table class="tabla-hoja" id="tablaRecepcion">
-                <thead>
-                    <tr>
-                        <th style="width: 40%;">Descripción</th>
-                        <th style="width: 15%;">Cant. Pedida</th>
-                        <th style="width: 15%;">Cant. Recibida</th> <th style="width: 15%;">Coste Kg/Ud</th>
-                        <th style="width: 15%;">Concordancia</th>
-                    </tr>
-                </thead>
-                <tbody id="tbodyRecepcion">
-                    </tbody>
-            </table>
-        </div>
+        <table class="styled-table full-width">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Fecha Entrada</th>
+                    <th>Proveedor</th>
+                    <th>Nº Albarán</th>
+                    <th>Total (€)</th>
+                    <th>Concordancia</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-recepcion-body"></tbody>
+        </table>
+    </div>
 
-        <div class="pie-pedido">
-            <div class="nota-informativa">
-                <strong>Instrucciones:</strong> Verifica que la cantidad recibida coincide con la pedida. Si hay diferencias, anótalas. Al confirmar, el stock se sumará automáticamente al inventario.
-            </div>
-            <div class="acciones-finales" style="display: flex; gap: 20px; flex-direction: column; align-items: flex-end;">
-                <div class="total-box">
-                    <label>Total Albarán</label>
-                    <input type="text" id="totalAlbaran" readonly value="0.00 €">
+    <div id="nvaRecepcion" class="tabcontent">
+        <div class="crear-articulo">
+            <form class="form-nuevo-articulo" id="formNuevaRecepcion">
+                <input type="hidden" id="recepcion-id-edicion">
+                
+                <div class="form-row main-inputs recep-header-inputs">
+                    <div class="form-group group-proveedor">
+                        <label>Proveedor</label>
+                        <select id="recep-proveedor" class="form-control rounded option-style">
+                            <option value="">-- Seleccionar --</option>
+                        </select>
+                    </div>
+                    <div class="form-group group-albaran">
+                        <label>Nº Albarán</label>
+                        <input type="text" id="recep-albaran" class="form-control rounded" placeholder="Referencia del papel...">
+                    </div>
+                    <div class="form-group group-fecha">
+                        <label>Fecha Recepción</label>
+                        <input type="date" id="recep-fecha" class="form-control rounded">
+                    </div>
                 </div>
-                <button id="btnConfirmarRecepcion" class="btn-submit">✅ Confirmar Entrada y Stock</button>
-            </div>
+
+                <h3 class="recep-subtitle">Líneas del Albarán</h3>
+                
+                <div class="recep-table-container">
+                    <table class="styled-table recep-lines-table">
+                        <thead>
+                            <tr>
+                                <th class="col-desc">Descripción (Producto)</th>
+                                <th class="col-cant">Cantidad</th>
+                                <th class="col-coste">Coste KG/UD (€)</th>
+                                <th class="col-imp">Impuestos (%)</th>
+                                <th class="col-total">Importe (€)</th>
+                                <th class="col-obs">Observaciones</th>
+                                <th class="col-action"></th>
+                            </tr>
+                        </thead>
+                        <tbody id="lineas-recepcion-body"></tbody>
+                    </table>
+                </div>
+
+                <button type="button" id="btnAgregarLineaRecep" class="btn-guardar btn-secondary recep-btn-add">
+                    + Agregar Línea
+                </button>
+
+                <div class="form-row recep-footer">
+                    
+                    <div class="form-group group-concordancia">
+                        <label class="label-bold">Concordancia</label>
+                        <select id="recep-concordancia" class="form-control rounded option-style">
+                            <option value="SI">SÍ</option>
+                            <option value="NO">NO</option>
+                        </select>
+                    </div>
+
+                    <div class="recep-actions-right">
+                        <h2 class="recep-total-display">Coste Total Albarán: <span id="recep-total-global">0.00</span> €</h2>
+                        <button id="btnGuardarRecepcion" class="btn-guardar btn-primary">
+                            Guardar Entrada
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-</section>
+</div>

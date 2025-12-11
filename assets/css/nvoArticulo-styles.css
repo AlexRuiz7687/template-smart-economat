@@ -1,4 +1,5 @@
 /* Estilos para el formulario Nuevo Artículo */
+@import url("./style.css");
 
 /* Contenedor principal del formulario */
 
@@ -57,7 +58,7 @@
 
 /* --- Sección de Alérgenos --- */
 .alergenos-section {
-    border: 1px solid #000;
+    border: 1px solid var(--cl-black);
     padding: 15px;
     margin-top: 20px;
 }
@@ -127,6 +128,17 @@ label.imput-style{
 
 #descripcion {
     resize: none; 
+}
+
+.registrarArticulo {
+    width: 100%; 
+    margin-top: 20px; 
+    padding: 10px; 
+    background-color: var(--primary-color); 
+    color: var(--cl-white); 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer;
 }
 
 /* --- Responsive para móviles (Opcional) --- */

@@ -171,7 +171,7 @@ button.menu-toggle:hover{
 }
 
 .bt-logout:hover {
-  background-color: #ff4d5e;
+  background-color: var(--primary-color);
 }
 
 
@@ -237,13 +237,13 @@ button.menu-toggle:hover{
     position: absolute;
     top: 100%;
     right: 0;
-    width: 40vh; /* Esto es lo que hace que se vea al 50% del ancho */
+    width: 40vh;
     background-color: var(--cl-white);
     
     /* Configuración para el efecto de despliegue */
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.4s ease-out, padding 0.4s ease; /* Añadida transición al padding */
+    transition: max-height 0.4s ease-out, padding 0.4s ease;
     z-index: 100;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     
@@ -252,14 +252,13 @@ button.menu-toggle:hover{
     align-items: stretch;
     margin: 0;
     border-radius: 0;
-    
-    /* CORRECCIÓN AQUÍ: Quitamos el padding por defecto para que no se vea la franja */
+
     padding-bottom: 0; 
   }
 
   .navbar.open {
     max-height: 800px; 
-    /* CORRECCIÓN AQUÍ: Añadimos el padding SOLO cuando está abierto */
+    
     padding-bottom: 20px;
   }
 

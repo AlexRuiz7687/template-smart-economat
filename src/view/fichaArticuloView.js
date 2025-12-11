@@ -64,17 +64,15 @@ export const FichaArticuloView = {
         }
     },
 
-    // --- NUEVO: Recoger los datos para enviar al servicio ---
+    // --- Recoger los datos para enviar al servicio ---
     getDatosFormulario() {
         return {
             nombre: document.getElementById('ficha-nombre').value,
-            // OJO: La categoría aquí se guardará como TEXTO si la editan. 
-            // Para mantenerla como objeto necesitarías un <select>, pero por ahora lo dejamos simple.
+            
             categoria: document.getElementById('ficha-categoria').value,
             precio: parseFloat(document.getElementById('ficha-precio').value),
             stockMinimo: parseInt(document.getElementById('ficha-stock-min').value) || 0, descripcion: document.getElementById('ficha-descripcion').value,
-            // Mantenemos la imagen si existe en el DOM, o vacía
-            // Nota: Aquí no estamos gestionando subida de archivos real todavía
+            
         };
     }
 };

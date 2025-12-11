@@ -182,15 +182,15 @@ select{
    ESTILOS PARA LA HOJA DE PEDIDO (TIPO EXCEL / ALBARÁN)
    ======================================================= */
 
-/* Contenedor Principal (Hoja de papel) */
+/* Contenedor Principal */
 .hoja-pedido-container {
-    background-color: white;
+    background-color: var(--cl-white);
     padding: 40px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--cl-light-gray);
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     max-width: 1100px;
     margin: 20px auto;
-    font-family: Arial, sans-serif; /* Fuente tipo documento */
+    /* font-family: Arial, sans-serif;  */
 }
 
 /* Título */
@@ -198,14 +198,14 @@ select{
     font-size: 2rem;
     font-weight: 800;
     text-transform: uppercase;
-    color: #333;
-    border-bottom: 3px solid #333;
+    color: var(--cl-dark-gray);
+    border-bottom: 3px solid var(--cl-dark-gray);
     display: inline-block;
     margin-bottom: 30px;
     padding-bottom: 5px;
 }
 
-/* --- CABECERA DEL PEDIDO (GRID) --- */
+/* --- CABECERA DEL PEDIDO --- */
 .grid-cabecera-pedido {
     display: flex;
     flex-direction: column;
@@ -213,23 +213,23 @@ select{
     margin-bottom: 30px;
 }
 
-/* Filas de datos (Profesor, Fechas...) */
+/* Filas de datos */
 .fila-hoja {
     display: flex;
     align-items: center;
-    border: 1px solid #999;
-    background-color: #fff;
+    border: 1px solid var(--cl-dark-gray);
+    background-color: var(--cl-white);
 }
 
 .fila-hoja label {
-    background-color: #e0e0e0; /* Fondo gris para la etiqueta */
+    background-color: var(--cl-light-gray);
     padding: 10px 15px;
     font-weight: bold;
-    border-right: 1px solid #999;
+    border-right: 1px solid var(--cl-light-gray);
     min-width: 150px;
     text-transform: uppercase;
     font-size: 0.85rem;
-    color: #333;
+    color: var(--cl-dark-gray);
 }
 
 /* El input se disfraza para parecer parte de la celda */
@@ -247,7 +247,7 @@ select{
 .fechas-group {
     display: flex;
     gap: 20px;
-    border: none; /* Quitamos el borde contenedor */
+    border: none;
     background: none;
 }
 
@@ -280,24 +280,24 @@ select{
 
 .tabla-hoja {
     width: 100%;
-    border-collapse: collapse; /* Bordes pegados tipo Excel */
+    border-collapse: collapse;
     margin-bottom: 0;
 }
 
 .tabla-hoja th {
-    background-color: #f2f2f2;
-    border: 1px solid #666;
+    background-color: var(--cl-white);
+    border: 1px solid var(--cl-light-gray);
     padding: 10px;
     text-align: left;
     font-weight: 800;
     text-transform: uppercase;
     font-size: 0.8rem;
-    color: #333;
+    color: var(--cl-dark-gray);
 }
 
 .tabla-hoja td {
     border: 1px solid #ccc;
-    padding: 0; /* Sin padding para que el input llene todo */
+    padding: 0; 
     height: 40px;
 }
 
@@ -311,19 +311,19 @@ select{
     padding: 0 10px;
     font-size: 0.95rem;
     background-color: transparent;
-    display: block; /* Ocupar todo el bloque */
+    display: block;
     font-family: inherit;
 }
 
 .tabla-hoja input:focus,
 .tabla-hoja select:focus {
-    background-color: #f0f8ff; /* Azul muy clarito al escribir */
+    background-color: var(--cl-white);
 }
 
-/* Campos de solo lectura (totales) */
+/* Campos de solo lectura */
 .tabla-hoja input[readonly] {
-    background-color: #fafafa;
-    color: #555;
+    background-color: var(--cl-light-gray);
+    color: var(--cl-dark-gray);
     font-weight: bold;
 }
 
@@ -331,10 +331,10 @@ select{
 .btn-mas-linea {
     width: 100%;
     padding: 10px;
-    background-color: #f9f9f9;
-    border: 1px dashed #999;
+    background-color: var(--cl-white);
+    border: 1px dashed var(--cl-light-gray);
     border-top: none;
-    color: #555;
+    color: var(--cl-dark-gray);
     font-weight: bold;
     cursor: pointer;
     transition: all 0.2s;
@@ -342,7 +342,7 @@ select{
 }
 
 .btn-mas-linea:hover {
-    background-color: #eee;
+    background-color: var(--cl-white);
     color: var(--primary-color);
 }
 
@@ -353,16 +353,16 @@ select{
     align-items: flex-start;
     margin-top: 30px;
     padding-top: 20px;
-    border-top: 2px solid #333;
+    border-top: 2px solid var(--cl-dark-gray);
 }
 
 .nota-informativa {
     width: 50%;
     font-size: 0.85rem;
-    color: #666;
-    background-color: #f9f9f9;
+    color: var(--cl-dark-gray);
+    background-color: var(--cl-white);
     padding: 15px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--cl-light-gray);
     border-radius: 4px;
 }
 
@@ -370,17 +370,17 @@ select{
 .total-box {
     display: flex;
     align-items: stretch;
-    border: 2px solid #000;
+    border: 2px solid var(--cl-dark-gray);
 }
 
 .total-box label {
-    background-color: #fff;
+    background-color: var(--cl-white);
     padding: 10px 15px;
     font-weight: 800;
     text-transform: uppercase;
     display: flex;
     align-items: center;
-    border-right: 2px solid #000;
+    border-right: 2px solid var(--cl-black);
 }
 
 .total-box input {
@@ -391,7 +391,7 @@ select{
     padding: 10px;
     width: 150px;
     text-align: right;
-    color: #000;
+    color: var(--cl-black);
 }
 
 /* Botón Final Confirmar */
@@ -437,8 +437,8 @@ select{
 .btn-guardar-stock {
     cursor: pointer;
     padding: 5px 10px;
-    background-color: #2a9d8f; /* Tu color verde azulado */
-    color: white;
+    background-color: var(--cl-green-primary);
+    color: var(--cl-white);
     border: none;
     border-radius: 4px;
     font-weight: bold;
@@ -447,7 +447,7 @@ select{
 
 /* Efecto al pasar el ratón */
 .btn-guardar-stock:hover {
-    background-color: #21867a; /* Un tono un poco más oscuro */
+    background-color: #21867a;
 }
 
 /* Efecto al clicar */
@@ -457,7 +457,7 @@ select{
 
 /* Estado deshabilitado (cuando está guardando) */
 .btn-guardar-stock:disabled {
-    background-color: #ccc;
+    background-color: var(--cl-light-gray);
     cursor: not-allowed;
 }
 

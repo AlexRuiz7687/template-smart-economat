@@ -2,7 +2,7 @@
 
 import { getPedidos, createPedido, deletePedido, getProductosCompleto, updatePedido } from "../services/economatoService.js";
 import { authService } from "../services/authService.js"; 
-import { PedidosView } from "../view/pedidosView.js"; // Importamos la nueva vista
+import { PedidosView } from "../view/pedidosView.js"; 
 
 // Variables de estado
 let usuarioActual = null;
@@ -10,7 +10,7 @@ let listaPedidos = [];
 let listaProductosGlobal = [];
 let lineasPedido = [];
 
-export async function inicializarPedidos() {
+export async function inicializarPedidos(tab = null) {
     console.log("Inicializando módulo Pedidos...");
 
     usuarioActual = authService.getCurrentUser();
@@ -33,6 +33,16 @@ export async function inicializarPedidos() {
         await cargarListadoPedidos();
         
         configurarEventos();
+
+        if (tab) {
+            console.log(`Auto-navegando a pestaña: ${tab}`);
+            cambiarPestana(tab); 
+        } else {
+            
+            const defaultBtn = document.getElementById('defaultOpenPedidos');
+            if (defaultBtn) defaultBtn.click();
+        }
+
     } catch (error) {
         console.error("Error en controlador pedidos:", error);
     }
@@ -92,7 +102,7 @@ function configurarEventos() {
             const btnEdit = e.target.closest('.btn-editar-pedido');
             const btnDel = e.target.closest('.btn-borrar-pedido');
 
-            // Importante: verificar que no tenga clase disabled
+            
             if(btnEdit && !btnEdit.classList.contains('btn-disabled')) cargarPedidoEdicion(btnEdit.dataset.id);
             if(btnDel && !btnDel.classList.contains('btn-disabled')) manejarBorrarPedido(btnDel.dataset.id);
         });
@@ -119,7 +129,7 @@ function configurarEventos() {
     }
 }
 
-// --- Lógica de Líneas (Delegando HTML a la Vista) ---
+// --- Lógica de Líneas ---
 
 function agregarLineaDOM(prodId = '', cant = 1) {
     const tbody = document.getElementById('lineas-pedido-body');

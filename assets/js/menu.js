@@ -4,10 +4,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (menuToggle && navbar) {
         menuToggle.addEventListener('click', () => {
-            // 1. Alternar la clase open (Abrir/Cerrar menú)
+            // Alternar la clase open (Abrir/Cerrar menú)
             navbar.classList.toggle('open');
 
-            // 2. Cambiar el icono dependiendo de si tiene la clase 'open'
+            // Cambiar el icono dependiendo de si tiene la clase 'open'
             if (navbar.classList.contains('open')) {
                 menuToggle.textContent = '✕'; // Icono de cerrar (X)
             } else {

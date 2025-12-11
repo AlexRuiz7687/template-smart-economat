@@ -166,7 +166,8 @@
       "categoriaId": 2,
       "unidad": "unidad",
       "imagen": "lechuga-iceberg.jpg",
-      "stock": 6
+      "stock": 8,
+      "precio": 5
     },
     {
       "id": "3",
@@ -174,7 +175,8 @@
       "categoriaId": 3,
       "unidad": "kg",
       "imagen": "solomillo-ternera.jpg",
-      "stock": 9
+      "stock": 14,
+      "precio": 3
     },
     {
       "id": "4",
@@ -189,7 +191,8 @@
       "nombre": "Salmón Fresco",
       "categoriaId": 5,
       "unidad": "kg",
-      "imagen": "salmon-fresco.jpg"
+      "imagen": "salmon-fresco.jpg",
+      "stock": 2
     },
     {
       "id": "6",
@@ -1266,6 +1269,34 @@
         }
       ],
       "total": 128.2
+    },
+    {
+      "id": "1f96",
+      "proveedorId": "1",
+      "albaran": "12345",
+      "fecha": "",
+      "concordancia": "SI",
+      "total": 25.75,
+      "detalles": [
+        {
+          "productoId": "2",
+          "cantidad": 2,
+          "coste": 5,
+          "impuestos": 3,
+          "importe": 10.3,
+          "observaciones": "fresca"
+        },
+        {
+          "productoId": "3",
+          "cantidad": 5,
+          "coste": 3,
+          "impuestos": 3,
+          "importe": 15.45,
+          "observaciones": ""
+        }
+      ],
+      "estado": "Recibido",
+      "fechaRecepcion": "2025-12-10T10:10:16.815Z"
     }
   ]
 }

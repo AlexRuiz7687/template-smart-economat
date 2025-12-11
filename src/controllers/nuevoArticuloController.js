@@ -3,7 +3,7 @@ import { createArticulo, getCategorias } from "../services/economatoService.js";
 export async function inicializarNuevoArticulo() {
     console.log("Inicializando formulario de Nuevo Artículo...");
 
-    // 1. LLENAR SELECT DE CATEGORÍAS
+    // LLENAR SELECT DE CATEGORÍAS
     try {
         const categorias = await getCategorias();
         const selectNuevo = document.getElementById('categoria'); 
@@ -21,7 +21,7 @@ export async function inicializarNuevoArticulo() {
         console.error("Error al cargar categorías:", error);
     }
 
-    // 2. ESCUCHAR EL BOTÓN
+    // ESCUCHAR EL BOTÓN
     const btnGuardar = document.getElementById('btnRegistrarArticulo'); 
     
     if (btnGuardar) {
@@ -36,7 +36,7 @@ export async function inicializarNuevoArticulo() {
 }
 
 async function guardarArticulo() {
-    // 3. CAPTURAR DATOS (IDs exactos de tu HTML)
+    // CAPTURAR DATOS (IDs exactos de tu HTML)
     const nombre = document.getElementById('nombre').value;
     const precio = document.getElementById('precio').value;
     

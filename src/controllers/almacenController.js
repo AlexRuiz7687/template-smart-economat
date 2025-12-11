@@ -129,7 +129,7 @@ function bindEvents(events) {
   }
 }
 
-// ESTA ES LA VERSIÓN BUENA Y ÚNICA DE SETUPTABS
+
 function setupTabs(tabDestino) {
     // Seleccionamos todos los botones de las pestañas
     const tabButtons = document.querySelectorAll('.tablinks');
@@ -160,12 +160,12 @@ function setupTabs(tabDestino) {
 
     // LÓGICA DE APERTURA AUTOMÁTICA
     if (tabDestino) {
-        // Buscamos el botón que tiene data-target igual al destino (ej: "nvoArticulo")
+        // Buscamos el botón que tiene data-target igual al destino
         const botonEspecifico = document.querySelector(`.tablinks[data-target="${tabDestino}"]`);
         
         if (botonEspecifico) {
-            botonEspecifico.click(); // ¡Clic automático!
-            return; // Salimos para que no se ejecute el default
+            botonEspecifico.click(); 
+            return; 
         }
     }
 

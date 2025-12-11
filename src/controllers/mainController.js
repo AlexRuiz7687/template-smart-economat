@@ -1,12 +1,13 @@
 import { authService } from '../services/authService.js';
-// Importamos los controladores de cada sección
+// CONTROLADORES
 import { inicializarAlmacen } from './almacenController.js';
 import { inicializarDetalleProducto } from './detalleProductoController.js';
 import { inicializarInventario } from './inventarioController.js';
 import { inicializarProveedores } from './proveedoresController.js';
 import { inicializarPedidos } from './pedidosController.js';
+import { inicializarRecepcion } from './recepcionController.js';
 
-// 1. PROTECCIÓN DE SEGURIDAD
+// PROTECCIÓN DE SEGURIDAD
 if (!authService.isAuthenticated()) {
     window.location.href = '../index.html';
 } 
@@ -33,7 +34,7 @@ else {
         }
 
         // --- FUNCIÓN PARA CARGAR PÁGINAS ---
-        // CAMBIO 1: Aceptamos un tercer parámetro 'tab' (pestaña)
+        // Aceptamos un tercer parámetro 'tab' (pestaña)
         const cargarPagina = async (page, id = null, tab = null) => {
             try {
                 const response = await fetch(`main-pages/${page}.html`);
@@ -46,7 +47,7 @@ else {
                 // Inicializadores específicos por página
                 switch (page) {
                     case "articulos":
-                        // CAMBIO 2: Le pasamos el 'tab' al controlador de almacén
+                        
                         inicializarAlmacen(tab);
                         break;
                     case "detalle-producto":
@@ -56,11 +57,15 @@ else {
                         inicializarInventario();
                         break;
                     case "proveedores":
-                        inicializarProveedores();
+                        inicializarProveedores(tab);
                         break;
                     case "pedidos":
-                        inicializarPedidos();
+                        inicializarPedidos(tab);
                         break;
+                    case "recepcion":
+                        inicializarRecepcion(tab);
+                        break
+
                 }
 
                 if (menuPrincipal) menuPrincipal.classList.remove("open");
@@ -80,7 +85,7 @@ else {
                 const page = elemento.dataset.page;
                 const id = elemento.dataset.id || null;
                 
-                // CAMBIO 3: Capturamos el atributo data-tab
+                // Capturamos el atributo data-tab
                 const tab = elemento.dataset.tab || null; 
 
                 // Gestión de la clase 'active' visual en el menú
@@ -90,7 +95,7 @@ else {
                     if (li) li.classList.add("active");
                 }
 
-                // CAMBIO 4: Pasamos el tab a la función de carga
+                // Pasamos el tab a la función de carga
                 cargarPagina(page, id, tab);
             }
         });

@@ -1,16 +1,18 @@
 /* --- ESTADOS DE PEDIDO --- */
+@import url("./style.css");
+
 .estado-pendiente {
-    color: #e67e22; /* Naranja */
+    color: var(--cl-orange);
     font-weight: bold;
 }
 
 .estado-procesado {
-    color: #2a9d8f; /* Verde */
+    color: var(--cl-green-primary); /* Verde */
     font-weight: bold;
 }
 
 .estado-desconocido {
-    color: #000;
+    color: var(--cl-black);
     font-weight: bold;
 }
 
@@ -29,7 +31,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: var(--cl-white);
 }
 
 .btn-accion svg {
@@ -38,11 +40,14 @@
 }
 
 .btn-editar {
-    background-color: #2a9d8f;
+    background-color: var(--cl-green-primary);
 }
 
+.btn-editar:hover {
+    background-color: var(--cl-green-primary-light);
+}
 .btn-borrar {
-    background-color: #dc3545;
+    background-color: var(--primary-color);
 }
 
 .btn-disabled {

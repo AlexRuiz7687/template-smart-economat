@@ -1,0 +1,144 @@
+/* recepcion-style.css */
+@import url("./style.css");
+/* --- Controles del Historial --- */
+.recep-controles-wrapper {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.recep-search {
+    width: 300px;
+}
+
+.recep-date-filter {
+    margin-left: 10px;
+    width: auto;
+}
+
+.active-tab {
+    display: block;
+}
+
+.full-width {
+    width: 100%;
+}
+
+/* --- Formulario Nueva Recepción: Cabecera --- */
+.recep-header-inputs {
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--cl-light-gray);
+    padding-bottom: 20px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-end;
+}
+
+/* Ajustes de ancho específicos para los inputs superiores */
+.group-proveedor {
+    flex: 1;
+}
+
+.group-albaran {
+    flex: 1;
+}
+
+.group-fecha {
+    width: 180px;
+    flex-shrink: 0;
+}
+
+/* --- Títulos y Texto --- */
+.recep-subtitle {
+    margin-bottom: 10px;
+    color: var(--cl-dark-gray);
+}
+
+.label-bold {
+    font-weight: bold;
+}
+
+/* --- Tabla de Líneas (Scroll y Columnas) --- */
+.recep-table-container {
+    overflow-x: auto;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.recep-lines-table {
+    width: 100%;
+    min-width: 900px;
+}
+
+/* Anchos de columnas definidos en CSS */
+.col-desc {
+    width: 25%;
+}
+
+.col-cant {
+    width: 10%;
+}
+
+.col-coste {
+    width: 12%;
+}
+
+.col-imp {
+    width: 10%;
+}
+
+.col-total {
+    width: 12%;
+}
+
+.col-obs {
+    width: 20%;
+}
+
+.col-action {
+    width: 5%;
+}
+
+/* --- Botones --- */
+.recep-btn-add {
+    margin-bottom: 20px;
+
+    background-color: var(--cl-light-gray);
+}
+
+.btn-primary {
+    background-color: var(--cl-green-primary);
+}
+
+/* --- Footer (Totales y Guardar) --- */
+.recep-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    border-top: 2px solid var(--cl-light-gray);
+    padding-top: 20px;
+}
+
+.group-concordancia {
+    width: 200px;
+}
+
+.recep-actions-right {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.recep-total-display {
+    margin: 0;
+
+}
+
+.recep-lines-table .form-control {
+    height: 35px;
+    padding: 2px 8px;
+    font-size: 0.9rem;
+}

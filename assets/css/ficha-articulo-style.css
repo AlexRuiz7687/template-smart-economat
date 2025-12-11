@@ -1,7 +1,4 @@
-/* =========================================
-   Estilos para la Ficha de Detalle de Artículo
-   (Basado en nvoArticulo-styles.css)
-   ========================================= */
+@import url("./style.css");
 
 /* --- Contenedor Principal --- */
 .contenedor-ficha {
@@ -40,13 +37,13 @@
 }
 
 .btn-volver:hover {
-    background-color: #000; /* Un poco más oscuro al pasar el mouse */
+    background-color: #000;
 }
 
 /* --- Grid Principal (Imagen a la izquierda, Datos a la derecha) --- */
 .card-producto {
     display: grid;
-    grid-template-columns: 1fr 2fr; /* 1 parte imagen, 2 partes datos */
+    grid-template-columns: 1fr 2fr;
     gap: 30px;
     align-items: start;
 }
@@ -82,7 +79,6 @@
 }
 
 /* --- Estilos de Inputs (Modo Lectura) --- */
-/* Reutilizamos la lógica de .rounded y .form-group */
 
 .grupo-input {
     display: flex;
@@ -91,7 +87,7 @@
 
 .grupo-input label {
     margin-bottom: 5px;
-    font-weight: 400; /* Un poco más de peso para leer mejor */
+    font-weight: 400;
     font-size: 0.9rem;
     color: var(--cl-dark-gray);
 }
@@ -110,10 +106,9 @@
     color: #333;
     font-family: inherit;
     font-size: 1rem;
-    font-weight: 500; /* Texto de datos más negrita */
+    font-weight: 500;
 }
 
-/* Quitamos el borde azul al hacer click ya que es readonly */
 .datos-producto input:focus,
 .datos-producto textarea:focus {
     outline: none;
@@ -141,12 +136,12 @@
 /* --- Responsive (Móviles) --- */
 @media (max-width: 768px) {
     .card-producto {
-        grid-template-columns: 1fr; /* Una sola columna */
+        grid-template-columns: 1fr;
     }
 
     .img-container {
         min-height: 200px;
-        order: -1; /* La imagen siempre arriba en móvil */
+        order: -1;
     }
     
     .encabezado-ficha {
@@ -173,8 +168,8 @@
 }
 
 .btn-editar {
-    background-color: var(--primary-color, #e63946); /* O el color que uses */
-    color: white;
+    background-color: var(--primary-color, #e63946);
+    color: var(--cl-white);
     padding: 8px 16px;
     border: none;
     border-radius: 1vh;
@@ -182,8 +177,8 @@
 }
 
 .btn-guardar {
-    background-color: #2a9d8f; /* Verde */
-    color: white;
+    background-color: var(--cl-green-primary);
+    color: var(--cl-white);
     padding: 8px 16px;
     border: none;
     border-radius: 1vh;
@@ -191,8 +186,8 @@
 }
 
 .btn-cancelar {
-    background-color: #6c757d; /* Gris */
-    color: white;
+    background-color: var(--cl-light-gray);
+    color: var(--cl-white);
     padding: 8px 16px;
     border: none;
     border-radius: 1vh;
@@ -203,31 +198,20 @@
    Estilos para MODO EDICIÓN (Campos activos)
    ========================================= */
 
-/* Cuando el input o textarea NO está desactivado (es decir, se puede escribir) */
+
 .datos-producto input:not(:disabled),
 .datos-producto textarea:not(:disabled) {
     
-    /* 1. Fondo totalmente blanco y opaco */
-    background-color: #ffffff; 
-    /* O si usas variables: var(--cl-white) */
-
-    /* 2. Borde más oscuro para resaltar */
-    border: 1px solid #333; 
-    
-    /* 3. Una sombra suave para que "salga" hacia afuera */
+    background-color: var(--cl-white); 
+    border: 1px solid var(--cl-dark-gray); 
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    
-    /* 4. Cambiamos el cursor para indicar texto */
     cursor: text;
-    
-    /* 5. Transición suave al cambiar de estado */
     transition: all 0.3s ease-in-out;
 }
 
-/* Efecto extra cuando estás escribiendo dentro (Focus) */
 .datos-producto input:focus,
 .datos-producto textarea:focus {
-    border-color: var(--primary-color, blue); /* Cambia al color principal de tu marca */
+    border-color: var(--primary-color, blue);
     outline: none;
-    background-color: #fff;
+    background-color: var(--cl-white);
 }

@@ -1,4 +1,5 @@
 @import url("./style.css");
+
 .menu-articulos{
     width: 100%;
     display: flex;
@@ -16,7 +17,7 @@
   
 }
 
-/* Style the buttons that are used to open the tab content */
+/* botones para abrir el tab */
 .tab button {
   background-color: inherit;
   float: left;
@@ -29,12 +30,12 @@
   color: var(--cl-black);
 }
 
-/* Change background color of buttons on hover */
+
 .tab button:hover {
   background-color: var( --cl-light-gray);
 }
 
-/* Create an active/current tablink class */
+
 .tab button.active {
   /* background-color: #ccc; */
   border-bottom: 3px solid var(--primary-color);
@@ -63,28 +64,28 @@
 /* El contenedor que agrupa título y tabs */
 .header-flex {
     display: flex;
-    justify-content: space-between; /* Uno a cada extremo */
-    align-items: center; /* Centrados verticalmente */
+    justify-content: space-between; 
+    align-items: center;
     margin-bottom: 20px;
-    border-bottom: 1px solid #ccc; /* Opcional: línea gris fina debajo de todo */
+    border-bottom: 1px solid #ccc; 
     padding-bottom: 10px;
 }
 
 /* Ajuste para el título */
 .header-flex .menu-articulos {
-    margin-bottom: 0 !important; /* Quitamos el margen inferior que tenía antes */
+    margin-bottom: 0 !important; 
 }
 
 .header-flex .menu-articulos h2 {
-    margin: 0; /* Quitamos márgenes por defecto del h2 */
-    font-size: 24px; /* Ajusta el tamaño según prefieras */
+    margin: 0;
+    font-size: 24px; 
 }
 
 /* Ajuste para las pestañas */
 .header-flex .tab {
-    width: auto; /* IMPORTANTE: Ya no ocupa el 100% */
+    width: auto; 
     margin-top: 0;
-    border: none; /* Quitamos bordes si los tenía el contenedor */
+    border: none; 
     background-color: transparent;
 }
 
@@ -105,7 +106,7 @@
     
     .header-flex .tab {
         width: 100%;
-        justify-content: space-between; /* O flex-start */
+        justify-content: space-between;
     }
 }
 

@@ -28,7 +28,7 @@ const domInventario = {
    INICIALIZACIÓN
    ========================================= */
 export async function inicializarInventario() {
-    // 1. Captura de elementos
+    // Captura de elementos
     
     // -- Pestaña Ver Stock --
     domInventario.inputBusqueda = document.getElementById('busquedaInv');
@@ -47,17 +47,17 @@ export async function inicializarInventario() {
     if (!domInventario.tbodyValorado) return;
 
     try {
-        // 2. Carga de datos
+        // Carga de datos
         datosInventario = await getProductos();
         datosFiltrados = [...datosInventario];
         
         const categorias = await getCategorias();
         cargarSelectCategorias(categorias);
 
-        // 3. Renderizado inicial
+        // Renderizado inicial
         renderizarTablaValorada(datosFiltrados);
 
-        // 4. Configuración de eventos
+        // Configuración de eventos
         configurarEventos();
         setupTabs(); 
 
@@ -316,13 +316,11 @@ function cargarSelectCategorias(categorias) {
     });
 }
 
-// -------------------------------------------------------------
-// AQUÍ ESTÁN LOS CAMBIOS APLICADOS (Búsqueda Dual + Orden Stock)
-// -------------------------------------------------------------
+
 function aplicarFiltros() {
     let resultado = [...datosInventario];
 
-    // CAMBIO 1: Búsqueda por Nombre O Código
+    // Búsqueda por Nombre O Código
     if (domInventario.inputBusqueda && domInventario.inputBusqueda.value.trim() !== '') {
         const termino = domInventario.inputBusqueda.value.toLowerCase().trim();
         resultado = resultado.filter(producto => {
@@ -334,7 +332,7 @@ function aplicarFiltros() {
         });
     }
 
-    // Filtro por Categoría (Sin cambios)
+    // Filtro por Categoría
     if (domInventario.selectCategoria && domInventario.selectCategoria.value !== '') {
         const catSeleccionada = domInventario.selectCategoria.value;
         resultado = resultado.filter(producto => {
@@ -345,8 +343,8 @@ function aplicarFiltros() {
         });
     }
 
-    // CAMBIO 2: Lógica de Ordenamiento
-    // Tu código ya soportaba 'stock-asc' y 'stock-desc', me aseguro de que se mantenga.
+    // Lógica de Ordenamiento
+    
     if (domInventario.selectOrden) {
         const criterio = domInventario.selectOrden.value;
         resultado.sort((a, b) => {

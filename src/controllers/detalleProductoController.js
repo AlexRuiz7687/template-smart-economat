@@ -1,6 +1,6 @@
 // src/controllers/detalleProductoController.js
 
-// 1. IMPORTANTE: Añadir updateArticulo a los imports
+// IMPORTS
 import { getArticuloById, updateArticulo } from "../services/economatoService.js";
 import { FichaArticuloView } from "../view/fichaArticuloView.js";
 
@@ -13,7 +13,7 @@ export async function inicializarDetalleProducto(id) {
         return;
     }
 
-    // Variable para guardar el objeto original en memoria (por si cancelamos)
+    // Variable para guardar el objeto original en memoria
     let articuloOriginal = null;
 
     try {
@@ -31,14 +31,14 @@ export async function inicializarDetalleProducto(id) {
     const btnGuardar = document.getElementById('btn-guardar');
     const btnCancelar = document.getElementById('btn-cancelar');
 
-    // 1. Click en Editar
+    // Click en Editar
     if(btnEditar) {
         btnEditar.addEventListener('click', () => {
             FichaArticuloView.toggleEdicion(true); // Activa inputs
         });
     }
 
-    // 2. Click en Cancelar
+    // Click en Cancelar
     if(btnCancelar) {
         btnCancelar.addEventListener('click', () => {
             // Restauramos los valores originales visualmente
@@ -48,14 +48,14 @@ export async function inicializarDetalleProducto(id) {
         });
     }
 
-    // 3. Click en Guardar (La lógica fuerte)
+    // Click en Guardar
     if(btnGuardar) {
         btnGuardar.addEventListener('click', async () => {
             try {
-                // A) Recoger datos nuevos
+                // Recoger datos nuevos
                 const datosNuevos = FichaArticuloView.getDatosFormulario();
                 
-                // B) Combinar con el ID original y datos que no están en el form (como la imagen)
+                // Combinar con el ID original y datos que no están en el form
                 // Usamos Spread Operator (...) para mezclar: original + nuevos
                 const productoAEnviar = { 
                     ...articuloOriginal, 
@@ -64,10 +64,10 @@ export async function inicializarDetalleProducto(id) {
 
                 console.log("Enviando actualización:", productoAEnviar);
 
-                // C) Llamar al servicio UPDATE
+                // Llamar al servicio UPDATE
                 await updateArticulo(id, productoAEnviar);
 
-                // D) Éxito: Actualizamos el 'original' con lo nuevo y bloqueamos
+                // Éxito: Actualizamos el 'original' con lo nuevo y bloqueamos
                 articuloOriginal = productoAEnviar; 
                 alert("¡Producto actualizado correctamente!");
                 
