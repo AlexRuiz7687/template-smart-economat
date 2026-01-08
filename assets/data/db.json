@@ -199,7 +199,8 @@
       "nombre": "Gambas Blancas",
       "categoriaId": 6,
       "unidad": "kg",
-      "imagen": "gambas-blancas.jpg"
+      "imagen": "gambas-blancas.jpg",
+      "stock": 4
     },
     {
       "id": "7",
@@ -1297,6 +1298,22 @@
       ],
       "estado": "Recibido",
       "fechaRecepcion": "2025-12-10T10:10:16.815Z"
+    },
+    {
+      "id": "5c67",
+      "usuarioId": "1595",
+      "nombreSolicitante": "Alexis",
+      "fecha": "2025-12-12",
+      "estado": "Pendiente",
+      "detalles": [
+        {
+          "productoId": "3",
+          "cantidad": 3,
+          "subtotal": 74.69999999999999,
+          "precioUnitario": 24.9
+        }
+      ],
+      "total": 74.7
     }
   ]
 }

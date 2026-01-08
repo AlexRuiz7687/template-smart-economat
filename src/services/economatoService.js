@@ -18,10 +18,10 @@ export async function getProductos() {
     const productos = await productosRes.json();
     const proveedores = await proveedoresRes.json();
     const relaciones = await relacionesRes.json();
-    // const inventario = await inventarioRes.json(); // YA NO LO USAMOS PARA EL STOCK
+    // const inventario = await inventarioRes.json(); 
     const categorias = await categoriasRes.json();
 
-    // Mapeamos basándonos en las relaciones (o podrías hacerlo directo de productos si quisieras simplificar más)
+    // Mapeamos basándonos en las relaciones 
     const datosUnificados = relaciones.map(relacion => {
         
         // Buscamos el producto real
@@ -65,7 +65,7 @@ export async function getProductos() {
   }
 }
 
-// Alias para compatibilidad con controladores que buscan "getProductosCompleto"
+
 export { getProductos as getProductosCompleto };
 
 export async function getCategorias() {
@@ -81,7 +81,7 @@ export async function getCategorias() {
 
 export async function getArticuloById(id) {
     try {
-        const response = await fetch(`${Api_URL}/productos/${id}`); // OJO: Para detalle completo deberías usar getProductos() y find
+        const response = await fetch(`${Api_URL}/productos/${id}`); 
         if (!response.ok) throw new Error("Error conexión");
         return await response.json();
     } catch (error) {
@@ -157,7 +157,7 @@ export async function createProveedor(nuevoProveedor) {
 
         if (!response.ok) throw new Error("Error al crear el proveedor");
         
-        // Retornamos el proveedor creado (incluyendo el ID generado automáticamente)
+        
         return await response.json();
     } catch (error) {
         console.error("Error en createProveedor:", error);

@@ -105,6 +105,7 @@
 
 .btn-submit:active{
     scale: .95;
+    background-color: #21867a;
 }
 
 .btn-submit:disabled{

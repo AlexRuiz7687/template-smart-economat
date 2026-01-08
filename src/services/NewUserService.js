@@ -14,7 +14,7 @@ export class NewUserService {
             throw new Error("El correo electrónico ya está registrado");
         }
 
-        /* PASO 2: Si no existe, hacemos el POST para guardarlo */
+        /* Si no existe, hacemos el POST para guardarlo */
         const response = await fetch("http://localhost:3000/usuarios", {
             method: "POST",
             headers: {

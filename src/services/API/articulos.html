@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Artículos - Smart Economato</title>
+    <!-- Iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <!-- Tu CSS separado -->
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="header-section">
+        <h2><i class="fas fa-boxes"></i> Administración de Artículos</h2>
+    </div>
+
+    <!-- PESTAÑAS (TABS) -->
+    <div class="tab">
+        <button class="tablinks active" data-target="verArticulos" id="defaultOpen">Artículos</button>
+        <button class="tablinks" data-target="nvoArticulo">Nuevo Artículo</button>
+    </div>
+
+    <!-- CONTENIDO: NUEVO ARTÍCULO -->
+    <div id="nvoArticulo" class="tabcontent">
+        <div class="crear-articulo">
+            <form class="form-nuevo-articulo" id="formCrear">
+                <div class="form-row main-inputs">
+                    <div class="form-group">
+                        <label>Código</label>
+                        <input type="text" id="codigo" class="form-control" placeholder="Código (SKU)">
+                    </div>
+                    <div class="form-group" style="flex: 2;">
+                        <label>Nombre</label>
+                        <input type="text" id="nombre" class="form-control" placeholder="Nombre del producto *" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Proveedor</label>
+                        <select id="proveedor" class="form-control option-style">
+                            <option value="">-- Seleccionar --</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Precio (€)</label>
+                        <input type="number" id="precio" class="form-control" placeholder="0.00" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Unidad</label>
+                        <select id="unidad" class="form-control option-style">
+                            <option value="Unidad">Unidad</option>
+                            <option value="kg">kg</option>
+                            <option value="gr">gr</option>
+                            <option value="litro">litro</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row description-image-row">
+                    <div class="left-col">
+                        <div class="form-group">
+                            <label>Descripción</label>
+                            <textarea id="descripcion" rows="4" class="form-control" placeholder="Descripción detallada"></textarea>
+                        </div>
+
+                        <div class="form-row" style="margin-top: 15px;">
+                            <div class="form-group" style="flex: 2;">
+                                <label>Categoría</label>
+                                <select id="categoria" class="form-control option-style" required>
+                                    <option value="">-- Seleccionar Categoría --</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Caducidad (días)</label>
+                                <input type="number" id="caducidad" class="form-control" placeholder="Días">
+                            </div>
+                            <div class="form-group">
+                                <label>Stock Mín.</label>
+                                <input type="number" id="stockMinimo" class="form-control" placeholder="Cant.">
+                            </div>
+                        </div>
+
+                        <!-- Sección Alérgenos -->
+                        <div class="alergenos-section rounded" style="margin-top: 15px;">
+                            <label class="alergenos-label">Alérgenos</label>
+                            <div class="alergenos-grid">
+                                <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Gluten"> Gluten</label>
+                                <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Crustaceos"> Crustáceos</label>
+                                <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Huevo"> Huevos</label>
+                                <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Pescado"> Pescado</label>
+                                <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Cacahuetes"> Cacahuetes</label>
+                                <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Soja"> Soja</label>
+                                <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Lacteos"> Lácteos</label>
+                                <label class="radio-label"><input type="checkbox" class="alergeno-check" value="FrutosCascara"> F. Cáscara</label>
+                                <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Apio"> Apio</label>
+                                <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Mostaza"> Mostaza</label>
+                                <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Sesamo"> Sésamo</label>
+                                <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Sulfitos"> Sulfitos</label>
+                                <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Altramuces"> Altramuces</label>
+                                <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Moluscos"> Moluscos</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="right-col">
+                        <div class="image-placeholder rounded" id="preview-img">
+                            <i class="fas fa-image fa-2x"></i>
+                        </div>
+                        <input type="text" id="imagenUrl" class="form-control" placeholder="URL de la imagen">
+                        
+                        <button type="submit" id="btnRegistrarArticulo" class="btn-guardar">
+                            <i class="fas fa-save"></i> Registrar Artículo
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- CONTENIDO: VER ARTÍCULOS -->
+    <div id="verArticulos" class="tabcontent" style="display: block;">
+        <div class="cabecera-articulos">
+            <div class="controles">
+                <div style="position: relative;">
+                    <i class="fas fa-search" style="position: absolute; left: 10px; top: 10px; color: #aaa;"></i>
+                    <input type="text" id="busqueda" placeholder="Buscar producto..." style="padding-left: 30px; min-width: 250px;">
+                </div>
+                
+                <select id="categoriaSelect">
+                    <option value="">Todas las Categorías</option>
+                </select>
+
+                <select id="ordenSelect">
+                    <option value="asc">Precio: Bajo a Alto</option>
+                    <option value="desc">Precio: Alto a Bajo</option>
+                </select>
+
+                <button id="btnAllProducts" title="Recargar"><i class="fas fa-sync"></i></button>
+            </div>
+            
+            <div id="loading" style="display:none; color: #007bff; font-weight: bold;">
+                <i class="fas fa-spinner fa-spin"></i> Cargando...
+            </div>
+        </div>
+
+        <div style="overflow-x: auto;">
+            <table id="tablaProductos">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Categoría</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Mínimo</th>
+                        <th>Proveedor</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody id="tabla-body">
+                    <!-- JS inyectará aquí -->
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="8" id="resumen">Calculando...</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- IMPORTANTE: type="module" permite usar import/export en JS -->
+<script type="module" src="js/controllers/mainController.js"></script>
+
+</body>
+</html>
