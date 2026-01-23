@@ -1,31 +1,32 @@
 //RUTA
 // src/services/authService.js
 
-/* const API_URL = 'http://localhost:3000'; */
-
 
 // RUTA DE ACCESO
-const DB_URL = 'http://localhost:3000/usuarios'; 
+const DB_URL = 'http://localhost/plantillas-smart-economat/src/services/API/usuarios.php';
 
 export const authService = {
-    
+
     login: async (username, password) => {
         try {
-            const response = await fetch(DB_URL);
+            const response = await fetch(DB_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            });
+
             if (!response.ok) throw new Error("No se pudo conectar con la base de datos");
-            
-            // RESPUESTA TIPO JSON
-            const users = await response.json(); 
-            
-            // BUSCAR EL USUARIO
-            const user = users.find(u => u.username === username && u.password === password);
-    
-            if (user) {
+
+            const data = await response.json();
+
+            if (data.success) {
                 // GUARDAR LA SESIÓN
-                localStorage.setItem('smart_user', JSON.stringify(user));
-                return { success: true, user: user };
+                localStorage.setItem('smart_user', JSON.stringify(data.user));
+                return { success: true, user: data.user };
             } else {
-                return { success: false, message: "Usuario o contraseña incorrectos" };
+                return { success: false, message: data.message || "Usuario o contraseña incorrectos" };
             }
 
         } catch (error) {

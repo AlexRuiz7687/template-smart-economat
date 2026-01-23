@@ -1,87 +1,53 @@
-const Api_URL = 'http://localhost:3000';
+const Api_URL = 'http://localhost/plantillas-smart-economat/src/services/API';
 
-// 1. OBTENER PRODUCTOS (JOIN COMPLETO)
-
+// 1. OBTENER PRODUCTOS
 export async function getProductos() {
-  try {
-    // Pedimos todo en paralelo
-    const [productosRes, proveedoresRes, relacionesRes, inventarioRes, categoriasRes] = await Promise.all([
-      fetch(`${Api_URL}/productos`),
-      fetch(`${Api_URL}/proveedores`),
-      fetch(`${Api_URL}/producto_proveedor`),
-      fetch(`${Api_URL}/inventario`),
-      fetch(`${Api_URL}/categorias`)
-    ]);
+    try {
+        const response = await fetch(`${Api_URL}/productos.php`);
 
-    if (!productosRes.ok) throw new Error("Error al cargar datos");
+        if (!response.ok) throw new Error("Error al cargar datos");
 
-    const productos = await productosRes.json();
-    const proveedores = await proveedoresRes.json();
-    const relaciones = await relacionesRes.json();
-    // const inventario = await inventarioRes.json(); 
-    const categorias = await categoriasRes.json();
+        const productos = await response.json();
 
-    // Mapeamos basándonos en las relaciones 
-    const datosUnificados = relaciones.map(relacion => {
-        
-        // Buscamos el producto real
-        const prodBase = productos.find(p => p.id == relacion.id_producto);
-        const provBase = proveedores.find(p => p.id == relacion.id_proveedor);
+        // Mapeamos para mantener compatibilidad con la vista
+        return productos.map(p => ({
+            id: p.id,
+            productoId: p.id,
+            codigo: p.codigo,
+            nombre: p.nombre,
+            stock: p.stock,
+            stockMinimo: p.stockMinimo,
+            precio: p.precio,
+            categoria: p.categoria || 'Sin Categoría',
+            proveedor: p.proveedor || 'Desconocido',
+            imagen: p.imagen || 'no-image.png',
+            descripcion: p.descripcion,
+            unidadMedida: p.unidad_medida
+        }));
 
-        // Nombre de categoría
-        let nombreCategoria = 'General';
-        if (prodBase && prodBase.categoriaId) {
-            // Buscamos por ID o nombre, según cómo lo guardes
-            const catObj = categorias.find(c => c.id == prodBase.categoriaId || c.nombre == prodBase.categoriaId);
-            if (catObj) nombreCategoria = catObj.nombre || catObj;
-        }
-
-        return {
-            id: relacion.id,           // ID de la relación (Fila)
-            
-            // --- CORRECCIÓN CLAVE 1: ID REAL DEL PRODUCTO ---
-            productoId: prodBase ? prodBase.id : null, 
-            
-            codigo: relacion.codigo || (prodBase ? prodBase.codigo : ''),
-            nombre: prodBase ? prodBase.nombre : 'Producto no encontrado',
-            
-            // --- CORRECCIÓN CLAVE 2: EL STOCK VIENE DE PRODUCTOS (prodBase) ---
-            // Antes leías de 'invBase', ahora leemos de 'prodBase' que es donde guardas.
-            stock: prodBase ? parseInt(prodBase.stock || 0) : 0,
-            stockMinimo: prodBase ? parseInt(prodBase.stockMinimo || 0) : 0,
-            
-            precio: relacion.precio, // O prodBase.precio si lo prefieres
-            categoria: nombreCategoria, 
-            proveedor: provBase ? provBase.nombre : 'Sin proveedor',
-            imagen: prodBase ? prodBase.imagenUrl : 'no-image.png'
-        };
-    });
-
-    return datosUnificados;
-
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
+    } catch (error) {
+        console.error(error);
+        return [];
+    }
 }
 
 
 export { getProductos as getProductosCompleto };
 
 export async function getCategorias() {
-  try {
-    const res = await fetch(`${Api_URL}/categorias`);
-    if (!res.ok) throw new Error(`Error al obtener categorías`);
-    return res.json();
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
+    try {
+        const res = await fetch(`${Api_URL}/categorias.php`);
+        if (!res.ok) throw new Error(`Error al obtener categorías`);
+        return res.json();
+    } catch (error) {
+        console.error(error);
+        return [];
+    }
 }
 
 export async function getArticuloById(id) {
     try {
-        const response = await fetch(`${Api_URL}/productos/${id}`); 
+        const response = await fetch(`${Api_URL}/productos.php?id=${id}`);
         if (!response.ok) throw new Error("Error conexión");
         return await response.json();
     } catch (error) {
@@ -92,12 +58,12 @@ export async function getArticuloById(id) {
 
 export async function updateArticulo(id, datosActualizados) {
     try {
-        const response = await fetch(`${Api_URL}/productos/${id}`, {
-            method: 'PATCH', 
+        const response = await fetch(`${Api_URL}/productos.php?id=${id}`, {
+            method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(datosActualizados)
         });
-        if(!response.ok) throw new Error("Error al actualizar");
+        if (!response.ok) throw new Error("Error al actualizar");
         return await response.json();
     } catch (error) {
         console.error(error);
@@ -106,58 +72,49 @@ export async function updateArticulo(id, datosActualizados) {
 }
 
 export async function createArticulo(nuevoArticulo) {
-     try {
-        // 1. Guardamos el producto base
-        const response = await fetch(`${Api_URL}/productos`, {
+    try {
+        const response = await fetch(`${Api_URL}/productos.php`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                id: nuevoArticulo.id,
-                nombre: nuevoArticulo.nombre,
-                descripcion: nuevoArticulo.descripcion,
-                categoriaId: nuevoArticulo.categoria, 
-                imagen: "no-image.png"
-            })
+            body: JSON.stringify(nuevoArticulo)
         });
 
-        if(!response.ok) throw new Error("Error al crear producto base");
-        
-    
-        
+        if (!response.ok) throw new Error("Error al crear producto");
+
         return await response.json();
-     } catch (error) {
-         console.error(error);
-         throw error;
-     }
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
 }
 
 
 // --- SECCIÓN PROVEEDORES ---
 
 export async function getProveedores() {
-  try {
-    const res = await fetch(`${Api_URL}/proveedores`);
-    if (!res.ok) throw new Error(`Error al obtener proveedores`);
-    return await res.json();
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
+    try {
+        const res = await fetch(`${Api_URL}/proveedores.php`);
+        if (!res.ok) throw new Error(`Error al obtener proveedores`);
+        return await res.json();
+    } catch (error) {
+        console.error(error);
+        return [];
+    }
 }
 
 
 
 export async function createProveedor(nuevoProveedor) {
     try {
-        const response = await fetch(`${Api_URL}/proveedores`, {
+        const response = await fetch(`${Api_URL}/proveedores.php`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(nuevoProveedor)
         });
 
         if (!response.ok) throw new Error("Error al crear el proveedor");
-        
-        
+
+
         return await response.json();
     } catch (error) {
         console.error("Error en createProveedor:", error);
@@ -170,9 +127,10 @@ export async function createProveedor(nuevoProveedor) {
 // OBTENER PEDIDOS
 export async function getPedidos() {
     try {
+        // Corrección: Asumimos pedidos.php y usuarios.php existen
         const [pedidosRes, usuariosRes] = await Promise.all([
-            fetch(`${Api_URL}/pedidos`),
-            fetch(`${Api_URL}/usuarios`)
+            fetch(`${Api_URL}/pedidos.php`),
+            fetch(`${Api_URL}/usuarios.php`)
         ]);
 
         if (!pedidosRes.ok) return [];
@@ -197,7 +155,7 @@ export async function getPedidos() {
 // ELIMINAR PEDIDO
 export async function deletePedido(id) {
     try {
-        const response = await fetch(`${Api_URL}/pedidos/${id}`, {
+        const response = await fetch(`${Api_URL}/pedidos.php?id=${id}`, {
             method: 'DELETE'
         });
         if (!response.ok) throw new Error("Error al eliminar pedido");
@@ -211,7 +169,7 @@ export async function deletePedido(id) {
 // ACTUALIZAR PEDIDO
 export async function updatePedido(id, datos) {
     try {
-        const response = await fetch(`${Api_URL}/pedidos/${id}`, {
+        const response = await fetch(`${Api_URL}/pedidos.php?id=${id}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(datos)
@@ -227,7 +185,7 @@ export async function updatePedido(id, datos) {
 
 export async function createPedido(nuevoPedido) {
     try {
-        const response = await fetch(`${Api_URL}/pedidos`, {
+        const response = await fetch(`${Api_URL}/pedidos.php`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(nuevoPedido)
@@ -241,12 +199,39 @@ export async function createPedido(nuevoPedido) {
     }
 }
 
-// ---- SECCIÓN PROVEEDORES ------------
+
+export async function getPedidoById(id) {
+    try {
+        const response = await fetch(`${Api_URL}/pedidos.php?id=${id}`);
+        if (!response.ok) throw new Error("Error al obtener el pedido");
+
+        const pedido = await response.json();
+
+        // Mapeo para compatibilidad con el controlador
+        // El controlador espera 'detalles' con 'productoId'
+        if (pedido.lineas) {
+            pedido.detalles = pedido.lineas.map(l => ({
+                id: l.id,
+                productoId: l.productoId,
+                cantidad: l.cantidad,
+                precioUnitario: l.precio,
+                subtotal: l.subtotal
+            }));
+        }
+
+        return pedido;
+    } catch (error) {
+        console.error("Error getPedidoById:", error);
+        throw error;
+    }
+}
+
+// ---- SECCIÓN PROVEEDORES UPDATE ------------
 
 export async function updateProveedor(id, datosActualizados) {
     try {
-        const response = await fetch(`${Api_URL}/proveedores/${id}`, {
-            method: 'PATCH', // Usamos PATCH para actualizar solo lo que cambie
+        const response = await fetch(`${Api_URL}/proveedores.php?id=${id}`, {
+            method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(datosActualizados)
         });
@@ -261,14 +246,80 @@ export async function updateProveedor(id, datosActualizados) {
 
 export async function deleteProveedor(id) {
     try {
-        const response = await fetch(`${Api_URL}/proveedores/${id}`, {
+        const response = await fetch(`${Api_URL}/proveedores.php?id=${id}`, {
             method: 'DELETE'
         });
 
         if (!response.ok) throw new Error("Error al eliminar proveedor");
-        return true; 
+        return true;
     } catch (error) {
         console.error("Error deleteProveedor:", error);
         throw error;
     }
 }
+
+
+// --- SECCIÓN UNIFICACIONES (HISTORIAL) ---
+
+export async function getUnificaciones(id = null) {
+    try {
+        const url = id ? `${Api_URL}/unificaciones.php?id=${id}` : `${Api_URL}/unificaciones.php`;
+        const response = await fetch(url);
+        if (!response.ok) throw new Error("Error al obtener historial unificaciones");
+        return await response.json();
+    } catch (error) {
+        console.error("Error getUnificaciones:", error);
+        throw error;
+    }
+}
+
+
+export async function createUnificacion(datos) {
+    try {
+        const response = await fetch(`${Api_URL}/unificaciones.php`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(datos)
+        });
+
+        if (!response.ok) throw new Error("Error al guardar unificación");
+        return await response.json();
+    } catch (error) {
+        console.error("Error createUnificacion:", error);
+        throw error;
+    }
+}
+
+
+// --- SECCIÓN RECEPCIONES (NUEVO) ---
+
+export async function checkBarcode(code) {
+    try {
+        const response = await fetch(`${Api_URL}/recepcion.php?action=check_barcode&code=${code}`);
+        if (!response.ok) throw new Error("Error verificando código");
+        return await response.json();
+    } catch (error) {
+        console.error("Error checkBarcode:", error);
+        throw error;
+    }
+}
+
+export async function createRecepcion(datos) {
+    try {
+        const response = await fetch(`${Api_URL}/recepcion.php`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(datos)
+        });
+
+        if (!response.ok) {
+            const err = await response.json();
+            throw new Error(err.error || "Error al registrar recepción");
+        }
+        return await response.json();
+    } catch (error) {
+        console.error("Error createRecepcion:", error);
+        throw error;
+    }
+}
+

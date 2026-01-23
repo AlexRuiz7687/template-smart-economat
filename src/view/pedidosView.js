@@ -31,7 +31,7 @@ export const PedidosView = {
             const checkHTML = usuarioActual.rol === 'admin'
                 ? `<input type="checkbox" class="check-unificar" value="${p.id}">`
                 : '';
-            
+
             // 2. Estado y Clase CSS
             const claseEstado = obtenerClaseEstado(p.estado);
 
@@ -61,18 +61,21 @@ export const PedidosView = {
         // Generar opciones del select
         const opcionesHTML = listaProductos.map(p => {
             const selected = p.id == prodIdSeleccionado ? 'selected' : '';
-            return `<option value="${p.id}" data-precio="${p.precio}" ${selected}>${p.nombre}</option>`;
+            return `<option value="${p.id}" data-precio="${p.precio}" data-unidad="${p.unidadMedida || ''}" ${selected}>${p.nombre}</option>`;
         }).join('');
 
         tr.innerHTML = `
             <td>
                 <select class="form-control rounded linea-prod-select" data-index="${index}">
-                    <option value="">-- Seleccionar --</option>
+                    <option value="" data-unidad="">-- Seleccionar --</option>
                     ${opcionesHTML}
                 </select>
             </td>
             <td>
-                <input type="number" class="form-control rounded linea-cant-input" data-index="${index}" value="${cantidad}" min="1">
+                <div style="display: flex; align-items: center; gap: 5px;">
+                    <input type="number" class="form-control rounded linea-cant-input" data-index="${index}" value="${cantidad}" min="1" style="width: 80px;">
+                    <span class="linea-unidad-texto" style="font-size: 0.9em; color: gray;"></span>
+                </div>
             </td>
             <td class="celda-moneda">
                 <span id="subtotal-${index}">0.00</span> €
@@ -114,6 +117,33 @@ export const PedidosView = {
     mostrarListaIdsUnificados: (ids) => {
         const el = document.getElementById('lista-ids-unificados');
         if (el) el.textContent = ids.join(', ');
+    },
+
+    renderHistorialUnificaciones: (lista) => {
+        const tbody = document.getElementById('tabla-historial-unificaciones-body');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+
+        if (!lista || lista.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5" class="celda-centrada">No hay historial de compras.</td></tr>';
+            return;
+        }
+
+        lista.forEach(item => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${item.id}</td>
+                <td>${item.fecha}</td>
+                <td>${item.total_items}</td>
+                <td>${item.ids_pedidos}</td>
+                <td>
+                    <button class="btn-accion btn-ver-hm btn-ver-historial" data-id="${item.id}" title="Ver Detalle">
+                        👁️ Ver
+                    </button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
     }
 };
 

@@ -1,5 +1,6 @@
+<h2 class="sr-only">Sección: Pedidos</h2>
 <div class="contenedor-seccion">
-    
+
     <div class="header-flex">
         <div class="menu-articulos">
             <h2>Gestión de Pedidos</h2>
@@ -13,12 +14,15 @@
 
     <div class="tab">
         <button class="tablinks active" id="defaultOpenPedidos" data-target="verPedidos">Historial de Pedidos</button>
+        <button class="tablinks" id="btnTabHistorialUnificaciones" data-target="verHistorialUnificaciones">Historial de
+            Compras</button>
         <button class="tablinks" id="btnTabNuevoPedido" data-target="nvoPedido">Nuevo Pedido</button>
     </div>
 
     <div id="verPedidos" class="tabcontent" style="display: block;">
         <div class="controles" style="margin-top: 20px; margin-bottom: 15px;">
-            <input type="text" id="busquedaPedido" placeholder="Buscar..." class="form-control rounded" style="width: 300px;">
+            <input type="text" id="busquedaPedido" placeholder="Buscar..." class="form-control rounded"
+                style="width: 300px;">
             <select id="filtroEstadoPedido" class="form-control rounded" style="width: 150px; margin-left: 10px;">
                 <option value="">Estado: Todos</option>
                 <option value="Pendiente">Pendiente</option>
@@ -42,11 +46,27 @@
         </table>
     </div>
 
+    <div id="verHistorialUnificaciones" class="tabcontent" style="display: none;">
+        <h3 style="margin-top: 20px;">Historial de Compras Unificadas</h3>
+        <table class="styled-table" style="width: 100%;">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Fecha</th>
+                    <th>Total Items</th>
+                    <th>Pedidos Incluidos</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-historial-unificaciones-body"></tbody>
+        </table>
+    </div>
+
     <div id="nvoPedido" class="tabcontent" style="display: none;">
         <div class="crear-articulo">
             <form class="form-nuevo-articulo" id="formNuevoPedido">
                 <input type="hidden" id="pedido-id-edicion">
-                
+
                 <div class="form-row main-inputs" style="margin-bottom: 20px;">
                     <div class="form-group">
                         <label>Solicitante</label>
@@ -59,7 +79,7 @@
                 </div>
 
                 <h3 style="margin-bottom: 10px; color: var(--cl-dark-gray);">Detalle del Pedido</h3>
-                
+
                 <table class="styled-table" style="width: 100%; margin-bottom: 15px;">
                     <thead>
                         <tr>
@@ -72,11 +92,13 @@
                     <tbody id="lineas-pedido-body"></tbody>
                 </table>
 
-                <button type="button" id="btnAgregarLinea" class="btn-guardar" style="background-color: #6c757d; margin-bottom: 20px;">
+                <button type="button" id="btnAgregarLinea" class="btn-guardar"
+                    style="background-color: #6c757d; margin-bottom: 20px;">
                     + Agregar Producto
                 </button>
 
-                <div class="form-row" style="display: flex; justify-content: flex-end; align-items: center; gap: 20px; border-top: 1px solid #ccc; padding-top: 20px;">
+                <div class="form-row"
+                    style="display: flex; justify-content: flex-end; align-items: center; gap: 20px; border-top: 1px solid #ccc; padding-top: 20px;">
                     <h2 style="margin: 0;">Total: <span id="pedido-total-global">0.00</span> €</h2>
                     <button id="btnGuardarPedido" class="btn-guardar" style="background-color: var(--primary-color);">
                         Enviar Pedido
@@ -86,18 +108,89 @@
         </div>
     </div>
 
+    <!-- MODAL DE EDICIÓN -->
+    <div id="modalFichaPedido" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="btnCerrarModal">&times;</span>
+            <div class="crear-articulo">
+                <h3 style="border-bottom: 2px solid var(--cl-orange); padding-bottom: 10px; margin-bottom: 20px;">
+                    Edición de Pedido</h3>
+                <form class="form-nuevo-articulo" id="formEdicionPedido">
+                    <input type="hidden" id="pedido-id-edicion">
+
+                    <div class="form-row main-inputs" style="margin-bottom: 20px;">
+                        <div class="form-group">
+                            <label>Solicitante</label>
+                            <input type="text" id="pedido-solicitante-edicion" class="form-control rounded" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha</label>
+                            <input type="date" id="pedido-fecha-edicion" class="form-control rounded" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <label>Estado</label>
+                        <select id="pedido-estado-edicion" class="form-control rounded">
+                            <option value="Pendiente">Pendiente</option>
+                            <option value="Procesado">Procesado</option>
+                            <option value="Cancelado">Cancelado</option>
+                        </select>
+                    </div>
+
+                    <h3 style="margin-bottom: 10px; color: var(--cl-dark-gray);">Detalle del Pedido</h3>
+
+                    <table class="styled-table" style="width: 100%; margin-bottom: 15px;">
+                        <thead>
+                            <tr>
+                                <th style="width: 40%;">Producto</th>
+                                <th style="width: 20%;">Cantidad</th>
+                                <th style="width: 20%;">Subtotal</th>
+                                <th style="width: 10%;">Acción</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lineas-pedido-edicion-body"></tbody>
+                    </table>
+
+                    <button type="button" id="btnAgregarLineaEdicion" class="btn-guardar"
+                        style="background-color: #6c757d; margin-bottom: 20px;">
+                        + Agregar Producto
+                    </button>
+
+                    <div class="form-row"
+                        style="display: flex; justify-content: flex-end; align-items: center; gap: 20px; border-top: 1px solid #ccc; padding-top: 20px;">
+                        <h2 style="margin: 0;">Total: <span id="pedido-total-edicion">0.00</span> €</h2>
+                        <button id="btnActualizarPedido" class="btn-guardar"
+                            style="background-color: var(--primary-color);">
+                            Guardar Cambios
+                        </button>
+                        <button id="btnCancelarEdicion" type="button" class="btn-guardar"
+                            style="background-color: #dc3545;">
+                            Cancelar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <div id="vistaUnificacion" class="tabcontent" style="display: none;">
         <div class="contenedor-ficha">
-            <div class="encabezado-ficha" style="border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 20px;">
+            <div class="encabezado-ficha"
+                style="border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 20px;">
                 <h2>Requerimiento de Compra Unificado</h2>
                 <div style="display: flex; gap: 10px;">
-                    <button class="btn-guardar" onclick="window.print()" style="background-color: #2c3e50;">Imprimir / PDF</button>
-                    <button class="btn-guardar" id="btnVolverDeUnificado" style="background-color: #6c757d;">Volver</button>
+                    <button class="btn-guardar" onclick="window.print()" style="background-color: #2c3e50;">Imprimir /
+                        PDF</button>
+                    <button class="btn-guardar" id="btnGuardarHistorial" style="background-color: #e67e22;">Guardar en
+                        Historial</button>
+                    <button class="btn-guardar" id="btnVolverDeUnificado"
+                        style="background-color: #6c757d;">Volver</button>
                 </div>
             </div>
-            
+
             <p><strong>Pedidos consolidados:</strong> <span id="lista-ids-unificados"></span></p>
-            
+
             <table class="styled-table" style="width: 100%; margin-top: 20px; border: 1px solid #000;">
                 <thead style="background-color: #eee;">
                     <tr>
@@ -108,6 +201,13 @@
                     </tr>
                 </thead>
                 <tbody id="tabla-unificada-body"></tbody>
+                <tfoot style="background-color: #eee; font-weight: bold;">
+                    <tr>
+                        <td colspan="2" style="text-align: right; padding-right: 10px;">Total Productos:</td>
+                        <td class="celda-centrada" id="total-items-unificados" style="font-size: 1.2rem;">0</td>
+                        <td></td>
+                    </tr>
+                </tfoot>
             </table>
         </div>
     </div>

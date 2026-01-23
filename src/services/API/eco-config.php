@@ -1,9 +1,8 @@
 <?php 
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-
-$dbname = "SmartEconomato";
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "SmartEconomato";
 
 ?>

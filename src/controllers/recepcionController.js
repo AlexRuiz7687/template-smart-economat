@@ -1,6 +1,6 @@
 /* src/controllers/recepcionController.js */
 
-import { getProveedores, getProductosCompleto, updateArticulo, updatePedido, getPedidos, deletePedido, createPedido } from "../services/economatoService.js";
+import { getProveedores, getProductosCompleto, updateArticulo, updatePedido, getPedidos, deletePedido, createPedido, createRecepcion, checkBarcode, createArticulo } from "../services/economatoService.js";
 import { authService } from "../services/authService.js";
 import { RecepcionView } from "../view/recepcionView.js";
 
@@ -11,14 +11,14 @@ let listaProveedores = [];
 let lineasRecepcion = [];
 
 export async function inicializarRecepcion(tab = null) {
-    console.log("Inicializando Recepción...");
-    
+    console.log("Inicializando Recepción PHP...");
+
     const user = authService.getCurrentUser();
     if (!user) { window.location.href = '../index.html'; return; }
 
     try {
         setupTabsDirecto();
-        configurarEventos(); 
+        configurarEventos();
         await cargarDatosMaestros();
         await cargarHistorial();
 
@@ -42,14 +42,14 @@ export async function inicializarRecepcion(tab = null) {
 function setupTabsDirecto() {
     const btnHist = document.getElementById('defaultOpenRecepcion');
     const btnNueva = document.getElementById('btnTabNuevaRecepcion');
-    
+
     // Validamos que existan
     if (!btnHist || !btnNueva) return;
 
     // 1. Reemplazo del Botón Historial (Clonado para limpiar eventos previos)
     const nuevoBtnHist = btnHist.cloneNode(true);
     btnHist.parentNode.replaceChild(nuevoBtnHist, btnHist);
-    
+
     nuevoBtnHist.addEventListener('click', () => {
         cambiarPestaña('historialRecepciones', nuevoBtnHist);
         cargarHistorial(); // Acción específica de esta pestaña
@@ -62,6 +62,11 @@ function setupTabsDirecto() {
     nuevoBtnNueva.addEventListener('click', () => {
         cambiarPestaña('nvaRecepcion', nuevoBtnNueva);
         limpiarFormulario(); // Acción específica de esta pestaña
+        // Foco en scanner
+        setTimeout(() => {
+            const scan = document.getElementById('recep-scanner-input');
+            if (scan) scan.focus();
+        }, 300);
     });
 }
 
@@ -86,7 +91,7 @@ function cambiarPestaña(targetId, botonClickado) {
 
     // Mostrar el contenido destino
     const divDestino = document.getElementById(targetId);
-    if(divDestino) {
+    if (divDestino) {
         divDestino.style.display = 'block';
         divDestino.classList.add('active-tab');
     }
@@ -99,7 +104,7 @@ async function cargarDatosMaestros() {
     listaProveedores = provs;
 
     const selProv = document.getElementById('recep-proveedor');
-    if(selProv) {
+    if (selProv) {
         selProv.innerHTML = '<option value="">-- Seleccionar --</option>';
         listaProveedores.forEach(p => {
             const opt = document.createElement('option');
@@ -112,28 +117,28 @@ async function cargarDatosMaestros() {
 
 async function cargarHistorial() {
     try {
-        const pedidos = await getPedidos(); 
+        const pedidos = await getPedidos();
         // Filtramos solo los RECIBIDOS (Historial de Recepciones)
-        const historial = pedidos.filter(p => p.estado && p.estado.toLowerCase() === 'recibido'); 
+        const historial = pedidos.filter(p => p.estado && p.estado.toLowerCase() === 'recibido');
 
         listaRecepciones = historial.map(r => {
             const prov = listaProveedores.find(p => p.id == r.proveedorId);
-            return { 
-                ...r, 
+            return {
+                ...r,
                 nombreProveedor: prov ? prov.nombre : 'Desconocido',
-                albaran: r.albaran || '-' 
+                albaran: r.albaran || '-'
             };
         });
-        
+
         RecepcionView.renderTablaHistorial(listaRecepciones);
     } catch (e) { console.error(e); }
 }
 
 // --- EVENTOS ---
 function configurarEventos() {
-    // Agregar Línea
+    // Agregar Línea Manual
     const btnAdd = document.getElementById('btnAgregarLineaRecep');
-    if(btnAdd) {
+    if (btnAdd) {
         const nBtn = btnAdd.cloneNode(true);
         btnAdd.parentNode.replaceChild(nBtn, btnAdd);
         nBtn.addEventListener('click', (e) => { e.preventDefault(); agregarLineaDOM(); });
@@ -141,7 +146,7 @@ function configurarEventos() {
 
     // Guardar
     const btnGuardar = document.getElementById('btnGuardarRecepcion');
-    if(btnGuardar) {
+    if (btnGuardar) {
         const nBtn = btnGuardar.cloneNode(true);
         btnGuardar.parentNode.replaceChild(nBtn, btnGuardar);
         nBtn.addEventListener('click', (e) => { e.preventDefault(); manejarGuardarRecepcion(); });
@@ -149,20 +154,132 @@ function configurarEventos() {
 
     // Delegación Tabla Historial (Editar / Borrar)
     const tabla = document.getElementById('tabla-recepcion-body');
-    if(tabla) {
+    if (tabla) {
         // Clonamos la tabla también para limpiar eventos antiguos si se recarga el módulo
         const nuevaTabla = tabla.cloneNode(true);
         tabla.parentNode.replaceChild(nuevaTabla, tabla);
-        
+
         nuevaTabla.addEventListener('click', (e) => {
             const btnEdit = e.target.closest('.btn-editar-recepcion');
             const btnDel = e.target.closest('.btn-borrar-recepcion');
 
-            if(btnEdit) cargarRecepcionParaEditar(btnEdit.dataset.id);
-            if(btnDel) manejarBorrarRecepcion(btnDel.dataset.id);
+            if (btnEdit) cargarRecepcionParaEditar(btnEdit.dataset.id);
+            if (btnDel) manejarBorrarRecepcion(btnDel.dataset.id);
+        });
+    }
+
+    // --- SCANNER / BÚSQUEDA ---
+    const btnScan = document.getElementById('btn-buscar-barcode');
+    const inputScan = document.getElementById('recep-scanner-input');
+
+    if (btnScan && inputScan) {
+        const nBtnScan = btnScan.cloneNode(true);
+        btnScan.parentNode.replaceChild(nBtnScan, btnScan);
+
+        nBtnScan.addEventListener('click', (e) => {
+            e.preventDefault();
+            manejarBusquedaBarcode();
+        });
+
+        // Enter key en input
+        const nInputScan = inputScan.cloneNode(true);
+        inputScan.parentNode.replaceChild(nInputScan, inputScan);
+
+        nInputScan.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                manejarBusquedaBarcode();
+            }
         });
     }
 }
+
+// --- SCANNER LOGIC ---
+async function manejarBusquedaBarcode() {
+    const input = document.getElementById('recep-scanner-input');
+    const code = input.value.trim();
+    if (!code) return;
+
+    // Mostrar loading
+    Swal.fire({ title: 'Buscando...', didOpen: () => Swal.showLoading() });
+
+    try {
+        const res = await checkBarcode(code);
+        Swal.close();
+
+        if (res.found) {
+            if (res.source === 'local') {
+                // Agregar línea
+                agregarLineaDOM({
+                    productoId: res.data.productoId,
+                    coste: res.data.coste,
+                    cantidad: 1
+                });
+
+                const toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000
+                });
+                toast.fire({
+                    icon: 'success',
+                    title: `Añadido: ${res.data.nombre}`
+                });
+
+                input.value = ''; // Limpiar para el siguiente
+                input.focus();
+            } else {
+                // External
+                const confirm = await Swal.fire({
+                    title: 'Producto Nuevo (OpenFoodFacts)',
+                    text: `El producto "${res.data.nombre}" no existe en la BD local. ¿Deseas registrarlo?`,
+                    imageUrl: res.data.imagen,
+                    imageHeight: 150,
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí, registrar y añadir',
+                    cancelButtonText: 'Cancelar'
+                });
+
+                if (confirm.isConfirmed) {
+                    Swal.fire({ title: 'Registrando...', didOpen: () => Swal.showLoading() });
+                    // Crear producto
+                    const nuevo = {
+                        nombre: res.data.nombre,
+                        precio: 0,
+                        id: res.data.codigo, // Usamos el barcode como ID ref para proveedor
+                        stock: 0,
+                        stockMinimo: 5,
+                        imagenUrl: res.data.imagen
+                    };
+
+                    const prodRes = await createArticulo(nuevo);
+                    if (prodRes && prodRes.id) {
+                        // Recargar lista productos en memoria local
+                        listaProductos = await getProductosCompleto();
+
+                        // Añadir línea con el ID recién creado
+                        agregarLineaDOM({
+                            productoId: prodRes.id,
+                            cantidad: 1,
+                            coste: 0
+                        });
+
+                        Swal.fire('Registrado', 'Producto creado correctamente y añadido a la lista.', 'success');
+                        input.value = '';
+                        input.focus();
+                    }
+                }
+            }
+        } else {
+            Swal.fire('No encontrado', 'El código de barras no existe ni en local ni en OpenFoodFacts.', 'error');
+        }
+    } catch (e) {
+        console.error(e);
+        Swal.fire('Error', 'Problema al buscar código: ' + e.message, 'error');
+    }
+}
+
 
 // --- LÓGICA DE LÍNEAS ---
 function agregarLineaDOM(datos = {}) {
@@ -189,10 +306,10 @@ function agregarLineaDOM(datos = {}) {
 
     // Evento borrar fila
     const btnDel = row.querySelector('.linea-del');
-    if(btnDel) {
+    if (btnDel) {
         btnDel.addEventListener('click', () => {
             row.remove();
-            lineasRecepcion[index] = null; 
+            lineasRecepcion[index] = null;
             actualizarTotalGlobal();
         });
     }
@@ -210,14 +327,14 @@ function recalcularFila(index, row) {
     const cant = parseFloat(cantEl.value) || 0;
     const coste = parseFloat(costeEl.value) || 0;
     const imp = parseFloat(impEl.value) || 0;
-    
+
     // Cálculo: Base + Impuestos
     const base = cant * coste;
     const total = base + (base * (imp / 100));
 
     row.querySelector('.linea-total').value = total.toFixed(2);
 
-    if(lineasRecepcion[index]) {
+    if (lineasRecepcion[index]) {
         lineasRecepcion[index].productoId = prodEl.value;
         lineasRecepcion[index].cantidad = cant;
         lineasRecepcion[index].coste = coste;
@@ -242,11 +359,11 @@ async function manejarGuardarRecepcion() {
     const albaran = document.getElementById('recep-albaran').value;
     const lineasValidas = lineasRecepcion.filter(l => l && l.productoId);
 
-    if(!provId || !albaran) {
+    if (!provId || !albaran) {
         Swal.fire('Faltan datos', 'Proveedor y Albarán obligatorios.', 'warning');
         return;
     }
-    if(lineasValidas.length === 0) {
+    if (lineasValidas.length === 0) {
         Swal.fire('Error', 'Añade líneas.', 'warning');
         return;
     }
@@ -257,40 +374,35 @@ async function manejarGuardarRecepcion() {
         fecha: document.getElementById('recep-fecha').value,
         concordancia: document.getElementById('recep-concordancia').value,
         total: parseFloat(document.getElementById('recep-total-global').textContent),
-        detalles: lineasValidas,
-        estado: 'Recibido', // Marcar como finalizado
-        fechaRecepcion: new Date().toISOString()
+        detalles: lineasValidas, // Enviamos las líneas
+        usuarioId: authService.getCurrentUser() ? authService.getCurrentUser().id : 1,
+        observaciones: `Albarán ${albaran}`
     };
 
     try {
         if (idEdicion) {
             // --- MODO EDICIÓN ---
+            // Usamos updatePedido genérico, pero si quisiéramos recalcular stock al editar,
+            // tendríamos que hacer lógica compleja en PHP (revertir stock anterior -> aplicar nuevo).
+            // Por ahora mantenemos updatePedido que SOLO actualiza cabecera/líneas pero NO gestiona diferencial de stock automáticamente en esta versión simple.
+            // AVISO: Idealmente bloquear edición de recepciones ya procesadas o manejar diferencial.
             await updatePedido(idEdicion, datosRecepcion);
-            Swal.fire('Actualizado', 'Datos de recepción modificados.', 'success');
+            Swal.fire('Actualizado', 'Datos de recepción modificados. (Stock no ajustado en edición)', 'success');
         } else {
-            // --- MODO NUEVA RECEPCIÓN ---
-            await createPedido(datosRecepcion); 
+            // --- MODO NUEVA RECEPCIÓN (USANDO SERVICIO DEDICADO) ---
+            // Esto llama a recepcion.php que maneja TRANSACCIÓN + STOCK
+            await createRecepcion(datosRecepcion);
 
-            // 2. ACTUALIZAR STOCK 
-            for (const linea of lineasValidas) {
-                const prod = listaProductos.find(p => p.id == linea.productoId);
-                if(prod) {
-                    const nuevoStock = parseFloat(prod.stock || 0) + parseFloat(linea.cantidad);
-                    await updateArticulo(prod.id, { 
-                        stock: nuevoStock,
-                        precio: linea.coste // Actualizamos coste
-                    });
-                }
-            }
-            Swal.fire('Registrado', 'Entrada y Stock actualizados.', 'success');
+            Swal.fire('Registrado', 'Entrada correcta y Stock actualizado.', 'success');
         }
 
         limpiarFormulario();
         await cargarHistorial();
-        
+
         document.getElementById('defaultOpenRecepcion').click();
 
     } catch (e) {
+        console.error(e);
         Swal.fire('Error', e.message, 'error');
     }
 }
@@ -298,7 +410,7 @@ async function manejarGuardarRecepcion() {
 // R: LEER (Cargar para editar)
 async function cargarRecepcionParaEditar(id) {
     const recepcion = listaRecepciones.find(r => r.id == id);
-    if(!recepcion) return;
+    if (!recepcion) return;
 
     // Rellenar cabecera
     document.getElementById('recepcion-id-edicion').value = recepcion.id;
@@ -310,30 +422,33 @@ async function cargarRecepcionParaEditar(id) {
     // Rellenar líneas
     document.getElementById('lineas-recepcion-body').innerHTML = '';
     lineasRecepcion = [];
-    
-    if(recepcion.detalles) {
-        recepcion.detalles.forEach(d => agregarLineaDOM(d));
+
+    // Si viene de 'getPedidos', las líneas pueden estar en 'lineas' o 'detalles'
+    const detalles = recepcion.detalles || recepcion.lineas || [];
+
+    if (detalles) {
+        detalles.forEach(d => agregarLineaDOM(d));
     }
     actualizarTotalGlobal();
 
     // Cambiar a pestaña formulario
     const btnNueva = document.getElementById('btnTabNuevaRecepcion');
-    btnNueva.click(); 
-    btnNueva.textContent = "Editar Recepción"; 
+    btnNueva.click();
+    btnNueva.textContent = "Editar Recepción";
 }
 
 // D: BORRAR
 async function manejarBorrarRecepcion(id) {
     const result = await Swal.fire({
         title: '¿Eliminar Recepción?',
-        text: "Esto borrará el registro del historial. (El stock NO se revertirá automáticamente).",
+        text: "Esto borrará el registro del historial. (ATENCIÓN: El stock NO se revertirá automáticamente en esta versión).",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#dc3545',
         confirmButtonText: 'Eliminar'
     });
 
-    if(!result.isConfirmed) return;
+    if (!result.isConfirmed) return;
 
     try {
         await deletePedido(id);
@@ -350,6 +465,6 @@ function limpiarFormulario() {
     document.getElementById('lineas-recepcion-body').innerHTML = '';
     document.getElementById('recep-total-global').textContent = '0.00';
     const btnNueva = document.getElementById('btnTabNuevaRecepcion');
-    if(btnNueva) btnNueva.textContent = "Nueva Recepción (Albarán)";
+    if (btnNueva) btnNueva.textContent = "Nueva Recepción (Albarán)";
     lineasRecepcion = [];
 }

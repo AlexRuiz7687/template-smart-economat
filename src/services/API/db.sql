@@ -126,15 +126,15 @@ CREATE TABLE movimiento (
 -- ==========================================
 
 -- VISTA ARTÍCULOS COMPLETOS
--- Para rellenar la tabla de tu frontend
 CREATE OR REPLACE VIEW vista_articulos AS
 SELECT 
     p.id_producto,
-    pp.id_producto_proveedor, -- ID único para transacciones
+    pp.id_producto_proveedor, 
     pp.codigo_referencia as codigo,
     p.nombre,
     c.nombre as categoria,
     p.unidad_medida as unidad,
+    p.descripcion,
     p.imagen,
     prov.nombre as proveedor,
     pp.precio_unitario as precio,

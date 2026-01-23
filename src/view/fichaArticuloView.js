@@ -10,6 +10,7 @@ export const FichaArticuloView = {
         const txtCategoria = document.getElementById('ficha-categoria');
         const txtPrecio = document.getElementById('ficha-precio');
         const txtStockMin = document.getElementById('ficha-stock-min');
+        const txtUnidad = document.getElementById('ficha-unidad');
         const txtDescripcion = document.getElementById('ficha-descripcion');
         const imgProducto = document.getElementById('ficha-img');
 
@@ -17,7 +18,8 @@ export const FichaArticuloView = {
         if (txtId) txtId.value = articulo.id;
         if (txtNombre) txtNombre.value = articulo.nombre;
         if (txtPrecio) txtPrecio.value = articulo.precio;
-        if (txtStockMin) txtStockMin.value = articulo.stockMinimo || 0;
+        if (txtStockMin) txtStockMin.value = articulo.stockMinimo || articulo.stock_minimo || 0;
+        if (txtUnidad) txtUnidad.value = articulo.unidad || articulo.unidadMedida || articulo.unidad_medida || '';
         if (txtDescripcion) txtDescripcion.value = articulo.descripcion || "Sin descripción detallada.";
 
         if (txtCategoria) {
@@ -68,11 +70,12 @@ export const FichaArticuloView = {
     getDatosFormulario() {
         return {
             nombre: document.getElementById('ficha-nombre').value,
-            
+
             categoria: document.getElementById('ficha-categoria').value,
             precio: parseFloat(document.getElementById('ficha-precio').value),
+            unidad: document.getElementById('ficha-unidad').value,
             stockMinimo: parseInt(document.getElementById('ficha-stock-min').value) || 0, descripcion: document.getElementById('ficha-descripcion').value,
-            
+
         };
     }
 };

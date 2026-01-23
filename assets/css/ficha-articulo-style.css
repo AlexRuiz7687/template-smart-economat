@@ -99,10 +99,10 @@
     border: 1px solid var(--cl-dark-gray);
     border-radius: 1vh;
     padding: 10px 12px;
-    
+
     /* Fondo un poco más transparente para indicar que es solo lectura */
-    background-color: rgb(from var(--cl-white) r g b / 0.4); 
-    
+    background-color: rgb(from var(--cl-white) r g b / 0.4);
+
     color: #333;
     font-family: inherit;
     font-size: 1rem;
@@ -123,14 +123,21 @@
 /* --- Agrupación de Precio y Stock (en una misma fila) --- */
 .grupo-dato-doble {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 20px;
 }
 
 /* --- Animación de entrada suave --- */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* --- Responsive (Móviles) --- */
@@ -143,13 +150,13 @@
         min-height: 200px;
         order: -1;
     }
-    
+
     .encabezado-ficha {
         flex-direction: column;
         gap: 10px;
         align-items: flex-start;
     }
-    
+
     .btn-volver {
         width: 100%;
         text-align: center;
@@ -201,10 +208,10 @@
 
 .datos-producto input:not(:disabled),
 .datos-producto textarea:not(:disabled) {
-    
-    background-color: var(--cl-white); 
-    border: 1px solid var(--cl-dark-gray); 
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+
+    background-color: var(--cl-white);
+    border: 1px solid var(--cl-dark-gray);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     cursor: text;
     transition: all 0.3s ease-in-out;
 }

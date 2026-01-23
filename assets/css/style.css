@@ -3,12 +3,22 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Open Sans",
+    "Helvetica Neue",
+    sans-serif;
 }
 
 :root {
-  --primary-color: #ea4634;
+  --primary-color: #922320;
   --secondary-color: #e1efe2;
   --terciary-color: yellow;
   --cl-white: #f5f5f5;
@@ -18,13 +28,11 @@
   --footer-height: 100px;
   --cl-green: rgb(4, 160, 4);
   --cl-green-primary: #2a9d8f;
-  --cl-green-primary-light: #3ad6c4;
+  --cl-green-primary-light: #35dbc8;
   --cl-orange: #e67e22;
-  
 }
 
 body {
-  
   /* min-height: 100vh; */
   position: relative;
   background-color: var(--cl-white);
@@ -39,39 +47,51 @@ body {
 }
 
 body::before {
-  content: ""; 
-  position: fixed; 
+  content: "";
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   z-index: -1;
-  background-image: linear-gradient(to bottom, white, transparent), url('../img/fondo-economato.jpg');
+  background-image:
+    linear-gradient(to bottom, white, transparent),
+    url("../img/fondo-economato.jpg");
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  filter: grayscale(40%)  opacity(0.2) blur(0px);
+  filter: grayscale(40%) opacity(0.2) blur(0px);
 }
 
-
-
-a{
+a {
   text-decoration: none;
 }
 
-ul{
+ul {
   list-style: none;
 }
 
-h2{
+h2 {
   color: var(--cl-black);
 }
 
-input:focus{
-    border-color: var(--primary-color, blue);
-    outline: none;
-    background-color: var(--cl-white);
+input:focus {
+  border-color: var(--primary-color, blue);
+  outline: none;
+  background-color: var(--cl-white);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* ===================================== MAIN ===================================== */
@@ -95,39 +115,39 @@ main {
 
 /* ===================================== ACCESOS DIRECTOS ===================================== */
 
-
 .acceso-directo {
   border: 1px solid var(--cl-white);
-  width: 40vh;
-  height: 20vh;
+  width: 30vh;
+  height: 25vh;
   background-color: var(--cl-light-gray);
   border-radius: 5vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   align-items: center;
-  padding-bottom: 20px;
+  padding-bottom: 10px;
   box-shadow: 0.1em 0.1em 0.4em rgba(0, 0, 0, 0.2);
   overflow: hidden;
   position: relative;
   object-fit: cover;
   margin-top: 2%;
-
 }
-.acceso-directo img{
-  position: absolute; 
-  
+
+.acceso-directo img {
+  position: absolute;
+
   width: 70%;
-  top: 0;
-  
-  filter: grayscale(100%) brightness(150%) contrast(70%) ;
+  top: 5px;
+
+  /*filter: grayscale(100%) brightness(150%) contrast(70%);*/
   z-index: 1;
   transition: filter 0.3s ease;
-  
 }
-.acceso-directo img:hover{
+
+.acceso-directo img:hover {
   filter: grayscale(0%);
 }
+
 .acceso-directo:hover {
   box-shadow: 0.1em 0.1em 0.4em rgba(0, 0, 0, 0.5);
 }
@@ -140,7 +160,7 @@ main {
   color: var(--cl-white);
   border-radius: 2vh;
   border: none;
-  font-size: 0.9rem;
+  font-size: 1rem;
   box-shadow: 0.1em 0.1em 0.4em rgba(0, 0, 0, 0.4);
   cursor: pointer;
   transition: 0.2s;
@@ -153,10 +173,9 @@ main {
   box-shadow: 0.1em 0.1em 0.8em rgba(0, 0, 0, 0.1);
 }
 
-.bt-acc-dir:active{
-  scale: .9;;
+.bt-acc-dir:active {
+  scale: 0.9;
 }
-
 
 /* -----------------------FIN ACCESOS DIRECTOS ----------------------- */
 
@@ -165,28 +184,29 @@ main {
 footer {
   grid-area: footer;
   height: auto;
-  line-height: var(--footer-height); 
+  line-height: var(--footer-height);
   border-top: 1px solid black;
   background-color: var(--cl-black);
   text-align: center;
   color: var(--cl-white);
-  padding: 0 1rem; 
+  padding: 0 1rem;
   box-sizing: border-box;
   width: 100%;
-   margin-top: 10vh;
-   
-   
+  margin-top: 10vh;
 }
 
 footer a {
   text-decoration: none;
   position: static;
+  color: var(--cl-green-primary-light);
 }
+
 footer p > a:hover {
-  color: var(--primary-color);
+  color: var(--cl-green-primary);
 }
+
 footer a:visited {
-  color: var(--cl-white);
+  color: var(--cl-green-primary-light);
   bottom: 0;
   position: fixed;
 }
@@ -196,52 +216,47 @@ footer a:visited {
 /*====================================MEDIA QUERIES====================================*/
 
 @media screen and (max-width: 920px) {
-
-  main{
+  main {
     margin-top: 0;
   }
-  
 }
-
 
 /* ======= BREAKPOINT PARA MÓVIL (hasta 600px) ======= */
 @media screen and (max-width: 630px) {
-
-  footer{
-    font-size: .8rem;
+  footer {
+    font-size: 0.8rem;
     bottom: 0;
-   margin-bottom: 0;
+    margin-bottom: 0;
   }
 }
-
 
 /* =========== PEDIDOS =====================*/
 
 @media print {
-    /* Oculta todo por defecto */
-    body * {
-        visibility: hidden;
-    }
-    
-    /* Muestra solo el contenido de unificación */
-    #vistaUnificacion, #vistaUnificacion * {
-        visibility: visible;
-    }
+  /* Oculta todo por defecto */
+  body * {
+    visibility: hidden;
+  }
 
-    /* Posiciona el contenido arriba a la izquierda */
-    #vistaUnificacion {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        margin: 0;
-        padding: 20px;
-        background-color: var(--cl-white);
-    }
+  /* Muestra solo el contenido de unificación */
+  #vistaUnificacion,
+  #vistaUnificacion * {
+    visibility: visible;
+  }
 
-    /* Oculta los botones dentro de la vista de unificación */
-    #vistaUnificacion button {
-        display: none !important;
-    }
+  /* Posiciona el contenido arriba a la izquierda */
+  #vistaUnificacion {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+    background-color: var(--cl-white);
+  }
+
+  /* Oculta los botones dentro de la vista de unificación */
+  #vistaUnificacion button {
+    display: none !important;
+  }
 }
-
