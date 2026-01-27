@@ -260,3 +260,33 @@ footer a:visited {
     display: none !important;
   }
 }
+
+/* =======================================================
+   UNIFICACIÓN DE FOCO (FOCUS) 
+   ======================================================= */
+  
+/* Regla Maestra para todos los elementos interactivos */
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+a:focus-visible,
+.tablinks:focus-visible,   /* pestañas */
+.btn-submit:focus-visible, /* Botón Ingresar */
+.btn-guardar:focus-visible /* Botón Registrar Artículo */ {
+  /* Anillo */
+  outline: 2px solid var(--primary-color) !important;
+
+  /* SEPARACIÓN: */
+  outline-offset: 2px !important;
+
+  /* Limpieza de estilos navegador */
+  border-radius: 1px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1) !important;
+  z-index: 100;
+}
+input[type="checkbox"]:focus-visible,
+input[type="radio"]:focus-visible {
+  outline-offset: 1px !important;
+  outline-width: 2px !important;
+}

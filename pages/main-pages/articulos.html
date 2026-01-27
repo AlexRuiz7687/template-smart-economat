@@ -1,38 +1,48 @@
-<h2 class="sr-only">Sección: Artículos</h2>
-<!-- Contenedor Artículosn-->
-<div class="menu-articulos"></div>
-<!-- Tab links -->
-<div class="tab">
-  <button class="tablinks" id="defaultOpen" data-target="verArticulos">Artículos</button>
-  <button class="tablinks" id="btnNuevoArticulo" data-target="nvoArticulo">Nuevo Artículo</button>
-  <!-- <button class="tablinks" id="btnCargaMasiva" data-target="cargaMasiva">Carga Masiva</button> -->
+<h2 class="sr-only">Sección: Gestión de Artículos</h2>
 
+<div class="menu-articulos">
+  <div class="tab" role="tablist" aria-label="Secciones de gestión de artículos">
+    <button class="tablinks" id="defaultOpen" data-target="verArticulos" role="tab" aria-selected="true"
+      aria-controls="verArticulos" id="tab-verArticulos">
+      Listado de Artículos
+    </button>
+    <button class="tablinks" id="btnNuevoArticulo" data-target="nvoArticulo" role="tab" aria-selected="false"
+      aria-controls="nvoArticulo" id="tab-nvoArticulo" tabindex="-1">
+      Nuevo Artículo
+    </button>
+  </div>
 </div>
 
-</div>
-<!-- Tab content -->
-<div id="nvoArticulo" class="tabcontent">
+<div id="nvoArticulo" class="tabcontent" role="tabpanel" aria-labelledby="tab-nvoArticulo" tabindex="0" hidden>
   <div class="crear-articulo">
     <form class="form-nuevo-articulo">
+      <h3 class="sr-only">Formulario de registro de producto</h3>
+
       <div class="form-row main-inputs">
         <div class="form-group">
-          <input type="text" id="codigo" class="form-control rounded" placeholder="Código (SKU)">
-        </div>
-        <div class="form-group">
-          <input type="text" id="nombre" class="form-control rounded" placeholder="Nombre del producto *">
+          <label for="codigo" class="sr-only">Código SKU</label>
+          <input type="text" id="codigo" class="form-control rounded" placeholder="Código (SKU)" />
         </div>
 
         <div class="form-group">
+          <label for="nombre" class="sr-only">Nombre del producto (Obligatorio)</label>
+          <input type="text" id="nombre" class="form-control rounded" placeholder="Nombre del producto *" />
+        </div>
+
+        <div class="form-group">
+          <label for="proveedor" class="sr-only">Seleccionar Proveedor</label>
           <select id="proveedor" class="form-control rounded option-style">
             <option value="">-- Seleccionar Proveedor --</option>
           </select>
         </div>
 
         <div class="form-group">
-          <input type="number" id="precio" class="form-control rounded" placeholder="Precio Coste *" step="0.01">
+          <label for="precio" class="sr-only">Precio de Coste (Obligatorio)</label>
+          <input type="number" id="precio" class="form-control rounded" placeholder="Precio Coste *" step="0.01" />
         </div>
 
         <div class="form-group">
+          <label for="unidad" class="sr-only">Unidad de medida</label>
           <select id="unidad" class="form-control rounded option-style">
             <option value="">Unidad medida</option>
             <option value="Unidad">Unidad</option>
@@ -46,86 +56,79 @@
       <div class="form-row description-image-row">
         <div class="left-col">
           <div class="form-group">
+            <label for="descripcion" class="sr-only">Descripción detallada</label>
             <textarea id="descripcion" rows="4" class="form-control rounded"
               placeholder="Descripción detallada"></textarea>
           </div>
 
-          <div class="form-row" style="display: flex; gap: 10px; width: 100%;">
-
-            <div class="form-group" style="flex: 2;">
-              <select id="categoria" class="form-control rounded option-style" style="width: 100%;">
+          <div class="form-row" style="display: flex; gap: 10px; width: 100%">
+            <div class="form-group" style="flex: 2">
+              <label for="categoria" class="sr-only">Categoría del producto</label>
+              <select id="categoria" class="form-control rounded option-style" style="width: 100%">
                 <option value="">-- Seleccionar Categoría --</option>
               </select>
             </div>
 
-            <div class="form-group" style="flex: 1;">
+            <div class="form-group" style="flex: 1">
+              <label for="caducidad" class="sr-only">Días de caducidad</label>
               <input type="number" id="caducidad" class="form-control rounded" placeholder="Caducidad"
-                style="width: 100%;">
+                style="width: 100%" />
             </div>
 
-            <div class="form-group" style="flex: 1;">
+            <div class="form-group" style="flex: 1">
+              <label for="stockMinimo" class="sr-only">Stock Mínimo de alerta</label>
               <input type="number" id="stockMinimo" class="form-control rounded" placeholder="Stock Mín."
-                style="width: 100%;">
+                style="width: 100%" />
             </div>
-
           </div>
 
-          <!-- <div class="form-group">
-            <input type="text" id="imagenUrl" class="form-control rounded" placeholder="URL de la imagen (http://...)">
-          </div> -->
+          <div class="alergenos-section rounded" style="margin-top: 15px">
+            <span class="alergenos-label" style="font-weight: bold; display: block; margin-bottom: 10px"
+              id="labelAlergenos">Alérgenos</span>
 
-          <div class="alergenos-section rounded" style="margin-top: 15px;">
-            <label class="alergenos-label"
-              style="font-weight: bold; display: block; margin-bottom: 10px;">Alérgenos</label>
-
-            <div class="alergenos-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;">
-
-              <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Gluten"> Gluten</label>
-
-              <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Crustaceos">
+            <div class="alergenos-grid" role="group" aria-labelledby="labelAlergenos" style="
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 10px;
+              ">
+              <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Gluten" />
+                Gluten</label>
+              <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Crustaceos" />
                 Crustáceos</label>
-
-              <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Huevo"> Huevos</label>
-
-              <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Pescado"> Pescado</label>
-
-              <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Cacahuetes">
+              <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Huevo" />
+                Huevos</label>
+              <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Pescado" />
+                Pescado</label>
+              <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Cacahuetes" />
                 Cacahuetes</label>
-
-              <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Soja"> Soja</label>
-
-              <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Lacteos"> Lácteos</label>
-
-              <label class="radio-label"><input type="checkbox" class="alergeno-check" value="FrutosCascara"> F.
-                Cáscara</label>
-
-              <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Apio"> Apio</label>
-
-              <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Mostaza"> Mostaza</label>
-
-              <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Sesamo"> Sésamo</label>
-
-              <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Sulfitos">
+              <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Soja" />
+                Soja</label>
+              <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Lacteos" />
+                Lácteos</label>
+              <label class="radio-label"><input type="checkbox" class="alergeno-check" value="FrutosCascara" />
+                F. Cáscara</label>
+              <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Apio" />
+                Apio</label>
+              <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Mostaza" />
+                Mostaza</label>
+              <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Sesamo" />
+                Sésamo</label>
+              <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Sulfitos" />
                 Sulfitos</label>
-
-              <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Altramuces">
+              <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Altramuces" />
                 Altramuces</label>
-
-              <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Moluscos">
+              <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Moluscos" />
                 Moluscos</label>
-
-              <!-- <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Maiz"> Maíz</label>
-    
-    <label class="radio-label"><input type="checkbox" class="alergeno-check" value="Cacao"> Cacao</label>
- -->
             </div>
           </div>
         </div>
 
         <div class="right-col image-upload-col">
-          <div class="image-placeholder rounded" id="preview-img">Sin Imagen</div>
+          <div class="image-placeholder rounded" id="preview-img" aria-label="Vista previa de imagen">
+            Sin Imagen
+          </div>
 
-          <button id="btnRegistrarArticulo" class="btn-guardar registrarArticulo">
+          <button type="button" id="btnRegistrarArticulo" class="btn-guardar registrarArticulo">
             Registrar Artículo
           </button>
         </div>
@@ -134,56 +137,49 @@
   </div>
 </div>
 
-<div id="verArticulos" class="tabcontent">
-
+<div id="verArticulos" class="tabcontent" role="tabpanel" aria-labelledby="tab-verArticulos" tabindex="0">
   <div class="cabecera-articulos">
-
     <div class="controles">
+      <label for="busqueda" class="sr-only">Buscar producto</label>
       <input type="text" id="busqueda" placeholder="Buscar producto..." />
+
       <button id="btnBuscar">Buscar</button>
 
+      <label for="categoriaSelect" class="sr-only">Filtrar por categoría</label>
       <select id="categoriaSelect">
         <option value="">-- Categoría --</option>
       </select>
 
+      <label for="ordenSelect" class="sr-only">Ordenar listado</label>
       <select id="ordenSelect">
         <option value="asc">Precio ascendente</option>
         <option value="desc">Precio descendente</option>
       </select>
 
-      <!-- <button id="btnStock">Comprobar stock</button> -->
       <button id="btnAllProducts">Mostrar todos</button>
     </div>
-
   </div>
 
   <table id="tablaProductos">
+    <caption class="sr-only">
+      Inventario actual de productos
+    </caption>
     <thead>
       <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Categoría</th>
-        <th>Precio (€)</th>
-        <!-- <th>Stock</th> -->
-        <th>Stock Mínimo</th>
-        <th>Proveedor</th>
-        <th>Detalle</th>
+        <th scope="col">ID</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Categoría</th>
+        <th scope="col">Precio (€)</th>
+        <th scope="col">Stock Mínimo</th>
+        <th scope="col">Proveedor</th>
+        <th scope="col">Detalle</th>
       </tr>
     </thead>
     <tbody id="tabla-body"></tbody>
     <tfoot>
       <tr>
-        <td colspan="8" id="resumen"></td>
+        <td colspan="7" id="resumen"></td>
       </tr>
     </tfoot>
   </table>
-
 </div>
-
-<!--EN CONSTRUCCIÓN-->
-
-<!-- <div id="cargaMasiva" class="tabcontent">
-  <div class="cont-cargaMasiva">
-    <h2> Cargar Archivo</h1>
-  </div>
-</div> -->

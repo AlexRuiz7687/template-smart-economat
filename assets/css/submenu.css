@@ -30,4 +30,54 @@ li.liActive{
     color: var(--cl-black);
 }
 
+/* =======================================================
+   PESTAÑAS ACCESIBLES 
+   ======================================================= */
+
+/* Contenedor de las pestañas */
+.tab {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 2%;
+    border-bottom: 1px solid #ccc; /* Línea separadora opcional */
+}
+
+/* Los botones que actúan como pestañas */
+.tablinks {
+    background-color: transparent; /* Fondo transparente */
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 1vh 2vh; 
+    margin-right: 2vh;
+    font-size: 1rem;
+    color: var(--cl-dark-gray); 
+    font-family: inherit;
+    transition: 0.3s;
+    position: relative;
+}
+
+/* Estado Hover (Ratón) */
+.tablinks:hover {
+    color: var(--cl-black);
+    background-color: rgba(0,0,0,0.05); 
+}
+
+/* Estado Activo (Pestaña seleccionada) */
+.tablinks.active {
+    color: var(--cl-black);
+    font-weight: bold;
+    border-bottom: 3px solid var(--primary-color); 
+}
+
+/* === ACCESIBILIDAD CRÍTICA: FOCO VISIBLE === */
+.tablinks:focus-visible {
+    outline: 3px solid var(--cl-black) !important;
+    outline-offset: -3px;
+    background-color: #e0e0e0 !important;
+    color: var(--cl-black) !important;
+    z-index: 10;
+}
+
 
