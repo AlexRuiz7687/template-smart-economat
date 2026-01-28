@@ -238,8 +238,36 @@ Se encontraron **2 problemas automáticos críticos** relacionados con los selec
 | <img src="image-55.png" width="400"> | <img src="image-56.png" width="400"> |
 
 ---
+**INVENTARIO**
+
+# Fase 1: Auditoría Inicial (Inventario)
+
+**Objetivo:** Identificar barreras de accesibilidad en los módulos de "Ver Stock Valorado" y "Consolidar Stock".
+
+### 1. Hallazgos Principales
+
+El análisis inicial revela **52 problemas críticos** concentrados principalmente en la falta de etiquetado de formularios.
+
+#### A. Controles de Fila sin Etiqueta (Bloqueante)
+- **Problema:** En la tabla de consolidación, cada fila genera un input numérico para el stock. Ninguno de estos inputs tiene una etiqueta asociada (`label`) ni un atributo accesible (`aria-label`).
+- **Impacto:** Un usuario de lector de pantalla escuchará "Edición de texto" repetidamente sin saber a qué producto corresponde el stock que está introduciendo.
+
+#### B. Filtros y Búsqueda Mudas
+- **Problema:** Los selectores de "Categoría" y "Orden", así como los campos de búsqueda global, carecen de etiquetas.
+- **Impacto:** Dificultad para entender la finalidad de los controles superiores.
+
+#### C. Navegación por Pestañas Deficiente
+- **Problema:** Al igual que en versiones anteriores de Artículos, botones como "Ver Stock" y "Consolidar Stock" son simples `<div>` o botones sin semántica de pestañas (`tablist`, `tab`).
+
+### 2. Evidencia de Auditoría
+
+| Axe DevTools _Ver Stock Valorado_ | Axe DevTools _Consolidar Stock_ | WAVE _Ver Stock Valorado_ |WAVE _Consolidar Stock_ |
+| :---: | :---: |
+|<img src="image-67.png" width="400">|<img src="image-66.png" width="400">|<img src="image-65.png" width="400">|<img src="image-64.png" width="400">|
 
 ---
+
+
 
 # **Fase 2: Mejora de la accesibilidad perceptible**
 
@@ -278,6 +306,12 @@ Se utilizó la herramienta **WhoCanUse** para validar los nuevos ratios. Esta he
 
 ---
 
+
+
+
+
+
+---
 ## LOGIN
 
 **Objetivo:** Garantizar que los controles de formulario y la estructura de la página sean perceptibles por tecnologías de asistencia, resolviendo la ausencia de etiquetas de texto.
@@ -437,6 +471,31 @@ _Código modificado:_
   </tr>
 </thead>
 ```
+
+---
+
+**INVENTARIO**
+
+**Objetivo:** Implementar atributos accesibles en los controles de formulario y estructurar roles ARIA en las pestañas.
+
+### 1. Etiquetado de Formularios (Resuelto)
+Se han añadido atributos `aria-label` descriptivos a todos los controles que carecían de etiqueta visual, resolviendo los 52 errores críticos de "Missing form label".
+
+**A. Búsqueda y Filtros:**
+```html
+<!-- inventario.html -->
+<input id="busquedaInv" aria-label="Buscar productos en stock valorado" ...>
+<select id="categoriaInvSelect" aria-label="Filtrar por categoría" ...>
+```
+
+**B. Tabla de Consolidación (Dinámico):**
+Se modificó el controlador para inyectar una etiqueta única por fila, permitiendo identificar el producto exacto al editar el stock.
+
+```javascript
+// inventarioController.js
+input.setAttribute('aria-label', `Stock físico para ${producto.nombre}`);
+```
+---
 
 ---
 
@@ -780,6 +839,103 @@ Tras la refactorización a etiquetas `<button>` y la limpieza de alertas vacías
 
 ---
 
+**ARTÍCULOS**
+
+# Fase 6: Pruebas con Lectores de Pantalla (Gestión de Artículos)
+
+**Objetivo:** Verificar que el complejo sistema de pestañas y tablas de datos sea navegable y comprensible sin referencias visuales, solucionando los problemas de foco y "contenido fantasma" detectados en el diagnóstico.
+
+### 1. Metodología y Problemas Detectados
+
+Durante la primera auditoría manual con **Silktide** y navegación por teclado, se identificaron barreras críticas que hacían la página inutilizable para usuarios ciegos:
+
+#### A. Contenido Fantasma (Ghost Content)
+- **Problema:** El lector de pantalla leía el formulario de "Nuevo Artículo" incluso cuando el usuario estaba visualizando el "Listado". Esto ocurría porque la ocultación visual (`display: none`) no estaba sincronizada correctamente con el árbol de accesibilidad en todos los contextos.
+- **Corrección:** Se implementó el atributo global `hidden` en los paneles inactivos, asegurando que el navegador los elimine completamente del árbol de accesibilidad.
+
+#### B. Trampa de Foco en Pestañas
+- **Problema:** Al pulsar `TAB` desde los botones de navegación, el foco saltaba directamente al pie de página, ignorando el contenido del panel seleccionado.
+- **Corrección:** Se añadió `tabindex="0"` dinámico al panel activo, permitiendo que el foco entre fluidamente al contenido (tabla o formulario) inmediatamente después de seleccionar la pestaña.
+
+#### C. Campos de Formulario sin Nombre Accesible
+- **Problema:** El lector de pantalla se detenía en el contenedor visual "controles" sin entrar al campo de texto, o lo anunciaba como "cuadro de texto" sin etiqueta.
+- **Corrección:** Se reestructuró la barra de herramientas utilizando HTML semántico y ARIA Regions:
+    1.  Contenedor principal con `role="toolbar"` para agrupar los controles.
+    2.  Agrupación de búsqueda en un contenedor `role="search"` explícito.
+    3.  Etiquetado robusto mediante `label` oculto asociado por ID único (`busquedaArticulos`).
+
+#### D. Región de Controles Ignorada
+- **Problema:** El grupo de filtros no se anunciaba explícitamente, confundiendo al usuario sobre el contexto de los controles.
+- **Corrección:** Se elevó el rol del contenedor de `role="group"` a `role="region"` con `aria-label="Controles de búsqueda y filtrado"`, forzando al lector a anunciar la entrada a esta sección crítica.
+
+```html
+<div class="controles" role="region" aria-label="Controles de búsqueda y filtrado">
+  <!-- Inputs y botones... -->
+</div>
+```
+
+#### E. Lectura de Tabla Abreviada
+- **Problema:** La navegación por celdas estándar solo leía el valor ("11", "Aceite..."), perdiendo el contexto de la columna al navegar rápido.
+- **Corrección:** Se implementó una técnica de **texto inyectado invisible** (`.sr-only`) dentro de cada celda. Esto garantiza que el lector anuncie explícitamente "ID: 11", "Nombre: Aceite..." sin depender de la heurística del navegador, proporcionando una experiencia detallada y verbosa bajo demanda del usuario.
+
+```javascript
+// almacenView.js (Renderizado de filas)
+fila.innerHTML = `
+  <td><span class="sr-only">ID: </span>${p.id}</td> 
+  <td><span class="sr-only">Nombre: </span>${p.nombre}</td> 
+  <td><span class="sr-only">Categoría: </span>${categoria}</td>
+  ...
+`;
+```
+
+#### F. Pérdida de Foco al Cambiar de Vista (SPA)
+- **Problema:** Al entrar en "Detalles del Producto", el lector de pantalla reiniciaba la lectura desde el menú superior.
+- **Corrección:** Se implementó un manejador global en `mainController.js` que detecta el primer encabezado (`h1` o `h2`) al cambiar de vista, le asigna `tabindex="-1"` y mueve el foco hacia él automáticamente.
+
+```javascript
+// mainController.js (cargarPagina)
+const mainHeader = contenido.querySelector('h1, h2');
+if (mainHeader) {
+    mainHeader.setAttribute('tabindex', '-1');
+    mainHeader.focus();
+}
+```
+
+#### G. Iconos Decorativos Leídos como Texto
+- **Problema:** El botón "Volver" leía "Flecha hacia la izquierda Volver", añadiendo ruido auditivo.
+- **Corrección:** Se sobrescribió el contenido accesible mediante `aria-label="Volver"`. Esto hace que el lector ignore el carácter Unicode de la flecha.
+
+```html
+<button class="btn-volver" aria-label="Volver">⬅ Volver</button>
+```
+
+#### H. Inputs Deshabilitados sin Etiqueta
+- **Problema:** En la vista de "Detalles", los inputs en estado `disabled` eran anunciados como campos sin nombre, a pesar de tener `label for`.
+- **Corrección:** Se añadió `aria-label` redundante a cada input con el mismo texto que su etiqueta visual (e.g., `<input ... aria-label="Precio">`). Esto asegura que el nombre accesible persista incluso si el navegador desvincula la etiqueta en campos deshabilitados.
+
+```html
+<div class="grupo-input">
+   <label for="ficha-nombre">Nombre:</label>
+   <input type="text" id="ficha-nombre" disabled aria-label="Nombre">
+</div>
+```
+
+### 2. Validación de la Solución (ARIA Robusto)
+
+Se ha implementado el patrón de diseño estandarizado **WAI-ARIA Tabs**, logrando una experiencia fluida:
+
+- **Roles Definidos:** El lector anuncia correctamente _"Pestaña 1 de 2: Listado de Artículos, seleccionada"_.
+- **Estado Dinámico:** Al cambiar de pestaña, el atributo `aria-selected` se actualiza instantáneamente.
+- **Navegación por Flechas:** Se ha habilitado el *Roving Tabindex*, permitiendo moverse entre las pestañas con las flechas Izquierda/Derecha, comportamiento nativo esperado en aplicaciones de escritorio.
+
+---
+
+
+
+
+
+
+
 # **Fase 7: Auditoría Final y Validación**
 
 **HOME**
@@ -819,6 +975,8 @@ Como medida de control de calidad adicional, se ejecutó el motor de análisis `
 **Evidencia:**
 ![Validación axe DevTools: 0 problemas detectados](image-24.png)
 
+---
+
 **LOGIN**
 
 **Objetivo:** Certificar el cumplimiento técnico de la página de acceso (`index.html`) tras la refactorización de formularios, estructura y navegación.
@@ -856,6 +1014,29 @@ El motor Axe, que inicialmente detectó 21 problemas graves, ahora certifica una
 
 ---
 
+**ARTÍCULOS**
+
+**Objetivo:** Certificar el cumplimiento técnico tras la refactorización profunda del código JavaScript y HTML.
+
+### 1. Validación Estructural y Semántica
+La estructura final del código `articulos.html` ha sido validada sin errores.
+- **Roles ARIA:** Correctos (`tablist`, `tab`, `tabpanel`).
+- **Formularios:** Todos los inputs cuentan con etiquetas accesibles (`.sr-only`).
+- **Tablas:** Encabezados con ámbito (`scope="col"`) definido.
+
+### 2. Resultado Final
+La página de Gestión de Artículos, que originalmente presentaba barreras bloqueantes, ahora ofrece una experiencia equivalente para todos los usuarios.
+
+**Evidencia:**
+
+Se muestran las tres vistas principales de la página de Gestión de Artículos evaluadas por la herrmanienta axe-devtools. Se observa que no hay problemas detectados.
+
+|           Vista de Listado            |          Vista de Nuevo Artículo          |      Vista de Detalle     |
+| :----------------------------------: | :----------------------------------: | :----------------------------------: |
+| <img src="image-61.png" width="400"> | <img src="image-62.png" width="400"> | <img src="image-63.png" width="400"> |
+
+---
+
 # Conclusiones del Proyecto
 
 La intervención realizada en la aplicación Smart Economato ha permitido transformar una interfaz con barreras de acceso significativas en un producto web inclusivo, robusto y con buenas prácticas.
@@ -868,4 +1049,4 @@ La intervención realizada en la aplicación Smart Economato ha permitido transf
 4.  **Operabilidad Total:** Garantía de navegación 100% funcional mediante teclado, ideal para usuarios con discapacidad motora.
 
 **Estado Final:**
-La página de inicio (`home.html`) y del login (`index.html`)n cumple satisfactoriamente con los Criterios de Conformidad de las **WCAG 2.1**, validadas mediante una triangulación de herramientas líderes en la industria (WAVE, Lighthouse y Axe).
+La página de inicio (`home.ht ml`), del login (`index.html`) y de gestión de artículos (`articulos.html`) cumple satisfactoriamente con los Criterios de Conformidad de las **WCAG 2.1**, validadas mediante una triangulación de herramientas líderes en la industria (WAVE, Lighthouse y Axe).

@@ -8,8 +8,14 @@ export function renderizarTabla(datos, resumenEl) {
     return;
   }
 
-  datos.forEach(p => {
+  datos.forEach((p, index) => {
     const fila = document.createElement('tr');
+    // Accesibilidad: Anunciar número de fila y contenido clave al entrar
+    const numeroFila = index + 1;
+    fila.setAttribute("aria-label", `Fila ${numeroFila}: ${p.nombre}`);
+    // Opcional: tabindex para navegar por filas si el usuario lo prefiere, aunque la tabla nativa ya navega por celdas
+    // fila.setAttribute("tabindex", "0"); 
+
     if (p.stock < p.stockMinimo) fila.classList.add('alerta');
 
     const categoria = typeof p.categoria === 'object' ? p.categoria.nombre : p.categoria;
@@ -17,15 +23,15 @@ export function renderizarTabla(datos, resumenEl) {
     const proveedorIsla = p.proveedor?.isla || p.isla || '';
 
     fila.innerHTML = `
-      <td>${p.id}</td> 
-      <td>${p.nombre}</td> 
-      <td>${categoria}</td> 
-      <td>${p.precio?.toFixed ? p.precio.toFixed(2) : p.precio}</td> 
+      <td><span class="sr-only">I D: </span>${p.id}</td> 
+      <td><span class="sr-only">Nombre: </span>${p.nombre}</td> 
+      <td><span class="sr-only">Categoría: </span>${categoria}</td> 
+      <td><span class="sr-only">Precio: </span>${p.precio?.toFixed ? p.precio.toFixed(2) : p.precio} euros</td> 
       
-      <td>${p.stockMinimo}</td> 
-      <td>${proveedorNombre}</td> 
+      <td><span class="sr-only">Stock Mínimo: </span>${p.stockMinimo}</td> 
+      <td><span class="sr-only">Proveedor: </span>${proveedorNombre}</td> 
       <td> 
-        <button class="btn-ver-detalle" data-page="detalle-producto" data-id="${p.productoId}"> 
+        <button class="btn-ver-detalle" data-page="detalle-producto" data-id="${p.productoId}" aria-label="Ver detalles de ${p.nombre}"> 
            + 
         </button> 
     </td>

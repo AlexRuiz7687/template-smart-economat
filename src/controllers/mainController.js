@@ -10,7 +10,7 @@ import { inicializarRecepcion } from './recepcionController.js';
 // PROTECCIÓN DE SEGURIDAD
 if (!authService.isAuthenticated()) {
     window.location.href = '../index.html';
-} 
+}
 else {
     document.addEventListener("DOMContentLoaded", () => {
 
@@ -47,7 +47,7 @@ else {
                 // Inicializadores específicos por página
                 switch (page) {
                     case "articulos":
-                        
+
                         inicializarAlmacen(tab);
                         break;
                     case "detalle-producto":
@@ -70,6 +70,14 @@ else {
 
                 if (menuPrincipal) menuPrincipal.classList.remove("open");
 
+                // --- ACCESIBILIDAD: GESTIÓN DE FOCO ---
+                // Mover el foco al título principal de la nueva vista para anunciar el cambio de contexto
+                const mainHeader = contenido.querySelector('h1, h2');
+                if (mainHeader) {
+                    mainHeader.setAttribute('tabindex', '-1');
+                    mainHeader.focus();
+                }
+
             } catch (error) {
                 console.error(error);
                 contenido.innerHTML = `<div style="padding:20px; color:red">Error cargando ${page}: ${error.message}</div>`;
@@ -84,9 +92,9 @@ else {
                 e.preventDefault();
                 const page = elemento.dataset.page;
                 const id = elemento.dataset.id || null;
-                
+
                 // Capturamos el atributo data-tab
-                const tab = elemento.dataset.tab || null; 
+                const tab = elemento.dataset.tab || null;
 
                 // Gestión de la clase 'active' visual en el menú
                 if (elemento.closest(".menu")) {
@@ -99,7 +107,7 @@ else {
                 cargarPagina(page, id, tab);
             }
         });
-        
+
         // Manejo del botón menú hamburguesa
         const menuToggle = document.getElementById('menu-toggle');
         if (menuToggle && menuPrincipal) {

@@ -14,12 +14,12 @@ const domInventario = {
     selectOrden: null,
     btnLimpiar: null,
     tbodyValorado: null,
-    
+
     // Pestaña Consolidar
     inputConsolidar: null,
     selectOrdenConsolidar: null,
     tbodyConsolidar: null,
-    
+
     // Comunes
     tfootResumen: null
 };
@@ -29,7 +29,7 @@ const domInventario = {
    ========================================= */
 export async function inicializarInventario() {
     // Captura de elementos
-    
+
     // -- Pestaña Ver Stock --
     domInventario.inputBusqueda = document.getElementById('busquedaInv');
     domInventario.selectCategoria = document.getElementById('categoriaInvSelect');
@@ -42,7 +42,7 @@ export async function inicializarInventario() {
     domInventario.inputConsolidar = document.getElementById('busquedaConsolidar');
     domInventario.selectOrdenConsolidar = document.getElementById('ordenConsolidar');
     domInventario.tbodyConsolidar = document.getElementById('tabla-consolidar-body');
-    
+
     // Validación de seguridad
     if (!domInventario.tbodyValorado) return;
 
@@ -50,7 +50,7 @@ export async function inicializarInventario() {
         // Carga de datos
         datosInventario = await getProductos();
         datosFiltrados = [...datosInventario];
-        
+
         const categorias = await getCategorias();
         cargarSelectCategorias(categorias);
 
@@ -59,7 +59,7 @@ export async function inicializarInventario() {
 
         // Configuración de eventos
         configurarEventos();
-        setupTabs(); 
+        setupTabs();
 
     } catch (error) {
         console.error("Error al cargar el inventario:", error);
@@ -77,7 +77,7 @@ function configurarEventos() {
             domInventario.inputBusqueda.value = '';
             domInventario.selectCategoria.value = '';
             domInventario.selectOrden.value = 'asc'; // Reseteo por defecto
-            aplicarFiltros(); 
+            aplicarFiltros();
         });
     }
 
@@ -105,15 +105,15 @@ function setupTabs() {
 
             const targetId = btn.dataset.target;
             const targetDiv = document.getElementById(targetId);
-            if(targetDiv) targetDiv.style.display = 'block';
-            
+            if (targetDiv) targetDiv.style.display = 'block';
+
             btn.classList.add('active');
 
             // LÓGICA: Al cambiar, aplicamos los filtros de esa pestaña para refrescar datos
             if (targetId === 'consolidarStock') {
                 aplicarFiltrosConsolidacion();
             } else {
-                aplicarFiltros(); 
+                aplicarFiltros();
             }
         });
     });
@@ -141,7 +141,7 @@ function aplicarFiltrosConsolidacion() {
         resultado.sort((a, b) => {
             const stockA = parseInt(a.stock) || 0;
             const stockB = parseInt(b.stock) || 0;
-            
+
             if (criterio === 'asc') return stockA - stockB;
             if (criterio === 'desc') return stockB - stockA;
             return 0;
@@ -172,12 +172,12 @@ function renderizarTablaValorada(productos) {
         const stock = parseInt(producto.stock) || 0;
         const precio = parseFloat(producto.precio) || 0;
         const totalFila = stock * precio;
-        
+
         totalValoradoGlobal += totalFila;
 
-        const nombreCat = (typeof producto.categoria === 'object' && producto.categoria !== null) 
-                          ? producto.categoria.nombre 
-                          : (producto.categoria || 'General');
+        const nombreCat = (typeof producto.categoria === 'object' && producto.categoria !== null)
+            ? producto.categoria.nombre
+            : (producto.categoria || 'General');
 
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -208,7 +208,7 @@ function renderizarTablaConsolidacion(productos) {
 
     productos.forEach(producto => {
         const stockActual = parseInt(producto.stock) || 0;
-        
+
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td>${producto.codigo || producto.id}</td>
@@ -219,7 +219,8 @@ function renderizarTablaConsolidacion(productos) {
                        value="${stockActual}" 
                        class="form-control input-consolidar" 
                        data-id="${producto.id}"
-                       style="width: 80px; text-align: center;">
+                       style="width: 80px; text-align: center;"
+                       aria-label="Stock físico para ${producto.nombre}">
             </td> 
             <td>
                 <button type="button" class="btn-guardar-stock" data-id="${producto.id}">
@@ -277,10 +278,10 @@ async function handleGuardarStock(e) {
         await updateArticulo(productoOriginal.productoId || productoOriginal.id, datosAEnviar);
 
         productoOriginal.stock = nuevoStock;
-        
+
         btn.textContent = "✔ OK";
-        btn.style.backgroundColor = "#155724"; 
-        
+        btn.style.backgroundColor = "#155724";
+
         setTimeout(() => {
             btn.textContent = "Guardar";
             btn.style.backgroundColor = ""; // Volver al CSS original
@@ -326,7 +327,7 @@ function aplicarFiltros() {
         resultado = resultado.filter(producto => {
             const nombre = producto.nombre ? producto.nombre.toLowerCase() : '';
             const codigo = producto.codigo ? producto.codigo.toString().toLowerCase() : '';
-            
+
             // Retorna TRUE si coincide nombre O código
             return nombre.includes(termino) || codigo.includes(termino);
         });
@@ -336,15 +337,15 @@ function aplicarFiltros() {
     if (domInventario.selectCategoria && domInventario.selectCategoria.value !== '') {
         const catSeleccionada = domInventario.selectCategoria.value;
         resultado = resultado.filter(producto => {
-            const nombreCat = (typeof producto.categoria === 'object' && producto.categoria !== null) 
-                              ? producto.categoria.nombre 
-                              : producto.categoria;
+            const nombreCat = (typeof producto.categoria === 'object' && producto.categoria !== null)
+                ? producto.categoria.nombre
+                : producto.categoria;
             return nombreCat === catSeleccionada;
         });
     }
 
     // Lógica de Ordenamiento
-    
+
     if (domInventario.selectOrden) {
         const criterio = domInventario.selectOrden.value;
         resultado.sort((a, b) => {

@@ -18,27 +18,16 @@
   <div id="verStock" class="tabcontent" style="display: block">
     <div class="cabecera-articulos">
       <div class="controles">
-        <input
-          type="text"
-          id="busquedaInv"
-          placeholder="Buscar por nombre o código..."
-          class="form-control rounded"
-          style="max-width: 300px; display: inline-block"
-        />
+        <input type="text" id="busquedaInv" placeholder="Buscar por nombre o código..." class="form-control rounded"
+          style="max-width: 300px; display: inline-block" aria-label="Buscar productos en stock valorado" />
 
-        <select
-          id="categoriaInvSelect"
-          class="form-control rounded option-style"
-          style="width: auto; display: inline-block"
-        >
+        <select id="categoriaInvSelect" class="form-control rounded option-style"
+          style="width: auto; display: inline-block" aria-label="Filtrar por categoría">
           <option value="">-- Todas las Categorías --</option>
         </select>
 
-        <select
-          id="ordenInvSelect"
-          class="form-control rounded option-style"
-          style="width: auto; display: inline-block"
-        >
+        <select id="ordenInvSelect" class="form-control rounded option-style" style="width: auto; display: inline-block"
+          aria-label="Ordenar listado de stock">
           <option value="asc">Precio: Bajo a Alto</option>
           <option value="desc">Precio: Alto a Bajo</option>
           <option value="stock-asc">Stock: Menor a Mayor</option>
@@ -73,30 +62,19 @@
   <div id="consolidarStock" class="tabcontent" style="display: none">
     <div class="cabecera-articulos">
       <div class="controles">
-        <input
-          type="text"
-          id="busquedaConsolidar"
-          placeholder="Buscar por nombre o código..."
-          class="form-control rounded"
-          style="width: 250px; display: inline-block"
-        />
+        <input type="text" id="busquedaConsolidar" placeholder="Buscar por nombre o código..."
+          class="form-control rounded" style="width: 250px; display: inline-block"
+          aria-label="Buscar productos para consolidar" />
 
-        <select
-          id="ordenConsolidar"
-          class="form-control rounded option-style"
-          style="width: auto; display: inline-block"
-        >
+        <select id="ordenConsolidar" class="form-control rounded option-style"
+          style="width: auto; display: inline-block" aria-label="Ordenar listado de consolidación">
           <option value="asc">Stock: Menor a Mayor</option>
           <option value="desc">Stock: Mayor a Menor</option>
         </select>
       </div>
     </div>
 
-    <table
-      id="tablaConsolidacion"
-      class="styled-table"
-      style="width: 100%; margin-top: 15px"
-    >
+    <table id="tablaConsolidacion" class="styled-table" style="width: 100%; margin-top: 15px">
       <thead>
         <tr>
           <th>Código / SKU</th>

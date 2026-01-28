@@ -1,7 +1,7 @@
-<h2 class="sr-only">Detalles del producto</h2>
+<!-- <h2 class="sr-only">Detalles del producto</h2> -->
 <div class="contenedor-ficha">
     <div class="encabezado-ficha">
-        <h2>Ficha de Producto</h2>
+        <h2>Detalles del Producto</h2>
 
         <div class="acciones-ficha">
             <button id="btn-editar" class="btn-editar">Editar</button>
@@ -9,7 +9,7 @@
             <button id="btn-guardar" class="btn-guardar oculto">Guardar</button>
             <button id="btn-cancelar" class="btn-cancelar oculto">Cancelar</button>
 
-            <button class="btn-volver" data-page="articulos">⬅ Volver</button>
+            <button class="btn-volver" data-page="articulos" aria-label="Volver">⬅ Volver</button>
         </div>
     </div>
 
@@ -22,40 +22,40 @@
 
     <div class="datos-producto">
         <div class="grupo-input">
-            <label>ID Referencia:</label>
-            <input type="text" id="ficha-id" disabled>
+            <label for="ficha-id">ID Referencia:</label>
+            <input type="text" id="ficha-id" disabled aria-label="ID Referencia">
         </div>
 
         <div class="grupo-input">
-            <label>Nombre del Artículo:</label>
-            <input type="text" id="ficha-nombre" disabled>
+            <label for="ficha-nombre">Nombre del Artículo:</label>
+            <input type="text" id="ficha-nombre" disabled aria-label="Nombre del Artículo">
         </div>
 
         <div class="grupo-input">
-            <label>Categoría:</label>
-            <input type="text" id="ficha-categoria" disabled>
+            <label for="ficha-categoria">Categoría:</label>
+            <input type="text" id="ficha-categoria" disabled aria-label="Categoría">
         </div>
 
         <div class="grupo-dato-doble">
             <div class="grupo-input">
-                <label>Precio (€):</label>
-                <input type="number" id="ficha-precio" disabled>
-            </div>
-            
-            <div class="grupo-input">
-                <label>Unidad de Medida:</label>
-                <input type="text" id="ficha-unidad" disabled>
+                <label for="ficha-precio">Precio (€):</label>
+                <input type="number" id="ficha-precio" disabled aria-label="Precio">
             </div>
 
             <div class="grupo-input">
-                <label>Stock Mínimo:</label>
-                <input type="number" id="ficha-stock-min" disabled>
+                <label for="ficha-unidad">Unidad de Medida:</label>
+                <input type="text" id="ficha-unidad" disabled aria-label="Unidad de Medida">
+            </div>
+
+            <div class="grupo-input">
+                <label for="ficha-stock-min">Stock Mínimo:</label>
+                <input type="number" id="ficha-stock-min" disabled aria-label="Stock Mínimo">
             </div>
         </div>
 
         <div class="grupo-input">
-            <label>Descripción / Notas:</label>
-            <textarea id="ficha-descripcion" disabled></textarea>
+            <label for="ficha-descripcion">Descripción / Notas:</label>
+            <textarea id="ficha-descripcion" disabled aria-label="Descripción / Notas"></textarea>
         </div>
     </div>
 </div>

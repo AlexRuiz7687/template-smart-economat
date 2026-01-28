@@ -27,7 +27,7 @@
   --cl-dark-gray: rgb(99, 99, 99);
   --footer-height: 100px;
   --cl-green: rgb(4, 160, 4);
-  --cl-green-primary: #2a9d8f;
+  --cl-green-primary: #165554;
   --cl-green-primary-light: #35dbc8;
   --cl-orange: #e67e22;
 }
@@ -201,7 +201,7 @@ footer a {
   color: var(--cl-green-primary-light);
 }
 
-footer p > a:hover {
+footer p>a:hover {
   color: var(--cl-green-primary);
 }
 
@@ -233,6 +233,7 @@ footer a:visited {
 /* =========== PEDIDOS =====================*/
 
 @media print {
+
   /* Oculta todo por defecto */
   body * {
     visibility: hidden;
@@ -264,16 +265,21 @@ footer a:visited {
 /* =======================================================
    UNIFICACIÓN DE FOCO (FOCUS) 
    ======================================================= */
-  
+
 /* Regla Maestra para todos los elementos interactivos */
 button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible,
 a:focus-visible,
-.tablinks:focus-visible,   /* pestañas */
-.btn-submit:focus-visible, /* Botón Ingresar */
-.btn-guardar:focus-visible /* Botón Registrar Artículo */ {
+.tablinks:focus-visible,
+/* pestañas */
+.btn-submit:focus-visible,
+/* Botón Ingresar */
+.btn-guardar:focus-visible
+
+/* Botón Registrar Artículo */
+  {
   /* Anillo */
   outline: 2px solid var(--primary-color) !important;
 
@@ -285,6 +291,7 @@ a:focus-visible,
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1) !important;
   z-index: 100;
 }
+
 input[type="checkbox"]:focus-visible,
 input[type="radio"]:focus-visible {
   outline-offset: 1px !important;

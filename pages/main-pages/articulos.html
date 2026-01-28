@@ -2,12 +2,12 @@
 
 <div class="menu-articulos">
   <div class="tab" role="tablist" aria-label="Secciones de gestión de artículos">
-    <button class="tablinks" id="defaultOpen" data-target="verArticulos" role="tab" aria-selected="true"
-      aria-controls="verArticulos" id="tab-verArticulos">
+    <button class="tablinks" id="tab-verArticulos" data-target="verArticulos" role="tab" aria-selected="true"
+      aria-controls="verArticulos">
       Listado de Artículos
     </button>
-    <button class="tablinks" id="btnNuevoArticulo" data-target="nvoArticulo" role="tab" aria-selected="false"
-      aria-controls="nvoArticulo" id="tab-nvoArticulo" tabindex="-1">
+    <button class="tablinks" id="tab-nvoArticulo" data-target="nvoArticulo" role="tab" aria-selected="false"
+      aria-controls="nvoArticulo" tabindex="-1">
       Nuevo Artículo
     </button>
   </div>
@@ -139,19 +139,22 @@
 
 <div id="verArticulos" class="tabcontent" role="tabpanel" aria-labelledby="tab-verArticulos" tabindex="0">
   <div class="cabecera-articulos">
-    <div class="controles">
-      <label for="busqueda" class="sr-only">Buscar producto</label>
-      <input type="text" id="busqueda" placeholder="Buscar producto..." />
-
-      <button id="btnBuscar">Buscar</button>
+    <div class="controles" role="region" aria-label="Controles de búsqueda y filtrado">
+      <!-- Región de Búsqueda -->
+      <div role="search" class="search-group">
+        <label for="busquedaArticulos" class="sr-only">Buscar producto</label>
+        <input type="text" id="busquedaArticulos" placeholder="Buscar producto..." autocomplete="off"
+          aria-label="Buscar producto por nombre o código" title="Buscar producto por nombre o código" />
+        <button id="btnBuscar">Buscar</button>
+      </div>
 
       <label for="categoriaSelect" class="sr-only">Filtrar por categoría</label>
-      <select id="categoriaSelect">
+      <select id="categoriaSelect" aria-label="Filtrar por categoría">
         <option value="">-- Categoría --</option>
       </select>
 
       <label for="ordenSelect" class="sr-only">Ordenar listado</label>
-      <select id="ordenSelect">
+      <select id="ordenSelect" aria-label="Ordenar listado">
         <option value="asc">Precio ascendente</option>
         <option value="desc">Precio descendente</option>
       </select>
@@ -162,7 +165,7 @@
 
   <table id="tablaProductos">
     <caption class="sr-only">
-      Inventario actual de productos
+      Listado de productos
     </caption>
     <thead>
       <tr>
