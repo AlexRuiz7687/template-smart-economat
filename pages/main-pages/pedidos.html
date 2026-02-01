@@ -12,17 +12,22 @@
         </div>
     </div>
 
-    <div class="tab">
-        <button class="tablinks active" id="defaultOpenPedidos" data-target="verPedidos">Historial de Pedidos</button>
-        <button class="tablinks" id="btnTabHistorialUnificaciones" data-target="verHistorialUnificaciones">Historial de
+    <div class="tab" role="tablist">
+        <button class="tablinks active" id="defaultOpenPedidos" role="tab" aria-selected="true"
+            aria-controls="verPedidos" data-target="verPedidos">Historial de Pedidos</button>
+        <button class="tablinks" id="btnTabHistorialUnificaciones" role="tab" aria-selected="false"
+            aria-controls="verHistorialUnificaciones" data-target="verHistorialUnificaciones">Historial de
             Compras</button>
-        <button class="tablinks" id="btnTabNuevoPedido" data-target="nvoPedido">Nuevo Pedido</button>
+        <button class="tablinks" id="btnTabNuevoPedido" role="tab" aria-selected="false" aria-controls="nvoPedido"
+            data-target="nvoPedido">Nuevo Pedido</button>
     </div>
 
-    <div id="verPedidos" class="tabcontent" style="display: block;">
+    <div id="verPedidos" class="tabcontent" role="tabpanel" style="display: block;">
         <div class="controles" style="margin-top: 20px; margin-bottom: 15px;">
+            <label for="busquedaPedido" class="sr-only">Buscar pedido</label>
             <input type="text" id="busquedaPedido" placeholder="Buscar..." class="form-control rounded"
                 style="width: 300px;">
+            <label for="filtroEstadoPedido" class="sr-only">Filtrar por estado</label>
             <select id="filtroEstadoPedido" class="form-control rounded" style="width: 150px; margin-left: 10px;">
                 <option value="">Estado: Todos</option>
                 <option value="Pendiente">Pendiente</option>
@@ -33,47 +38,47 @@
         <table class="styled-table" style="width: 100%;">
             <thead>
                 <tr>
-                    <th class="col-check-admin" style="display:none; width: 40px;">Sel.</th>
-                    <th>ID</th>
-                    <th>Fecha</th>
-                    <th>Solicitante</th>
-                    <th>Estado</th>
-                    <th>Total (€)</th>
-                    <th>Acciones</th>
+                    <th class="col-check-admin" style="display:none; width: 40px;" scope="col">Sel.</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Solicitante</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Total (€)</th>
+                    <th scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody id="tabla-pedidos-body"></tbody>
         </table>
     </div>
 
-    <div id="verHistorialUnificaciones" class="tabcontent" style="display: none;">
+    <div id="verHistorialUnificaciones" class="tabcontent" role="tabpanel" style="display: none;">
         <h3 style="margin-top: 20px;">Historial de Compras Unificadas</h3>
         <table class="styled-table" style="width: 100%;">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Fecha</th>
-                    <th>Total Items</th>
-                    <th>Pedidos Incluidos</th>
-                    <th>Acciones</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Total Items</th>
+                    <th scope="col">Pedidos Incluidos</th>
+                    <th scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody id="tabla-historial-unificaciones-body"></tbody>
         </table>
     </div>
 
-    <div id="nvoPedido" class="tabcontent" style="display: none;">
+    <div id="nvoPedido" class="tabcontent" role="tabpanel" style="display: none;">
         <div class="crear-articulo">
             <form class="form-nuevo-articulo" id="formNuevoPedido">
                 <input type="hidden" id="pedido-id-edicion">
 
                 <div class="form-row main-inputs" style="margin-bottom: 20px;">
                     <div class="form-group">
-                        <label>Solicitante</label>
+                        <label for="pedido-solicitante">Solicitante</label>
                         <input type="text" id="pedido-solicitante" class="form-control rounded" readonly>
                     </div>
                     <div class="form-group">
-                        <label>Fecha de Solicitud</label>
+                        <label for="pedido-fecha">Fecha de Solicitud</label>
                         <input type="date" id="pedido-fecha" class="form-control rounded">
                     </div>
                 </div>
@@ -83,10 +88,10 @@
                 <table class="styled-table" style="width: 100%; margin-bottom: 15px;">
                     <thead>
                         <tr>
-                            <th style="width: 40%;">Producto</th>
-                            <th style="width: 20%;">Cantidad</th>
-                            <th style="width: 20%;">Subtotal</th>
-                            <th style="width: 10%;">Acción</th>
+                            <th style="width: 40%;" scope="col">Producto</th>
+                            <th style="width: 20%;" scope="col">Cantidad</th>
+                            <th style="width: 20%;" scope="col">Subtotal</th>
+                            <th style="width: 10%;" scope="col">Acción</th>
                         </tr>
                     </thead>
                     <tbody id="lineas-pedido-body"></tbody>
@@ -109,28 +114,29 @@
     </div>
 
     <!-- MODAL DE EDICIÓN -->
-    <div id="modalFichaPedido" class="modal">
+    <div id="modalFichaPedido" class="modal" role="dialog" aria-modal="true" aria-labelledby="titulo-edicion-pedido">
         <div class="modal-content">
-            <span class="close-modal" id="btnCerrarModal">&times;</span>
+            <span class="close-modal" id="btnCerrarModal" aria-label="Cerrar modal">&times;</span>
             <div class="crear-articulo">
-                <h3 style="border-bottom: 2px solid var(--cl-orange); padding-bottom: 10px; margin-bottom: 20px;">
+                <h3 id="titulo-edicion-pedido"
+                    style="border-bottom: 2px solid var(--cl-orange); padding-bottom: 10px; margin-bottom: 20px;">
                     Edición de Pedido</h3>
                 <form class="form-nuevo-articulo" id="formEdicionPedido">
                     <input type="hidden" id="pedido-id-edicion">
 
                     <div class="form-row main-inputs" style="margin-bottom: 20px;">
                         <div class="form-group">
-                            <label>Solicitante</label>
+                            <label for="pedido-solicitante-edicion">Solicitante</label>
                             <input type="text" id="pedido-solicitante-edicion" class="form-control rounded" readonly>
                         </div>
                         <div class="form-group">
-                            <label>Fecha</label>
+                            <label for="pedido-fecha-edicion">Fecha</label>
                             <input type="date" id="pedido-fecha-edicion" class="form-control rounded" readonly>
                         </div>
                     </div>
 
                     <div class="form-group" style="margin-bottom: 20px;">
-                        <label>Estado</label>
+                        <label for="pedido-estado-edicion">Estado</label>
                         <select id="pedido-estado-edicion" class="form-control rounded">
                             <option value="Pendiente">Pendiente</option>
                             <option value="Procesado">Procesado</option>
@@ -143,10 +149,10 @@
                     <table class="styled-table" style="width: 100%; margin-bottom: 15px;">
                         <thead>
                             <tr>
-                                <th style="width: 40%;">Producto</th>
-                                <th style="width: 20%;">Cantidad</th>
-                                <th style="width: 20%;">Subtotal</th>
-                                <th style="width: 10%;">Acción</th>
+                                <th style="width: 40%;" scope="col">Producto</th>
+                                <th style="width: 20%;" scope="col">Cantidad</th>
+                                <th style="width: 20%;" scope="col">Subtotal</th>
+                                <th style="width: 10%;" scope="col">Acción</th>
                             </tr>
                         </thead>
                         <tbody id="lineas-pedido-edicion-body"></tbody>
@@ -174,7 +180,7 @@
         </div>
     </div>
 
-    <div id="vistaUnificacion" class="tabcontent" style="display: none;">
+    <div id="vistaUnificacion" class="tabcontent" role="tabpanel" style="display: none;">
         <div class="contenedor-ficha">
             <div class="encabezado-ficha"
                 style="border-bottom: 2px solid #000; padding-bottom: 15px; margin-bottom: 20px;">
@@ -194,10 +200,10 @@
             <table class="styled-table" style="width: 100%; margin-top: 20px; border: 1px solid #000;">
                 <thead style="background-color: #eee;">
                     <tr>
-                        <th>Código</th>
-                        <th>Producto</th>
-                        <th style="text-align: center;">Cantidad Total</th>
-                        <th>Unidad</th>
+                        <th scope="col">Código</th>
+                        <th scope="col">Producto</th>
+                        <th style="text-align: center;" scope="col">Cantidad Total</th>
+                        <th scope="col">Unidad</th>
                     </tr>
                 </thead>
                 <tbody id="tabla-unificada-body"></tbody>

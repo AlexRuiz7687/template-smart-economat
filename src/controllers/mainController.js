@@ -99,7 +99,7 @@ else {
                 // Gestión de la clase 'active' visual en el menú
                 if (elemento.closest(".menu")) {
                     document.querySelectorAll(".menu li").forEach(li => li.classList.remove("active"));
-                    const li = elemento.querySelector("li");
+                    const li = elemento.closest("li");
                     if (li) li.classList.add("active");
                 }
 

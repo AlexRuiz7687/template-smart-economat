@@ -1,81 +1,99 @@
 <h2 class="sr-only">Sección: Proveedores</h2>
 <div class="contenedor-seccion">
-    
+
     <div class="header-flex">
         <div class="menu-articulos">
             <h2>Gestión de Proveedores</h2>
         </div>
     </div>
 
-    <div class="tab">
-        <button class="tablinks active" id="defaultOpenProv" data-target="verProveedores">Ver Proveedores</button>
-        <button class="tablinks" id="btnTabNuevoProveedor" data-target="nvoProveedor">Nuevo Proveedor</button>
+    <div class="tab" role="tablist">
+        <button class="tablinks active" id="defaultOpenProv" role="tab" aria-selected="true"
+            aria-controls="verProveedores" data-target="verProveedores">Ver Proveedores</button>
+        <button class="tablinks" id="btnTabNuevoProveedor" role="tab" aria-selected="false" aria-controls="nvoProveedor"
+            data-target="nvoProveedor">Nuevo Proveedor</button>
     </div>
 
     <div id="verProveedores" class="tabcontent" style="display: block;">
         <div class="controles" style="margin-top: 20px; margin-bottom: 15px; justify-content: flex-start;">
-            <input type="text" id="busquedaProveedor" placeholder="Buscar proveedor (Nombre o CIF)..." class="form-control rounded" style="width: 300px;">
+            <label for="busquedaProveedor" class="sr-only">Buscar proveedor</label>
+            <input type="text" id="busquedaProveedor" placeholder="Buscar proveedor (Nombre o CIF)..."
+                class="form-control rounded" style="width: 300px;">
         </div>
 
         <table class="styled-table" style="width: 100%;">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Empresa</th>
-                    <th>CIF/NIF</th>
-                    <th>Contacto</th>
-                    <th>Teléfono</th>
-                    <th>Email</th>
-                    <th>Acciones</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Empresa</th>
+                    <th scope="col">CIF/NIF</th>
+                    <th scope="col">Contacto</th>
+                    <th scope="col">Teléfono</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody id="tabla-proveedores-body">
-                </tbody>
+            </tbody>
         </table>
     </div>
 
-    <div id="nvoProveedor" class="tabcontent" style="display: none;">
-        <div class="crear-articulo"> <form class="form-nuevo-articulo" id="formNuevoProveedor">
-                
-                <div class="form-row main-inputs" style="grid-template-columns: 1fr 2fr 1fr;"> 
+    <div id="nvoProveedor" class="tabcontent" role="tabpanel" style="display: none;">
+        <div class="crear-articulo">
+            <form class="form-nuevo-articulo" id="formNuevoProveedor">
+
+                <div class="form-row main-inputs" style="grid-template-columns: 1fr 2fr 1fr;">
                     <div class="form-group">
+                        <label for="prov-cif" class="sr-only">CIF / NIF</label>
                         <input type="text" id="prov-cif" class="form-control rounded" placeholder="CIF / NIF *">
-                    </div>
-                    
-                    <div class="form-group">
-                        <input type="text" id="prov-nombre" class="form-control rounded" placeholder="Nombre de la Empresa *">
                     </div>
 
                     <div class="form-group">
+                        <label for="prov-nombre" class="sr-only">Nombre de la Empresa</label>
+                        <input type="text" id="prov-nombre" class="form-control rounded"
+                            placeholder="Nombre de la Empresa *">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="prov-telefono" class="sr-only">Teléfono</label>
                         <input type="text" id="prov-telefono" class="form-control rounded" placeholder="Teléfono">
                     </div>
                 </div>
 
                 <div class="form-row description-image-row">
-                    
+
                     <div class="left-col">
                         <div class="form-group">
-                            <input type="email" id="prov-email" class="form-control rounded" placeholder="Correo Electrónico">
+                            <label for="prov-email" class="sr-only">Correo Electrónico</label>
+                            <input type="email" id="prov-email" class="form-control rounded"
+                                placeholder="Correo Electrónico">
                         </div>
 
                         <div class="form-row" style="display: flex; gap: 10px; width: 100%; margin-top: 15px;">
                             <div class="form-group" style="flex: 1;">
-                                <input type="text" id="prov-contacto" class="form-control rounded" placeholder="Persona de Contacto">
+                                <label for="prov-contacto" class="sr-only">Persona de Contacto</label>
+                                <input type="text" id="prov-contacto" class="form-control rounded"
+                                    placeholder="Persona de Contacto">
                             </div>
                             <div class="form-group" style="flex: 1;">
-                                <input type="text" id="prov-direccion" class="form-control rounded" placeholder="Dirección / Isla">
+                                <label for="prov-direccion" class="sr-only">Dirección / Isla</label>
+                                <input type="text" id="prov-direccion" class="form-control rounded"
+                                    placeholder="Dirección / Isla">
                             </div>
                         </div>
 
                         <div class="form-group" style="margin-top: 15px;">
-                            <textarea id="prov-notas" rows="4" class="form-control rounded" placeholder="Notas adicionales u observaciones..."></textarea>
+                            <label for="prov-notas" class="sr-only">Notas adicionales</label>
+                            <textarea id="prov-notas" rows="4" class="form-control rounded"
+                                placeholder="Notas adicionales u observaciones..."></textarea>
                         </div>
                     </div>
 
                     <div class="right-col image-upload-col" style="justify-content: flex-end;">
-                        
-                        <div class="image-placeholder rounded" style="background-color: transparent; border: none; height: auto; min-height: 0;">
-                           </div>
+
+                        <div class="image-placeholder rounded"
+                            style="background-color: transparent; border: none; height: auto; min-height: 0;">
+                        </div>
 
                         <button id="btnGuardarProveedor" class="btn-guardar"
                             style="width: 100%; padding: 10px; background-color: var(--primary-color); color: white; border: none; border-radius: 5px; cursor: pointer;">
@@ -88,28 +106,30 @@
         </div>
     </div>
 
-    <div id="fichaProveedor" class="tabcontent" style="display: none;">
-        
+    <div id="fichaProveedor" class="tabcontent" role="tabpanel" style="display: none;">
+
         <div class="contenedor-ficha">
-            <div class="encabezado-ficha" style="display:flex; justify-content:space-between; margin-bottom:20px; border-bottom:1px solid #ccc; padding-bottom:10px;">
+            <div class="encabezado-ficha"
+                style="display:flex; justify-content:space-between; margin-bottom:20px; border-bottom:1px solid #ccc; padding-bottom:10px;">
                 <h2 id="titulo-ficha-prov">Detalle Proveedor</h2>
                 <button id="btnVolverProv" class="btn-guardar" style="background-color: #6c757d;">← Volver</button>
             </div>
 
             <form id="formFichaProveedor" class="form-nuevo-articulo">
-                <input type="hidden" id="edit-prov-id"> <div class="form-row main-inputs" style="grid-template-columns: 1fr 2fr 1fr;"> 
+                <input type="hidden" id="edit-prov-id">
+                <div class="form-row main-inputs" style="grid-template-columns: 1fr 2fr 1fr;">
                     <div class="form-group">
-                        <label>CIF / NIF</label>
+                        <label for="edit-prov-cif">CIF / NIF</label>
                         <input type="text" id="edit-prov-cif" class="form-control rounded">
                     </div>
-                    
+
                     <div class="form-group">
-                        <label>Nombre Empresa</label>
+                        <label for="edit-prov-nombre">Nombre Empresa</label>
                         <input type="text" id="edit-prov-nombre" class="form-control rounded">
                     </div>
 
                     <div class="form-group">
-                        <label>Teléfono</label>
+                        <label for="edit-prov-telefono">Teléfono</label>
                         <input type="text" id="edit-prov-telefono" class="form-control rounded">
                     </div>
                 </div>
@@ -117,29 +137,31 @@
                 <div class="form-row description-image-row">
                     <div class="left-col">
                         <div class="form-group">
-                            <label>Email</label>
+                            <label for="edit-prov-email">Email</label>
                             <input type="email" id="edit-prov-email" class="form-control rounded">
                         </div>
 
                         <div class="form-row" style="display: flex; gap: 10px; width: 100%; margin-top: 15px;">
                             <div class="form-group" style="flex: 1;">
-                                <label>Contacto</label>
+                                <label for="edit-prov-contacto">Contacto</label>
                                 <input type="text" id="edit-prov-contacto" class="form-control rounded">
                             </div>
                             <div class="form-group" style="flex: 1;">
-                                <label>Dirección / Isla</label>
+                                <label for="edit-prov-direccion">Dirección / Isla</label>
                                 <input type="text" id="edit-prov-direccion" class="form-control rounded">
                             </div>
                         </div>
 
                         <div class="form-group" style="margin-top: 15px;">
-                            <label>Notas</label>
+                            <label for="edit-prov-notas">Notas</label>
                             <textarea id="edit-prov-notas" rows="4" class="form-control rounded"></textarea>
                         </div>
                     </div>
 
-                    <div class="right-col" style="display:flex; flex-direction:column; justify-content:flex-end; gap:10px;">
-                        <button type="button" id="btnGuardarEdicionProv" class="btn-guardar" style="background-color: #2a9d8f; width:100%; padding:10px;">
+                    <div class="right-col"
+                        style="display:flex; flex-direction:column; justify-content:flex-end; gap:10px;">
+                        <button type="button" id="btnGuardarEdicionProv" class="btn-guardar"
+                            style="background-color: #2a9d8f; width:100%; padding:10px;">
                             Guardar Cambios
                         </button>
                     </div>

@@ -6,6 +6,13 @@
     flex-wrap: wrap;
     gap: 0.5rem;
     justify-content: center;
+    align-items: center;
+}
+
+.search-group {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
 }
 
 input,
@@ -55,21 +62,21 @@ tfoot td {
     font-weight: bold;
     background: var(--cl-light-gray);
 }
-.acciones button{
+
+.acciones button {
     margin: 1vh;
 }
 
 /*INVENTARIO*/
 
 .valorado {
-    width: 100%; 
+    width: 100%;
     margin-top: 15px;
 }
 
-.resumen-inv{
-    font-weight:bold; 
-    text-align:right; 
-    padding: 10px; 
+.resumen-inv {
+    font-weight: bold;
+    text-align: right;
+    padding: 10px;
     background-color: var(--cl-white);
 }
-

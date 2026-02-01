@@ -179,13 +179,22 @@ function renderizarTablaValorada(productos) {
             ? producto.categoria.nombre
             : (producto.categoria || 'General');
 
+        // Formatear código para lectura dígito a dígito (ej: "1, 2, 3" para forzar pausa)
+        const rawCode = (producto.codigo || producto.id).toString();
+        const codeAudible = rawCode.split('').join(', ');
+
         const tr = document.createElement('tr');
         tr.innerHTML = `
-            <td>${producto.codigo || producto.id}</td>
-            <td style="font-weight: bold;">${producto.nombre}</td>
-            <td>${nombreCat}</td>
-            <td style="${stock < producto.stockMinimo ? 'color:red; font-weight:bold;' : ''}">${stock}</td>
-            <td>${totalFila.toFixed(2)} €</td>
+            <td>
+                <span class="sr-only">Código: ${codeAudible}</span>
+                <span aria-hidden="true">${rawCode}</span>
+            </td>
+            <td style="font-weight: bold;"><span class="sr-only">Producto: </span>${producto.nombre}</td>
+            <td><span class="sr-only">Categoría: </span>${nombreCat}</td>
+            <td style="${stock < producto.stockMinimo ? 'color:var(--primary-color); font-weight:bold;' : ''}">
+                <span class="sr-only">Stock: </span>${stock}
+            </td>
+            <td><span class="sr-only">Valor Total: </span>${totalFila.toFixed(2)} €</td>
         `;
         domInventario.tbodyValorado.appendChild(tr);
     });
@@ -209,18 +218,26 @@ function renderizarTablaConsolidacion(productos) {
     productos.forEach(producto => {
         const stockActual = parseInt(producto.stock) || 0;
 
+        // Formatear código para lectura dígito a dígito
+        const rawCode = (producto.codigo || producto.id).toString();
+        const codeAudible = rawCode.split('').join(', ');
+
         const tr = document.createElement('tr');
         tr.innerHTML = `
-            <td>${producto.codigo || producto.id}</td>
-            <td>${producto.nombre}</td>
             <td>
+                <span class="sr-only">Código: ${codeAudible}</span>
+                <span aria-hidden="true">${rawCode}</span>
+            </td>
+            <td><span class="sr-only">Producto: </span>${producto.nombre}</td>
+            <td>
+                <span class="sr-only">Stock Actual: </span>
                 <input type="number" 
                        id="input-stock-${producto.id}" 
                        value="${stockActual}" 
                        class="form-control input-consolidar" 
                        data-id="${producto.id}"
                        style="width: 80px; text-align: center;"
-                       aria-label="Stock físico para ${producto.nombre}">
+                       aria-label="Stock actual para ${producto.nombre} es de ${stockActual}, ingresar Stock real">
             </td> 
             <td>
                 <button type="button" class="btn-guardar-stock" data-id="${producto.id}">

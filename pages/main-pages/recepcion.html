@@ -7,54 +7,58 @@
         </div>
     </div>
 
-    <div class="tab">
-        <button class="tablinks active" id="defaultOpenRecepcion" data-target="historialRecepciones">Historial de
+    <div class="tab" role="tablist">
+        <button class="tablinks active" id="defaultOpenRecepcion" role="tab" aria-selected="true"
+            aria-controls="historialRecepciones" data-target="historialRecepciones">Historial de
             Recepciones</button>
-        <button class="tablinks" id="btnTabNuevaRecepcion" data-target="nvaRecepcion">Nueva Recepción (Albarán)</button>
+        <button class="tablinks" id="btnTabNuevaRecepcion" role="tab" aria-selected="false" aria-controls="nvaRecepcion"
+            data-target="nvaRecepcion">Nueva Recepción (Albarán)</button>
     </div>
 
-    <div id="historialRecepciones" class="tabcontent active-tab">
+    <div id="historialRecepciones" class="tabcontent active-tab" role="tabpanel">
         <div class="controles recep-controles-wrapper">
+            <label for="busquedaRecepcion" class="sr-only">Buscar recepción</label>
             <input type="text" id="busquedaRecepcion" placeholder="Buscar por proveedor o albarán..."
                 class="form-control rounded recep-search">
+            <label for="filtroFechaRecepcion" class="sr-only">Filtrar por fecha</label>
             <input type="date" id="filtroFechaRecepcion" class="form-control rounded recep-date-filter">
         </div>
 
         <table class="styled-table full-width">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Fecha Entrada</th>
-                    <th>Proveedor</th>
-                    <th>Nº Albarán</th>
-                    <th>Total (€)</th>
-                    <th>Concordancia</th>
-                    <th>Acciones</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Fecha Entrada</th>
+                    <th scope="col">Proveedor</th>
+                    <th scope="col">Nº Albarán</th>
+                    <th scope="col">Total (€)</th>
+                    <th scope="col">Concordancia</th>
+                    <th scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody id="tabla-recepcion-body"></tbody>
         </table>
     </div>
 
-    <div id="nvaRecepcion" class="tabcontent">
+    <div id="nvaRecepcion" class="tabcontent" role="tabpanel">
         <div class="crear-articulo">
             <form class="form-nuevo-articulo" id="formNuevaRecepcion">
                 <input type="hidden" id="recepcion-id-edicion">
 
                 <div class="form-row main-inputs recep-header-inputs">
                     <div class="form-group group-proveedor">
-                        <label>Proveedor</label>
+                        <label for="recep-proveedor">Proveedor</label>
                         <select id="recep-proveedor" class="form-control rounded option-style">
                             <option value="">-- Seleccionar --</option>
                         </select>
                     </div>
                     <div class="form-group group-albaran">
-                        <label>Nº Albarán</label>
+                        <label for="recep-albaran">Nº Albarán</label>
                         <input type="text" id="recep-albaran" class="form-control rounded"
                             placeholder="Referencia del papel...">
                     </div>
                     <div class="form-group group-fecha">
-                        <label>Fecha Recepción</label>
+                        <label for="recep-fecha">Fecha Recepción</label>
                         <input type="date" id="recep-fecha" class="form-control rounded">
                     </div>
                 </div>
@@ -63,7 +67,8 @@
 
                 <div class="recep-scanner-section"
                     style="margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px; display: flex; align-items: center; gap: 10px;">
-                    <label style="font-weight: bold; min-width: 120px;">Escanear Código:</label>
+                    <label for="recep-scanner-input" style="font-weight: bold; min-width: 120px;">Escanear
+                        Código:</label>
                     <input type="text" id="recep-scanner-input" class="form-control rounded"
                         placeholder="Escanea código de barras (EAN)..." style="flex:1;" autocomplete="off">
                     <button type="button" id="btn-buscar-barcode" class="btn-guardar btn-primary"
@@ -74,13 +79,13 @@
                     <table class="styled-table recep-lines-table">
                         <thead>
                             <tr>
-                                <th class="col-desc">Descripción (Producto)</th>
-                                <th class="col-cant">Cantidad</th>
-                                <th class="col-coste">Coste KG/UD (€)</th>
-                                <th class="col-imp">Impuestos (%)</th>
-                                <th class="col-total">Importe (€)</th>
-                                <th class="col-obs">Observaciones</th>
-                                <th class="col-action"></th>
+                                <th class="col-desc" scope="col">Descripción (Producto)</th>
+                                <th class="col-cant" scope="col">Cantidad</th>
+                                <th class="col-coste" scope="col">Coste KG/UD (€)</th>
+                                <th class="col-imp" scope="col">Impuestos (%)</th>
+                                <th class="col-total" scope="col">Importe (€)</th>
+                                <th class="col-obs" scope="col">Observaciones</th>
+                                <th class="col-action" scope="col"></th>
                             </tr>
                         </thead>
                         <tbody id="lineas-recepcion-body"></tbody>
@@ -94,7 +99,7 @@
                 <div class="form-row recep-footer">
 
                     <div class="form-group group-concordancia">
-                        <label class="label-bold">Concordancia</label>
+                        <label for="recep-concordancia" class="label-bold">Concordancia</label>
                         <select id="recep-concordancia" class="form-control rounded option-style">
                             <option value="SI">SÍ</option>
                             <option value="NO">NO</option>
