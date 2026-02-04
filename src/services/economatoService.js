@@ -73,13 +73,31 @@ export async function updateArticulo(id, datosActualizados) {
 
 export async function createArticulo(nuevoArticulo) {
     try {
-        const response = await fetch(`${Api_URL}/productos.php`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(nuevoArticulo)
-        });
+        const isFormData = nuevoArticulo instanceof FormData;
 
-        if (!response.ok) throw new Error("Error al crear producto");
+        const options = {
+            method: 'POST',
+            body: isFormData ? nuevoArticulo : JSON.stringify(nuevoArticulo)
+        };
+
+        if (!isFormData) {
+            options.headers = { 'Content-Type': 'application/json' };
+        }
+
+        const response = await fetch(`${Api_URL}/productos.php`, options);
+
+        if (!response.ok) {
+            // Intentar obtener mensaje de error del backend
+            let errorMessage = "Error al crear producto";
+            try {
+                const errorData = await response.json();
+                if (errorData.error) errorMessage = errorData.error;
+            } catch (e) {
+                // Si no es JSON, usar texto plano o el status
+                errorMessage = `Error ${response.status}: ${response.statusText}`;
+            }
+            throw new Error(errorMessage);
+        }
 
         return await response.json();
     } catch (error) {

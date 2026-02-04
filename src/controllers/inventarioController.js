@@ -68,7 +68,11 @@ export async function inicializarInventario() {
 
 function configurarEventos() {
     // --- Eventos Pestaña Ver Stock ---
-    if (domInventario.inputBusqueda) domInventario.inputBusqueda.addEventListener('input', aplicarFiltros);
+    // --- Eventos Pestaña Ver Stock ---
+    if (domInventario.inputBusqueda) {
+        domInventario.inputBusqueda.addEventListener('input', aplicarFiltros);
+        domInventario.inputBusqueda.addEventListener('keyup', (e) => { if (e.key === 'Enter') aplicarFiltros(); });
+    }
     if (domInventario.selectCategoria) domInventario.selectCategoria.addEventListener('change', aplicarFiltros);
     if (domInventario.selectOrden) domInventario.selectOrden.addEventListener('change', aplicarFiltros);
 
@@ -84,6 +88,7 @@ function configurarEventos() {
     // --- Eventos Pestaña Consolidar ---
     if (domInventario.inputConsolidar) {
         domInventario.inputConsolidar.addEventListener('input', aplicarFiltrosConsolidacion);
+        domInventario.inputConsolidar.addEventListener('keyup', (e) => { if (e.key === 'Enter') aplicarFiltrosConsolidacion(); });
     }
     if (domInventario.selectOrdenConsolidar) {
         domInventario.selectOrdenConsolidar.addEventListener('change', aplicarFiltrosConsolidacion);

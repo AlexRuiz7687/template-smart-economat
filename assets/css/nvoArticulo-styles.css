@@ -5,27 +5,44 @@
 
 .form-nuevo-articulo {
     max-width: 1000px;
-    margin: 2vh auto;
-    padding: 20px;
+    margin: var(--space-8) auto;
+    padding: var(--space-6);
+    background: var(--bg-secondary);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-base);
 }
 
-
 .rounded {
-    border: 1px solid var(--cl-dark-gray);
-    border-radius: 1vh;
-    padding: 8px 12px;
-    background-color:rgb(from var(--cl-white) r g b / 0.6);
+    border: var(--border-width) solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-4);
+    background-color: var(--bg-primary);
+    transition: all var(--duration-base) var(--ease-out);
+}
+
+.rounded:hover {
+    border-color: var(--cl-dark-gray);
+}
+
+.rounded:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px var(--primary-light);
+    outline: none;
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: var(--space-4);
     display: flex;
     flex-direction: column;
 }
 
 .form-group label:not(.radio-label) {
-    margin-bottom: 5px;
-    font-weight: 400;
+    margin-bottom: var(--space-2);
+    font-weight: var(--font-normal);
+    color: var(--cl-dark-gray);
+    font-size: var(--text-sm);
 }
 
 .form-control {
@@ -44,7 +61,7 @@
 /* --- Fila Principal (Izquierda y Derecha) --- */
 .description-image-row {
     display: grid;
-    grid-template-columns: 3fr 1fr; 
+    grid-template-columns: 3fr 1fr;
     gap: 30px;
 }
 
@@ -58,15 +75,18 @@
 
 /* --- Sección de Alérgenos --- */
 .alergenos-section {
-    border: 1px solid var(--cl-black);
-    padding: 15px;
-    margin-top: 20px;
+    border: var(--border-width) solid var(--border-color);
+    padding: var(--space-4);
+    margin-top: var(--space-6);
+    border-radius: var(--radius-md);
+    background: var(--bg-elevated);
 }
 
 .alergenos-label {
-    font-weight: bold;
+    font-weight: var(--font-semibold);
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: var(--space-3);
+    color: var(--cl-black);
 }
 
 .alergenos-grid {
@@ -86,7 +106,7 @@
 
 .radio-label input[type="radio"] {
     accent-color: var(--primary-color);
-    transform: scale(1.2); 
+    transform: scale(1.2);
 }
 
 /* --- Columna de Imagen Derecha --- */
@@ -102,12 +122,19 @@
     width: 100%;
     height: 100%;
     min-height: 250px;
-    border: 1px solid var(--cl-dark-gray);
+    border: var(--border-width-2) dashed var(--border-color);
+    border-radius: var(--radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgb(from var(--cl-white) r g b / 0.6);
-    margin-bottom: 10px;
+    background-color: var(--bg-primary);
+    margin-bottom: var(--space-3);
+    transition: all var(--duration-base) var(--ease-out);
+}
+
+.image-placeholder:hover {
+    border-color: var(--primary-color);
+    background-color: var(--primary-light);
 }
 
 .upload-link {
@@ -117,52 +144,71 @@
     cursor: pointer;
 }
 
-.option-style{
+.option-style {
     margin: 0;
     color: var(--cl-dark-gray);
 }
 
-label.imput-style{
+label.imput-style {
     font-weight: 100;
 }
 
 #descripcion {
-    resize: none; 
+    resize: none;
 }
 
 .registrarArticulo {
-    width: 100%; 
-    margin-top: 20px; 
-    padding: 10px; 
-    background-color: var(--primary-color); 
-    color: var(--cl-white); 
-    border: none; 
-    border-radius: 5px; 
+    width: 100%;
+    margin-top: var(--space-6);
+    padding: var(--space-4) var(--space-6);
+    background-color: var(--color-success);
+    color: var(--cl-white);
+    border: none;
+    border-radius: var(--radius-md);
     cursor: pointer;
+    font-weight: var(--font-semibold);
+    font-size: var(--text-base);
+    box-shadow: var(--shadow-md);
+    transition: all var(--duration-base) var(--ease-out);
+}
+
+.registrarArticulo:hover {
+    background-color: var(--color-success-light);
+    color: var(--cl-black);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.registrarArticulo:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-sm);
 }
 
 /* --- Responsive para móviles (Opcional) --- */
 @media (max-width: 768px) {
+
     .main-inputs,
     .description-image-row,
     .select-row,
     .alergenos-grid {
-        grid-template-columns: 1fr; /* Todo a 1 sola columna en móvil */
+        grid-template-columns: 1fr;
+        /* Todo a 1 sola columna en móvil */
     }
+
     .image-placeholder {
         height: 200px;
     }
 }
 
-label{
-    font-weight: 300;
+label {
+    font-weight: var(--font-light);
 }
 
-.labels{
-    font-weight: 300;
+.labels {
+    font-weight: var(--font-light);
 }
 
-.cont-cargaMasiva{
+.cont-cargaMasiva {
     height: 400px;
     width: 1000px;
     background-color: rgb(from var(--cl-white) r g b / 0.6);

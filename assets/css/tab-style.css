@@ -1,57 +1,95 @@
 @import url("./style.css");
 
-.menu-articulos{
-    width: 100%;
-    display: flex;
-    justify-content:flex-start;
+.menu-articulos {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
 }
+
 /* Style the tab */
 .tab {
   display: flex;
-  /* border: 1px solid var(--cl-black);
-  background-color: var(--cl-dark-gray); */
   justify-content: flex-start;
   width: 100%;
   margin-top: 0;
   max-width: 1000px;
-  
+  gap: var(--space-2);
+  border-bottom: var(--border-width-2) solid var(--border-color-light);
+  position: relative;
 }
 
 /* botones para abrir el tab */
 .tab button {
-  background-color: inherit;
+  background-color: transparent;
   float: left;
   border: none;
   outline: none;
   cursor: pointer;
-  border-radius: 0;
-  padding: 5px 16px;
-  transition: 0.3s;
+  border-radius: var(--radius-md) var(--radius-md) 0 0;
+  padding: var(--space-4) var(--space-6);
+  transition: all var(--duration-base) var(--ease-out);
+  color: var(--cl-dark-gray);
+  font-weight: var(--font-medium);
+  font-size: var(--text-base);
+  position: relative;
+}
+
+.tab button:hover {
+  background-color: rgba(0, 0, 0, 0.02);
   color: var(--cl-black);
 }
 
-
-.tab button:hover {
-  background-color: var( --cl-light-gray);
+.tab button.active {
+  color: var(--primary-color);
+  font-weight: var(--font-semibold);
 }
 
+/* Indicador animado */
+.tab button.active::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--primary-color);
+  border-radius: var(--radius-full);
+  animation: slideIn var(--duration-base) var(--ease-out);
+}
 
-.tab button.active {
-  /* background-color: #ccc; */
-  border-bottom: 3px solid var(--primary-color);
+@keyframes slideIn {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
 }
 
 /* Style the tab content */
 .tabcontent {
   display: none;
-  padding: 6px 12px;
-  /* border: 1px solid #ccc; */
+  padding: var(--space-3) var(--space-4);
   border-top: none;
+  animation: fadeIn var(--duration-base) var(--ease-out);
 }
 
-.crear-articulo{
-    width: 100%;
-    max-width: 1000px;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.crear-articulo {
+  width: 100%;
+  max-width: 1000px;
 }
 
 
@@ -63,53 +101,53 @@
 
 /* El contenedor que agrupa título y tabs */
 .header-flex {
-    display: flex;
-    justify-content: space-between; 
-    align-items: center;
-    margin-bottom: 20px;
-    border-bottom: 1px solid #ccc; 
-    padding-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
 }
 
 /* Ajuste para el título */
 .header-flex .menu-articulos {
-    margin-bottom: 0 !important; 
+  margin-bottom: 0 !important;
 }
 
 .header-flex .menu-articulos h2 {
-    margin: 0;
-    font-size: 24px; 
+  margin: 0;
+  font-size: 24px;
 }
 
 /* Ajuste para las pestañas */
 .header-flex .tab {
-    width: auto; 
-    margin-top: 0;
-    border: none; 
-    background-color: transparent;
+  width: auto;
+  margin-top: 0;
+  border: none;
+  background-color: transparent;
 }
 
 /* Ajuste de los botones de las pestañas */
 .header-flex .tab button {
-    font-size: 16px;
-    padding: 10px 20px;
-    background-color: transparent;
+  font-size: 16px;
+  padding: 10px 20px;
+  background-color: transparent;
 }
 
 /* Responsive: En móviles, que vuelvan a ponerse uno debajo del otro */
 @media (max-width: 768px) {
-    .header-flex {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-    }
-    
-    .header-flex .tab {
-        width: 100%;
-        justify-content: space-between;
-    }
+  .header-flex {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .header-flex .tab {
+    width: 100%;
+    justify-content: space-between;
+  }
 }
 
-.contenedor-seccion{
+.contenedor-seccion {
   min-width: 900px;
 }

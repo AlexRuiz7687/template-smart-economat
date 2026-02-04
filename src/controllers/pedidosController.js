@@ -127,13 +127,18 @@ function configurarEventos() {
 
     const inputBusqueda = document.getElementById('busquedaPedido');
     if (inputBusqueda) {
-        inputBusqueda.addEventListener('keyup', (e) => {
-            const texto = e.target.value.toLowerCase();
+        const filtrar = () => {
+            const texto = inputBusqueda.value.toLowerCase();
             const filtrados = listaPedidos.filter(p =>
                 p.id.toString().includes(texto) ||
                 (p.nombreSolicitante && p.nombreSolicitante.toLowerCase().includes(texto))
             );
             PedidosView.renderTabla(filtrados, usuarioActual);
+        };
+
+        inputBusqueda.addEventListener('input', filtrar);
+        inputBusqueda.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') filtrar();
         });
     }
 
@@ -227,7 +232,7 @@ function agregarLineaDOM(contexto, prodId = '', cant = 1) {
 
         // Actualizar visuales
         const spanSub = row.querySelector(`#subtotal-${index}`);
-       
+
         if (row.querySelector('td:nth-child(3) span')) {
             row.querySelector('td:nth-child(3) span').textContent = totalLinea.toFixed(2);
         }

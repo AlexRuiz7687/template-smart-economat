@@ -58,6 +58,8 @@ export async function inicializarAlmacen(tabDestino = null) {
   // Configuración de Eventos
   const eventMap = [
     { selector: '#btnBuscar', event: 'click', handler: onBuscar },
+    { selector: '#busquedaArticulos', event: 'input', handler: onBuscar },
+    { selector: '#busquedaArticulos', event: 'keyup', handler: (e) => { if (e.key === 'Enter') onBuscar(); } },
     { selector: '#ordenSelect', event: 'change', handler: onOrdenar },
     { selector: '#btnAllProducts', event: 'click', handler: onShowAll },
     { selector: '#btnStock', event: 'click', handler: onComprobarStock },

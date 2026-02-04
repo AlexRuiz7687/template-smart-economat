@@ -32,13 +32,18 @@ function configurarEventos() {
     // A) BUSCADOR
     const inputBusqueda = document.getElementById('busquedaProveedor');
     if (inputBusqueda) {
-        inputBusqueda.addEventListener('keyup', (e) => {
-            const texto = e.target.value.toLowerCase();
+        const filtrar = () => {
+            const texto = inputBusqueda.value.toLowerCase();
             const filtrados = listaProveedores.filter(p =>
                 (p.nombre && p.nombre.toLowerCase().includes(texto)) ||
                 (p.cif && p.cif.toLowerCase().includes(texto))
             );
             renderTablaProveedores(filtrados);
+        };
+
+        inputBusqueda.addEventListener('input', filtrar);
+        inputBusqueda.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') filtrar();
         });
     }
 
@@ -116,13 +121,13 @@ async function manejarCrearProveedor() {
 
     try {
         await createProveedor(nuevoProveedor);
-        
+
         // ÉXITO (Reemplazo de alert)
         await Swal.fire({
             title: 'SmartEconomat',
             text: 'Proveedor creado correctamente',
             icon: 'success',
-            confirmButtonColor: '#2a9d8f', 
+            confirmButtonColor: '#2a9d8f',
             timer: 1500,
             showConfirmButton: false
         });
@@ -192,7 +197,7 @@ async function manejarGuardarEdicion() {
 
     try {
         await updateProveedor(id, datosEditados);
-        
+
         // ÉXITO (Reemplazo de alert)
         await Swal.fire({
             title: 'SmartEconomat',

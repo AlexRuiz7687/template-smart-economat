@@ -30,8 +30,25 @@ export const FichaArticuloView = {
             }
         }
 
-        if (imgProducto && articulo.imagenUrl) {
-            imgProducto.src = articulo.imagenUrl;
+        // DEBUG: Ver qué llega
+        console.log("Datos Artículo en Ficha:", articulo);
+        console.log("Imagen recibida:", articulo.imagen, articulo.imagenUrl);
+
+        // Corregido: Construir la ruta completa
+        let nombreImagen = articulo.imagen || articulo.imagenUrl;
+
+        if (imgProducto && nombreImagen) {
+            nombreImagen = nombreImagen.trim(); // Limpiar espacios
+
+            // Detectar si es URL completa (http, https, //) o Base64
+            if (nombreImagen.match(/^(http|https|\/\/|data:)/i)) {
+                imgProducto.src = nombreImagen;
+            } else {
+                // Si es nombre de archivo local, añadir ruta de assets
+                imgProducto.src = `../assets/img/productos/${nombreImagen}`;
+            }
+        } else if (imgProducto) {
+            imgProducto.src = "../assets/img/no-image.svg";
         }
     },
 

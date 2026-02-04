@@ -3,21 +3,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family:
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    "Open Sans",
-    "Helvetica Neue",
-    sans-serif;
+  font-family: var(--font-primary);
 }
 
 :root {
+  /* ===== COLORES BASE ===== */
   --primary-color: #922320;
   --secondary-color: #e1efe2;
   --terciary-color: yellow;
@@ -30,12 +20,111 @@
   --cl-green-primary: #165554;
   --cl-green-primary-light: #35dbc8;
   --cl-orange: #e67e22;
+
+  /* ===== VARIANTES DE COLORES ===== */
+  --primary-hover: #7a1d1a;
+  --primary-active: #5e1714;
+  --primary-light: rgba(146, 35, 32, 0.1);
+
+  /* Colores de estado */
+  --color-success: var(--cl-green-primary);
+  --color-success-light: var(--cl-green-primary-light);
+  --color-warning: var(--cl-orange);
+  --color-error: var(--primary-color);
+  --color-info: #3b82f6;
+
+  /* Fondos */
+  --bg-page: #f5f5f5;
+  --bg-primary: #f5f5f5;
+  --bg-secondary: rgba(255, 255, 255, 0.6);
+  --bg-elevated: #ffffff;
+
+  /* Textos */
+  --text-primary: #2f2e2d;
+  --text-secondary: rgb(99, 99, 99);
+  --text-tertiary: rgb(196, 196, 196);
+
+  /* Bordes */
+  --border-color: rgba(0, 0, 0, 0.1);
+  --border-color-light: rgba(0, 0, 0, 0.05);
+
+  /* ===== TIPOGRAFÍA ===== */
+  --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'SF Mono', 'Consolas', 'Monaco', monospace;
+
+  /* Tamaños de fuente (escala modular 1.25) */
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+
+  /* Pesos de fuente */
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  /* ===== ESPACIADO ===== */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* ===== SOMBRAS ===== */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-base: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+
+  /* ===== BORDES Y RADIOS ===== */
+  --radius-sm: 0.25rem;
+  --radius-base: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-full: 9999px;
+
+  --border-width: 1px;
+  --border-width-2: 2px;
+  --border-width-4: 4px;
+
+  /* ===== TRANSICIONES ===== */
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --duration-slow: 300ms;
+  --duration-slower: 500ms;
+
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  /* ===== BREAKPOINTS ===== */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
 }
 
 body {
   /* min-height: 100vh; */
   position: relative;
-  background-color: var(--cl-white);
+  background-color: var(--bg-page);
+  color: var(--text-primary);
   display: grid;
   grid-template-areas:
     "header"
@@ -66,14 +155,46 @@ body::before {
 
 a {
   text-decoration: none;
+  transition: color var(--duration-base) var(--ease-out);
 }
 
 ul {
   list-style: none;
 }
 
-h2 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: var(--cl-black);
+  font-weight: var(--font-semibold);
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: var(--text-3xl);
+}
+
+h2 {
+  font-size: var(--text-2xl);
+}
+
+h3 {
+  font-size: var(--text-xl);
+}
+
+h4 {
+  font-size: var(--text-lg);
+}
+
+h5 {
+  font-size: var(--text-base);
+}
+
+h6 {
+  font-size: var(--text-sm);
 }
 
 input:focus {
@@ -92,6 +213,31 @@ input:focus {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+/* ===== BOTONES VERDES - CONTRASTE EN HOVER ===== */
+/* Asegurar que todos los botones verdes tengan texto negro en hover para contraste */
+button[style*="background-color: var(--cl-green-primary)"]:hover,
+.btn-guardar:hover,
+.btn-verde:hover {
+  color: var(--cl-black) !important;
+}
+
+/* ===== BOTONES ROJOS/PRIMARIOS - CONTRASTE GARANTIZADO ===== */
+/* Asegurar que todos los botones con color primario tengan texto blanco */
+button[style*="background-color: var(--primary-color)"],
+.bt-acc-dir,
+.bt-logout,
+button.primary,
+.btn-primary {
+  color: white !important;
+}
+
+button[style*="background-color: var(--primary-color)"]:hover,
+button[style*="background-color: var(--primary-color)"]:active,
+.bt-acc-dir:hover,
+.bt-acc-dir:active {
+  color: white !important;
 }
 
 /* ===================================== MAIN ===================================== */
@@ -116,65 +262,76 @@ main {
 /* ===================================== ACCESOS DIRECTOS ===================================== */
 
 .acceso-directo {
-  border: 1px solid var(--cl-white);
-  width: 30vh;
-  height: 25vh;
-  background-color: var(--cl-light-gray);
-  border-radius: 5vh;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-2xl);
+  /* 24px - Rounded look */
+  padding: var(--space-6);
+  width: 280px;
+  /* Fixed width for consistency */
+  height: 280px;
+  /* Fixed height */
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
   align-items: center;
-  padding-bottom: 10px;
-  box-shadow: 0.1em 0.1em 0.4em rgba(0, 0, 0, 0.2);
-  overflow: hidden;
+  justify-content: space-between;
+  /* Space out content nicely */
+  gap: var(--space-4);
+  box-shadow: var(--shadow-base);
   position: relative;
-  object-fit: cover;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: pointer;
   margin-top: 2%;
 }
 
-.acceso-directo img {
-  position: absolute;
-
-  width: 70%;
-  top: 5px;
-
-  /*filter: grayscale(100%) brightness(150%) contrast(70%);*/
-  z-index: 1;
-  transition: filter 0.3s ease;
-}
-
-.acceso-directo img:hover {
-  filter: grayscale(0%);
-}
-
 .acceso-directo:hover {
-  box-shadow: 0.1em 0.1em 0.4em rgba(0, 0, 0, 0.5);
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--primary-light);
+}
+
+.acceso-directo img {
+  width: 140px;
+  /* Controlled size */
+  height: 140px;
+  object-fit: contain;
+  margin-top: var(--space-4);
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: 1;
+}
+
+.acceso-directo:hover img {
+  transform: scale(1.1);
 }
 
 .bt-acc-dir {
-  min-width: 10vh;
-  padding: 1vh;
-  min-height: 5vh;
+  width: 100%;
+  padding: var(--space-3);
   background-color: var(--primary-color);
-  color: var(--cl-white);
-  border-radius: 2vh;
+  color: white !important;
+  border-radius: var(--radius-full);
   border: none;
-  font-size: 1rem;
-  box-shadow: 0.1em 0.1em 0.4em rgba(0, 0, 0, 0.4);
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  letter-spacing: 0.5px;
+  box-shadow: var(--shadow-md);
   cursor: pointer;
-  transition: 0.2s;
-  position: relative;
+  transition: all 0.2s ease;
   z-index: 2;
+  margin-top: auto;
+  /* Push to bottom */
 }
 
 .bt-acc-dir:hover {
-  scale: 1.1;
-  box-shadow: 0.1em 0.1em 0.8em rgba(0, 0, 0, 0.1);
+  background-color: var(--primary-hover);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
 }
 
 .bt-acc-dir:active {
-  scale: 0.9;
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
 }
 
 /* -----------------------FIN ACCESOS DIRECTOS ----------------------- */

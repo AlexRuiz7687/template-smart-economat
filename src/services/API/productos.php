@@ -9,6 +9,18 @@ header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Conte
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, PATCH, DELETE");
 header('Content-Type: application/json; charset=utf-8');
 
+// Manejo de errores fatales (que no se capturan con try-catch)
+register_shutdown_function(function() {
+    $error = error_get_last();
+    if ($error && ($error['type'] === E_ERROR || $error['type'] === E_PARSE || $error['type'] === E_CORE_ERROR || $error['type'] === E_COMPILE_ERROR)) {
+        // Limpiar cualquier salida previa corrupta
+        if (ob_get_length()) ob_clean(); 
+        http_response_code(500);
+        echo json_encode(["error" => "Error Fatal PHP: " . $error['message'] . " en línea " . $error['line']]);
+        exit();
+    }
+});
+
 // Manejo de preflight request (OPTIONS)
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
@@ -86,7 +98,21 @@ try {
     // POST: CREAR PRODUCTO
     // ==========================================
     elseif ($method === 'POST') {
-        $input = json_decode(file_get_contents('php://input'), true);
+        
+        // Determinar si es JSON o FormData
+        $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
+        
+        if (strpos($contentType, 'application/json') !== false) {
+             $input = json_decode(file_get_contents('php://input'), true);
+        } else {
+             // Asumimos FormData
+             $input = $_POST;
+             
+             // Decodificar Alérgenos si vienen como string JSON
+             if (isset($input['alergenos']) && is_string($input['alergenos'])) {
+                 $input['alergenos'] = json_decode($input['alergenos'], true);
+             }
+        }
 
         if (!isset($input['nombre']) || !isset($input['precio'])) {
             sendResponse(400, ['error' => 'Datos incompletos: nombre y precio son obligatorios']);
@@ -95,28 +121,38 @@ try {
         try {
             $conn->beginTransaction();
 
-            // 1. Obtener o Crear Categoría
+            // 1. Procesar Imagen si existe
+            $nombreImagen = 'no-image.png'; // Default
+            
+            // Si viene archivo en $_FILES
+            if (isset($_FILES['file_imagen']) && $_FILES['file_imagen']['error'] === UPLOAD_ERR_OK) {
+                $nombreImagen = processAndSaveImage($_FILES['file_imagen']);
+            } 
+            // Si viene URL/nombre en input (JSON)
+            elseif (isset($input['imagenUrl'])) {
+                 $nombreImagen = $input['imagenUrl'];
+            }
+
+            // 2. Obtener o Crear Categoría
             $nombreCategoria = isset($input['categoria']) ? trim($input['categoria']) : 'General';
             $idCategoria = getOrCreateCategoria($conn, $nombreCategoria);
 
-            // 2. Insertar Producto (Tabla `producto`)
+            // 3. Insertar Producto (Tabla `producto`)
             $stmtProd = $conn->prepare("INSERT INTO producto (nombre, descripcion, unidad_medida, imagen, id_categoria) VALUES (?, ?, ?, ?, ?)");
             
             // Mapeo de campos
             $nombre = $input['nombre'];
             $descripcion = isset($input['descripcion']) ? $input['descripcion'] : '';
             $unidad = isset($input['unidad']) ? $input['unidad'] : 'unidad';
-            $imagen = isset($input['imagenUrl']) ? $input['imagenUrl'] : (isset($input['imagen']) ? $input['imagen'] : 'no-image.png');
-
-            $stmtProd->execute([$nombre, $descripcion, $unidad, $imagen, $idCategoria]);
+            
+            $stmtProd->execute([$nombre, $descripcion, $unidad, $nombreImagen, $idCategoria]);
             $idProducto = $conn->lastInsertId();
 
-            // 3. Obtener o Crear Proveedor
+            // 4. Obtener o Crear Proveedor
             $nombreProveedor = isset($input['distribuidor']) ? trim($input['distribuidor']) : (isset($input['proveedor']) ? trim($input['proveedor']) : 'Genérico');
             $idProveedor = getOrCreateProveedor($conn, $nombreProveedor);
 
-            // 4. Crear Relación Producto-Proveedor (Tabla `producto_proveedor`)
-            // Generamos un código de referencia ficticio si no viene uno, o usamos el ID del input si es un código
+            // 5. Crear Relación Producto-Proveedor (Tabla `producto_proveedor`)
             $codigoRef = isset($input['id']) ? $input['id'] : ('REF-' . time());
             $precio = (float)$input['precio'];
 
@@ -124,7 +160,7 @@ try {
             $stmtPP->execute([$idProducto, $idProveedor, $codigoRef, $precio]);
             $idProductoProveedor = $conn->lastInsertId();
 
-            // 5. Crear Inventario Inicial (Tabla `inventario`)
+            // 6. Crear Inventario Inicial (Tabla `inventario`)
             $stock = isset($input['stock']) ? (float)$input['stock'] : 0;
             $stockMin = isset($input['stockMinimo']) ? (float)$input['stockMinimo'] : 5;
 
@@ -133,10 +169,11 @@ try {
 
             $conn->commit();
 
-            sendResponse(201, ['message' => 'Producto creado correctamente', 'id' => $idProducto]);
+            sendResponse(201, ['message' => 'Producto creado correctamente', 'id' => $idProducto, 'imagen' => $nombreImagen]);
 
         } catch (Exception $e) {
             $conn->rollBack();
+            // Borrar imagen subida si falló la transacción para no dejar basura? (Opcional)
             throw $e;
         }
     }
@@ -155,10 +192,6 @@ try {
         try {
             $conn->beginTransaction();
 
-            // 1. Actualizar Datos Básicos (Tabla `producto`)
-            // Construimos dinámicamente la query para actualizar solo lo enviado si es posible, 
-            // pero para simplificar actualizaremos los campos principales si están presentes.
-            
             $fieldsToUpdate = [];
             $params = [];
 
@@ -191,12 +224,7 @@ try {
                 $stmt->execute($params);
             }
 
-            // 2. Actualizar Relaciones (Precios y Stock)
-            // IMPORTANTE: Esto asume una relación 1:1 simplificada para la edición desde esta vista.
-            // Si el producto tiene múltiples proveedores, esto actualizaría el PRINCIPAL o TODOS si no tenemos cuidado.
-            // Aquí buscaremos el `producto_proveedor` asociado. Si hay varios, tomamos el primero (limitación conocida).
-
-            // Obtener ID Producto Proveedor
+            // Actualizar relaciones (simplificado)
             $stmtGetPP = $conn->prepare("SELECT id_producto_proveedor FROM producto_proveedor WHERE id_producto = ? LIMIT 1");
             $stmtGetPP->execute([$id]);
             $ppRow = $stmtGetPP->fetch();
@@ -204,7 +232,6 @@ try {
             if ($ppRow) {
                 $idPP = $ppRow['id_producto_proveedor'];
 
-                // Actualizar Proveedor si cambió
                 if (isset($input['proveedor']) || isset($input['distribuidor'])) {
                      $nomProv = isset($input['proveedor']) ? $input['proveedor'] : $input['distribuidor'];
                      $idProv = getOrCreateProveedor($conn, $nomProv);
@@ -212,13 +239,11 @@ try {
                      $updProv->execute([$idProv, $idPP]);
                 }
 
-                // Actualizar Precio
                 if (isset($input['precio'])) {
                     $updPrecio = $conn->prepare("UPDATE producto_proveedor SET precio_unitario = ? WHERE id_producto_proveedor = ?");
                     $updPrecio->execute([(float)$input['precio'], $idPP]);
                 }
 
-                // Actualizar Stock (Tabla `inventario`)
                 if (isset($input['stock']) || isset($input['stockMinimo'])) {
                     $invFields = [];
                     $invParams = [];
@@ -260,8 +285,6 @@ try {
         }
 
         try {
-            // Gracias a ON DELETE CASCADE en la BD, eliminar de `producto` debería limpiar lo demás.
-            // Pero verificamos permisos o lógica extra si fuese necesario.
             $stmt = $conn->prepare("DELETE FROM producto WHERE id_producto = ?");
             $stmt->execute([$id]);
 
@@ -296,48 +319,112 @@ function sendResponse($code, $data) {
 }
 
 /**
- * Busca una categoría por nombre. Si no existe, la crea.
+ * Procesa la subida de imagen y la convierte a WebP
  */
+function processAndSaveImage($file) {
+    // Corregido: Subir 3 niveles para llegar al root (API -> services -> src -> root)
+    $targetDir = "../../../assets/img/productos/";
+    
+    // Crear carpeta si no existe
+    if (!file_exists($targetDir)) {
+        if (!mkdir($targetDir, 0777, true)) {
+            throw new Exception("No se pudo crear el directorio de imágenes. Verifica permisos.");
+        }
+    }
+
+    // Comprobar si GD está disponible
+    if (!extension_loaded('gd') || !function_exists('gd_info')) {
+       throw new Exception("La librería GD de PHP no está instalada o habilitada en el servidor.");
+    }
+    
+    // Validar tipo de imagen
+    $imageFileType = strtolower(pathinfo($file["name"], PATHINFO_EXTENSION));
+    $check = getimagesize($file["tmp_name"]);
+    
+    if ($check === false) {
+        throw new Exception("El archivo no es una imagen válida.");
+    }
+
+    // Generar nombre base (la extensión se decide al guardar)
+    // $newFileName = "producto_" . time() . ".webp"; // Eliminado, se define abajo
+    // $targetFile = $targetDir . $newFileName;       // Eliminado, se define abajo
+
+    // Cargar imagen según tipo
+    $sourceImage = null;
+    switch ($imageFileType) {
+        case 'jpg':
+        case 'jpeg':
+            $sourceImage = imagecreatefromjpeg($file["tmp_name"]);
+            break;
+        case 'png':
+            $sourceImage = imagecreatefrompng($file["tmp_name"]);
+            // Mantener transparencia si es PNG
+            imagepalettetotruecolor($sourceImage);
+            imagealphablending($sourceImage, true);
+            imagesavealpha($sourceImage, true);
+            break;
+        case 'gif':
+            $sourceImage = imagecreatefromgif($file["tmp_name"]);
+            break;
+        case 'webp':
+            $sourceImage = imagecreatefromwebp($file["tmp_name"]);
+            break;
+        default:
+            throw new Exception("Formato de imagen no soportado. Usa JPG, PNG, GIF o WEBP.");
+    }
+
+    if (!$sourceImage) {
+        throw new Exception("Error al procesar la imagen.");
+    }
+
+    // Convertir y guardar
+    // Intentar WebP primero
+    if (function_exists('imagewebp')) {
+        $newFileName = "producto_" . time() . ".webp";
+        $targetFile = $targetDir . $newFileName;
+        if (imagewebp($sourceImage, $targetFile, 80)) {
+            imagedestroy($sourceImage);
+            return $newFileName; 
+        }
+    }
+    
+    // Fallback a JPEG si WebP no existe o falló
+    $newFileName = "producto_" . time() . ".jpg";
+    $targetFile = $targetDir . $newFileName;
+    
+    if (imagejpeg($sourceImage, $targetFile, 80)) {
+        imagedestroy($sourceImage);
+        return $newFileName;
+    } else {
+        imagedestroy($sourceImage);
+        throw new Exception("Error al guardar la imagen (WebP no disponible y JPEG falló).");
+    }
+}
+
 function getOrCreateCategoria($conn, $nombreCategoria) {
     if (empty($nombreCategoria)) $nombreCategoria = 'General';
-
-    // Buscar
     $stmt = $conn->prepare("SELECT id_categoria FROM categoria WHERE nombre = ?");
     $stmt->execute([$nombreCategoria]);
     $row = $stmt->fetch();
-
-    if ($row) {
-        return $row['id_categoria'];
-    } else {
-        // Crear
-        $stmtIns = $conn->prepare("INSERT INTO categoria (nombre) VALUES (?)");
-        $stmtIns->execute([$nombreCategoria]);
-        return $conn->lastInsertId();
-    }
+    if ($row) return $row['id_categoria'];
+    
+    $stmtIns = $conn->prepare("INSERT INTO categoria (nombre) VALUES (?)");
+    $stmtIns->execute([$nombreCategoria]);
+    return $conn->lastInsertId();
 }
 
-/**
- * Busca un proveedor por nombre. Si no existe, lo crea.
- */
 function getOrCreateProveedor($conn, $nombreProveedor) {
     if (empty($nombreProveedor)) $nombreProveedor = 'Proveedor Desconocido';
-
-    // Buscar
     $stmt = $conn->prepare("SELECT id_proveedor FROM proveedor WHERE nombre = ?");
     $stmt->execute([$nombreProveedor]);
     $row = $stmt->fetch();
-
-    if ($row) {
-        return $row['id_proveedor'];
-    } else {
-        // Crear
-        $stmtIns = $conn->prepare("INSERT INTO proveedor (nombre) VALUES (?)");
-        $stmtIns->execute([$nombreProveedor]);
-        return $conn->lastInsertId();
-    }
+    if ($row) return $row['id_proveedor'];
+    
+    $stmtIns = $conn->prepare("INSERT INTO proveedor (nombre) VALUES (?)");
+    $stmtIns->execute([$nombreProveedor]);
+    return $conn->lastInsertId();
 }
 
-// Solo para uso interno al leer
 function getCategoriaIdByName($conn, $nombre) {
     if (!$nombre) return null;
     $stmt = $conn->prepare("SELECT id_categoria FROM categoria WHERE nombre = ?");
